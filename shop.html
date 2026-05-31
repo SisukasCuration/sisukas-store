@@ -90,11 +90,11 @@
 
     /* ─────────────────────────────────────────
        CONTROLS BAR
-       Sticky below nav — collapses cleanly on mobile
+       Sticky below nav — dropdown filter groups
        ───────────────────────────────────────── */
     .controls-bar {
       position: sticky;
-      top: 68px; /* nav height */
+      top: 68px;
       z-index: 100;
       background: rgba(8,9,11,0.96);
       border-bottom: 1px solid var(--border-dark);
@@ -105,36 +105,162 @@
     .controls-inner {
       max-width: 1100px;
       margin: 0 auto;
-      padding: var(--sp-3) var(--sp-6);
+      padding: 0 var(--sp-6);
       display: flex;
-      flex-direction: column;
-      gap: var(--sp-2);
+      align-items: stretch;
+      gap: 0;
     }
 
-    .controls-row {
+    /* Each filter group is a dropdown trigger */
+    .filter-group {
+      position: relative;
+    }
+
+    /* The visible trigger button */
+    .filter-trigger {
       display: flex;
       align-items: center;
       gap: var(--sp-2);
-      flex-wrap: wrap;
-    }
-
-    .controls-label {
+      min-height: var(--touch-min);
+      padding: 0 var(--sp-4);
+      background: transparent;
+      border: none;
+      border-right: 1px solid rgba(201,168,76,0.1);
+      color: var(--smoke);
       font-family: var(--ff-mono);
       font-size: var(--text-xs);
-      letter-spacing: 0.3em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--accent-gold);
-      opacity: 0.65;
-      flex-shrink: 0;
-      /* min-width keeps label from wrapping oddly */
-      min-width: 72px;
+      cursor: pointer;
+      transition: color var(--transition-fast), background var(--transition-fast);
+      white-space: nowrap;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
+    .filter-trigger:hover {
+      color: var(--frost);
+      background: rgba(200,220,232,0.04);
+    }
+
+    .filter-trigger.open {
+      color: var(--accent-gold);
+      background: rgba(201,168,76,0.06);
+    }
+
+    .filter-trigger:focus-visible {
+      outline: 2px solid var(--accent-gold);
+      outline-offset: -2px;
+    }
+
+    /* Active selection indicator next to label */
+    .filter-trigger-value {
+      color: var(--accent-gold);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      max-width: 80px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Chevron arrow */
+    .filter-chevron {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg) translateY(-2px);
+      transition: transform var(--transition-fast);
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+    .filter-trigger.open .filter-chevron {
+      transform: rotate(-135deg) translateY(-2px);
+      opacity: 1;
+    }
+
+    /* Dropdown panel */
+    .filter-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      background: var(--deep);
+      border: 1px solid var(--border-dark);
+      box-shadow: var(--shadow-modal);
+      padding: var(--sp-2);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-1);
+      min-width: 160px;
+      z-index: 200;
+      /* hide by default */
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition:
+        opacity var(--transition-fast),
+        transform var(--transition-fast);
+    }
+
+    .filter-dropdown.open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    /* Pill inside dropdown */
+    .filter-option {
+      font-family: var(--ff-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      min-height: var(--touch-min);
+      padding: 0 var(--sp-3);
+      display: flex;
+      align-items: center;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--smoke);
+      cursor: pointer;
+      border-radius: 2px;
+      transition:
+        color var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast);
+      text-align: left;
+      width: 100%;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .filter-option:hover {
+      color: var(--frost);
+      background: rgba(200,220,232,0.06);
+    }
+
+    .filter-option:active { transform: scale(0.97); }
+
+    .filter-option.active {
+      color: var(--accent-gold);
+      background: rgba(201,168,76,0.08);
+      border-color: rgba(201,168,76,0.25);
+    }
+
+    .filter-option:focus-visible {
+      outline: 2px solid var(--accent-gold);
+      outline-offset: -2px;
+    }
+
+    /* Right side — count + sort */
     .controls-right {
       margin-left: auto;
       display: flex;
       align-items: center;
       gap: var(--sp-3);
+      padding: 0 0 0 var(--sp-4);
     }
 
     .item-count {
@@ -146,59 +272,7 @@
       white-space: nowrap;
     }
 
-    /* ─────────────────────────────────────────
-       FILTER PILLS
-       Min 44px height — touch target compliant
-       ───────────────────────────────────────── */
-    .pill {
-      font-family: var(--ff-mono);
-      font-size: var(--text-xs);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      /* min touch target */
-      min-height: var(--touch-min);
-      padding: 0 var(--sp-3);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(90,99,112,0.3);
-      background: transparent;
-      color: var(--smoke);
-      cursor: pointer;
-      border-radius: 2px;
-      transition:
-        color var(--transition-fast),
-        border-color var(--transition-fast),
-        background var(--transition-fast),
-        transform var(--transition-fast);
-      /* no layout shift on press */
-      will-change: transform;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
 
-    .pill:hover {
-      color: var(--frost);
-      border-color: rgba(200,220,232,0.35);
-    }
-
-    /* scale feedback on press — no layout shift */
-    .pill:active {
-      transform: scale(0.96);
-    }
-
-    .pill.active {
-      background: var(--accent-gold);
-      color: var(--void);
-      border-color: var(--accent-gold);
-      font-weight: 600;
-    }
-
-    /* Focus ring — keyboard nav */
-    .pill:focus-visible {
-      outline: 2px solid var(--accent-gold);
-      outline-offset: 2px;
-    }
 
     /* ─────────────────────────────────────────
        SORT SELECT
@@ -1097,38 +1171,66 @@
   <div class="controls-bar" role="search" aria-label="Filter and sort products">
     <div class="controls-inner">
 
-      <!-- Gender row -->
-      <div class="controls-row" role="group" aria-label="Filter by gender">
-        <span class="controls-label" aria-hidden="true">Gender</span>
-        <button class="pill" data-gender="all"    aria-pressed="true">All</button>
-        <button class="pill" data-gender="mens"   aria-pressed="false">Mens</button>
-        <button class="pill" data-gender="womens" aria-pressed="false">Womens</button>
-        <button class="pill" data-gender="unisex" aria-pressed="false">Unisex</button>
-
-        <div class="controls-right">
-          <span class="item-count" id="item-count" aria-live="polite" aria-atomic="true">— items</span>
-          <select
-            class="sort-select"
-            id="sort-select"
-            aria-label="Sort products">
-            <option value="default">Sort: Default</option>
-            <option value="price-asc">Price: Low → High</option>
-            <option value="price-desc">Price: High → Low</option>
-            <option value="newest">Newest First</option>
-          </select>
+      <!-- Gender dropdown -->
+      <div class="filter-group" id="group-gender">
+        <button
+          class="filter-trigger"
+          id="trigger-gender"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+          aria-controls="dropdown-gender">
+          Gender
+          <span class="filter-trigger-value" id="val-gender"></span>
+          <span class="filter-chevron" aria-hidden="true"></span>
+        </button>
+        <div
+          class="filter-dropdown"
+          id="dropdown-gender"
+          role="listbox"
+          aria-label="Filter by gender">
+          <button class="filter-option active" data-gender="all"    role="option" aria-selected="true">All</button>
+          <button class="filter-option"        data-gender="mens"   role="option" aria-selected="false">Mens</button>
+          <button class="filter-option"        data-gender="womens" role="option" aria-selected="false">Womens</button>
+          <button class="filter-option"        data-gender="unisex" role="option" aria-selected="false">Unisex</button>
         </div>
       </div>
 
-      <!-- Category row -->
-      <div class="controls-row" role="group" aria-label="Filter by category">
-        <span class="controls-label" aria-hidden="true">Category</span>
-        <button class="pill" data-cat="all"        aria-pressed="true">All</button>
-        <button class="pill" data-cat="outerwear"  aria-pressed="false">Outerwear</button>
-        <button class="pill" data-cat="tops"       aria-pressed="false">Tops</button>
-        <button class="pill" data-cat="bottoms"    aria-pressed="false">Bottoms</button>
-        <button class="pill" data-cat="footwear"   aria-pressed="false">Footwear</button>
-        <button class="pill" data-cat="accessories"aria-pressed="false">Accessories</button>
-        <button class="pill" data-cat="sale"       aria-pressed="false">On Sale</button>
+      <!-- Category dropdown -->
+      <div class="filter-group" id="group-cat">
+        <button
+          class="filter-trigger"
+          id="trigger-cat"
+          aria-haspopup="listbox"
+          aria-expanded="false"
+          aria-controls="dropdown-cat">
+          Category
+          <span class="filter-trigger-value" id="val-cat"></span>
+          <span class="filter-chevron" aria-hidden="true"></span>
+        </button>
+        <div
+          class="filter-dropdown"
+          id="dropdown-cat"
+          role="listbox"
+          aria-label="Filter by category">
+          <button class="filter-option active" data-cat="all"         role="option" aria-selected="true">All</button>
+          <button class="filter-option"        data-cat="outerwear"   role="option" aria-selected="false">Outerwear</button>
+          <button class="filter-option"        data-cat="tops"        role="option" aria-selected="false">Tops</button>
+          <button class="filter-option"        data-cat="bottoms"     role="option" aria-selected="false">Bottoms</button>
+          <button class="filter-option"        data-cat="footwear"    role="option" aria-selected="false">Footwear</button>
+          <button class="filter-option"        data-cat="accessories" role="option" aria-selected="false">Accessories</button>
+          <button class="filter-option"        data-cat="sale"        role="option" aria-selected="false">On Sale</button>
+        </div>
+      </div>
+
+      <!-- Count + Sort -->
+      <div class="controls-right">
+        <span class="item-count" id="item-count" aria-live="polite" aria-atomic="true">— items</span>
+        <select class="sort-select" id="sort-select" aria-label="Sort products">
+          <option value="default">Sort: Default</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="newest">Newest First</option>
+        </select>
       </div>
 
     </div>
@@ -1463,25 +1565,102 @@
       }
     });
 
-    // ── SYNC FILTER PILLS ──
-    function syncPills() {
+    // ── DROPDOWN FILTERS ──
+    const dropdowns = {
+      gender: {
+        trigger:  document.getElementById('trigger-gender'),
+        dropdown: document.getElementById('dropdown-gender'),
+        valEl:    document.getElementById('val-gender'),
+      },
+      cat: {
+        trigger:  document.getElementById('trigger-cat'),
+        dropdown: document.getElementById('dropdown-cat'),
+        valEl:    document.getElementById('val-cat'),
+      }
+    };
+
+    function openDropdown(key) {
+      const { trigger, dropdown } = dropdowns[key];
+      trigger.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
+      dropdown.classList.add('open');
+    }
+
+    function closeDropdown(key) {
+      const { trigger, dropdown } = dropdowns[key];
+      trigger.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
+      dropdown.classList.remove('open');
+    }
+
+    function closeAllDropdowns() {
+      Object.keys(dropdowns).forEach(closeDropdown);
+    }
+
+    // Toggle on trigger click
+    dropdowns.gender.trigger.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = dropdowns.gender.dropdown.classList.contains('open');
+      closeAllDropdowns();
+      if (!isOpen) openDropdown('gender');
+    });
+
+    dropdowns.cat.trigger.addEventListener('click', e => {
+      e.stopPropagation();
+      const isOpen = dropdowns.cat.dropdown.classList.contains('open');
+      closeAllDropdowns();
+      if (!isOpen) openDropdown('cat');
+    });
+
+    // Close on outside click
+    document.addEventListener('click', closeAllDropdowns);
+
+    // Stop clicks inside dropdown from closing it
+    document.getElementById('dropdown-gender').addEventListener('click', e => e.stopPropagation());
+    document.getElementById('dropdown-cat').addEventListener('click', e => e.stopPropagation());
+
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeAllDropdowns();
+    });
+
+    // ── SYNC FILTER OPTIONS ──
+    function syncFilters() {
+      // Gender options
       document.querySelectorAll('[data-gender]').forEach(b => {
         const active = b.dataset.gender === activeGender;
         b.classList.toggle('active', active);
-        b.setAttribute('aria-pressed', active);
+        b.setAttribute('aria-selected', active);
       });
+      // Cat options
       document.querySelectorAll('[data-cat]').forEach(b => {
         const active = b.dataset.cat === activeCat;
         b.classList.toggle('active', active);
-        b.setAttribute('aria-pressed', active);
+        b.setAttribute('aria-selected', active);
       });
+      // Update trigger value labels
+      dropdowns.gender.valEl.textContent = activeGender === 'all' ? '' : `— ${activeGender}`;
+      dropdowns.cat.valEl.textContent    = activeCat   === 'all' ? '' : `— ${activeCat}`;
+      // Gold tint trigger when non-default selected
+      dropdowns.gender.trigger.style.color = activeGender !== 'all' ? 'var(--accent-gold)' : '';
+      dropdowns.cat.trigger.style.color    = activeCat   !== 'all' ? 'var(--accent-gold)' : '';
     }
 
     document.querySelectorAll('[data-gender]').forEach(btn =>
-      btn.addEventListener('click', () => { activeGender = btn.dataset.gender; syncPills(); render(); }));
+      btn.addEventListener('click', () => {
+        activeGender = btn.dataset.gender;
+        closeDropdown('gender');
+        syncFilters();
+        render();
+      }));
 
     document.querySelectorAll('[data-cat]').forEach(btn =>
-      btn.addEventListener('click', () => { activeCat = btn.dataset.cat; syncPills(); render(); }));
+      btn.addEventListener('click', () => {
+        activeCat = btn.dataset.cat;
+        closeDropdown('cat');
+        syncFilters();
+        render();
+      }));
 
     document.getElementById('sort-select').addEventListener('change', e => {
       activeSort = e.target.value; render();
@@ -1493,7 +1672,7 @@
         const res = await fetch('./listings.json');
         if (!res.ok) throw new Error('fetch failed');
         allItems = await res.json();
-        syncPills();
+        syncFilters();
         render();
       } catch {
         document.getElementById('grid').innerHTML = `
