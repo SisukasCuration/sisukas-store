@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acne Studios SS25: The Jean That Rewrote the Silhouette — Sisukas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@300;400;600&family=IM+Fell+English:ital@0;1&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --snow:        #f7f8fa;
+      --frost-white: #eef2f6;
+      --ice-blue:    #dce8f0;
+      --oak-dark:    #3d2b1a;
+      --oak-mid:     #5c3d22;
+      --oak-light:   #8b5e3c;
+      --iron:        #4a4e54;
+      --iron-light:  #7a8089;
+      --gold:        #b8893a;
+      --gold-pale:   #d4aa6a;
+      --border-snow: rgba(61,43,26,0.1);
+      --border-oak:  rgba(61,43,26,0.2);
+      --text-dark:   #1e1410;
+      --text-mid:    #4a3d32;
+      --text-light:  #7a6e64;
+      --ff-title:    'Cinzel Decorative', serif;
+      --ff-body:     'Cinzel', serif;
+      --ff-italic:   'IM Fell English', serif;
+      --ff-mono:     'Share Tech Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--snow);
+      color: var(--text-dark);
+      font-family: var(--ff-body);
+      min-height: 100dvh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 140% 50% at 50% 0%, rgba(200,220,232,0.4) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 30% at 0% 100%, rgba(220,232,240,0.2) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 64px;
+      background: rgba(247,248,250,0.92);
+      border-bottom: 1px solid var(--border-snow);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: var(--ff-title);
+      font-size: 1.1rem;
+      letter-spacing: 0.22em;
+      color: var(--oak-dark);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a {
+      font-family: var(--ff-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--iron-light);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--oak-dark); }
+
+    /* ── ARTICLE HERO ── */
+    .article-hero {
+      position: relative;
+      z-index: 1;
+      padding: 9rem 2.5rem 4rem;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .article-back {
+      font-family: var(--ff-mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--oak-light);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 2.5rem;
+      transition: color 0.2s;
+    }
+    .article-back:hover { color: var(--oak-dark); }
+
+    .article-tag {
+      font-family: var(--ff-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--oak-mid);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .article-tag::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-oak);
+      max-width: 60px;
+    }
+
+    .article-title {
+      font-family: var(--ff-title);
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      line-height: 1.1;
+      color: var(--oak-dark);
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .article-subtitle {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding: 1rem 0;
+      border-top: 1px solid var(--border-snow);
+      border-bottom: 1px solid var(--border-snow);
+    }
+
+    .article-meta-item {
+      font-family: var(--ff-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .article-meta-item strong {
+      color: var(--oak-mid);
+      font-weight: 400;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* ── COVER IMAGE ── */
+    .article-cover {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+      margin: 0 auto 4rem;
+      padding: 0 2.5rem;
+    }
+
+    .article-cover-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      background: var(--ice-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cover-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, var(--ice-blue) 0%, var(--frost-white) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .cover-placeholder-text {
+      font-family: var(--ff-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--iron-light);
+    }
+
+    /* ── ARTICLE BODY ── */
+    .article-body {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 2.5rem 6rem;
+    }
+
+    /* Running chapter marker */
+    .chapter {
+      font-family: var(--ff-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+      margin-top: 3.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .chapter::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .article-body h2 {
+      font-family: var(--ff-title);
+      font-size: clamp(1.2rem, 3vw, 1.7rem);
+      color: var(--oak-dark);
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .article-body p {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--text-mid);
+      margin-bottom: 1.4rem;
+    }
+
+    .article-body p strong {
+      font-style: normal;
+      color: var(--oak-dark);
+      font-weight: 400;
+    }
+
+    /* Pull quote */
+    .pull-quote {
+      border-left: 3px solid var(--oak-dark);
+      padding: 1rem 1.5rem;
+      margin: 2.5rem 0;
+      background: rgba(61,43,26,0.04);
+    }
+
+    .pull-quote p {
+      font-family: var(--ff-title);
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-style: normal;
+      color: var(--oak-dark);
+      line-height: 1.45;
+      margin-bottom: 0;
+    }
+
+    /* Info grid — for specs */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border-snow);
+      margin: 2rem 0;
+      border: 1px solid var(--border-snow);
+    }
+
+    .info-cell {
+      background: #fff;
+      padding: 1rem 1.2rem;
+    }
+
+    .info-cell-label {
+      font-family: var(--ff-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--oak-light);
+      margin-bottom: 0.3rem;
+    }
+
+    .info-cell-value {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: 0.92rem;
+      color: var(--text-dark);
+      line-height: 1.4;
+    }
+
+    /* ── COLLECTION SECTION ── */
+    .collection-section {
+      position: relative;
+      z-index: 1;
+      background: var(--oak-dark);
+      padding: 4rem 2.5rem 5rem;
+      margin-top: 2rem;
+    }
+
+    .collection-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .collection-eyebrow {
+      font-family: var(--ff-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold-pale);
+      opacity: 0.7;
+      margin-bottom: 0.6rem;
+    }
+
+    .collection-title {
+      font-family: var(--ff-title);
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      color: var(--snow);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.05em;
+    }
+
+    .collection-desc {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: rgba(247,248,250,0.55);
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    .collection-empty {
+      font-family: var(--ff-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      color: rgba(247,248,250,0.3);
+      text-transform: uppercase;
+      padding: 3rem 0;
+      text-align: center;
+      border: 1px solid rgba(247,248,250,0.08);
+    }
+
+    /* Mini product cards inside collection */
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1px;
+      background: rgba(247,248,250,0.06);
+    }
+
+    .collection-card {
+      background: rgba(247,248,250,0.04);
+      text-decoration: none;
+      overflow: hidden;
+      transition: background 0.25s;
+    }
+    .collection-card:hover { background: rgba(247,248,250,0.08); }
+
+    .collection-card-img {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: rgba(247,248,250,0.06);
+    }
+    .collection-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .collection-card:hover .collection-card-img img { transform: scale(1.04); }
+
+    .collection-card-body {
+      padding: 0.8rem 1rem 1rem;
+      border-top: 1px solid rgba(247,248,250,0.07);
+    }
+
+    .collection-card-brand {
+      font-family: var(--ff-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-pale);
+      margin-bottom: 0.25rem;
+    }
+
+    .collection-card-title {
+      font-size: 0.82rem;
+      color: var(--snow);
+      line-height: 1.3;
+      margin-bottom: 0.4rem;
+    }
+
+    .collection-card-price {
+      font-size: 0.95rem;
+      color: var(--ice-blue);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── FOOTER ── */
+    .article-footer {
+      position: relative;
+      z-index: 1;
+      background: var(--oak-dark);
+      padding: 2.5rem 2.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .article-footer-logo {
+      font-family: var(--ff-title);
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      color: var(--gold-pale);
+      text-decoration: none;
+    }
+
+    .article-footer-links {
+      display: flex; gap: 1.5rem;
+    }
+
+    .article-footer-links a {
+      font-family: var(--ff-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(247,248,250,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .article-footer-links a:hover { color: var(--snow); }
+
+    @media (max-width: 768px) {
+      .nav { padding: 0 1.2rem; }
+      .article-hero { padding: 8rem 1.2rem 3rem; }
+      .article-cover { padding: 0 1.2rem; }
+      .article-body { padding: 0 1.2rem 4rem; }
+      .collection-section { padding: 3rem 1.2rem 4rem; }
+      .info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="../index.html" class="nav-logo">SISUKAS</a>
+    <div class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../shop.html">Shop</a>
+      <a href="../journal/">Journal</a>
+      <a href="../auth/">Auth Ledger</a>
+    </div>
+  </nav>
+
+  <!-- ARTICLE HERO -->
+  <div class="article-hero">
+    <a href="../index.html" class="article-back">← Back to Home</a>
+    <div class="article-tag">Brand Feature — Vol. 01 — Denim</div>
+    <h1 class="article-title">Acne Studios SS25: The Jean That Rewrote the Silhouette</h1>
+    <p class="article-subtitle">How a Swedish house channelled 70s Scandinavian workwear, Japanese selvedge tradition, and the ghost of Helmut Lang into the season's most-discussed denim drop.</p>
+    <div class="article-meta">
+      <div class="article-meta-item"><strong>Brand</strong>Acne Studios</div>
+      <div class="article-meta-item"><strong>Season</strong>Spring/Summer 2025</div>
+      <div class="article-meta-item"><strong>Category</strong>Denim / Bottoms</div>
+      <div class="article-meta-item"><strong>Published</strong>May 2026</div>
+    </div>
+  </div>
+
+  <!-- COVER IMAGE -->
+  <div class="article-cover">
+    <div class="cover-placeholder">
+      <span class="cover-placeholder-text">Acne Studios — SS25 Denim</span>
+      <span class="cover-placeholder-text" style="opacity:0.4">Replace with cover image URL</span>
+    </div>
+  </div>
+
+  <!-- ARTICLE BODY -->
+  <div class="article-body">
+
+    <div class="chapter">Origins</div>
+    <h2>A Brand That Was Never Just About Clothes</h2>
+    <p>Acne Studios launched in 1996 not as a fashion house but as a creative collective. The name — Ambition to Create Novel Expression — was honest about what it was trying to do. Jonny Johansson, the founder, gave the brand's first product run as gifts: a hundred pairs of raw selvedge denim jeans, each identical, distributed to friends in Stockholm's creative underground. That act defined the brand's DNA — <strong>denim as creative statement, not commodity.</strong></p>
+    <p>For a decade Acne was fashion's best-kept European secret, beloved by stylists and editors who didn't need to advertise their taste. Then the mainline collections started arriving, the ready-to-wear expanded, and the brand entered a different conversation — one about whether it could hold its identity at scale. For a while, the consensus was that it had drifted. Then SS25 arrived.</p>
+
+    <div class="pull-quote">
+      <p>"What Acne has always understood is that the jean is a canvas. SS25 is the brand remembering exactly what that means."</p>
+    </div>
+
+    <div class="chapter">The Resurgence</div>
+    <h2>New Locations, New Energy, Old Intention</h2>
+    <p>The last two years have seen Acne Studios operating with a renewed sense of purpose. New flagship locations have opened across major cities — including expanded presences in Tokyo, New York, and several European capitals — each designed as much as a gallery environment as a retail space. The stores reflect what the clothes are doing: <strong>treating the everyday object as something worthy of serious attention.</strong></p>
+    <p>The re-energised retail strategy coincides with a creative sharpening. Johansson has spoken in recent interviews about returning to first principles — asking what Acne was actually for, and whether the answer had been lost in the years of growth. The answer he arrived at shows up clearly in SS25: the collection feels considered in a way that some recent seasons didn't. Purposeful proportions. Restraint where it counts. Excess where it doesn't.</p>
+
+    <div class="chapter">The Wide Leg Models</div>
+    <h2>Pushing the Limits of What Goes on Denim</h2>
+    <p>The conversation-generating pieces in SS25 are the wide leg cuts — specifically the exaggerated silhouettes that Acne ran through several washes and treatments, and then treated as a surface for graphic experimentation. <strong>Oversized print placements, tonal-on-tonal embroidery, and deliberately misaligned branding</strong> challenge the convention that a jean's job is to stay invisible. These are jeans that want to be looked at.</p>
+    <p>The proportions push hard — full thigh, wide leg opening, high rise — drawing directly from 1970s Swedish workwear and the kind of Japanese wide-cut denim that was never designed to be fashionable, just functional. Acne takes that utilitarian shape and applies the logic of contemporary art direction to it: what happens when the most basic garment becomes the loudest piece in the room?</p>
+    <p>The graphic treatments range from faded archival logos to painterly abstractions, with several pieces featuring lettering and illustration that sits across seam lines intentionally — the print treating the garment as a flat object before it becomes a three-dimensional one. It is one of the more interesting denim propositions of the season.</p>
+
+    <div class="chapter">The Classics</div>
+    <h2>Slim and Skinny: The Cuts That Built the Brand</h2>
+    <p>While the wide legs generate headlines, the pieces that move — and hold their value in the archive market — remain the classic slim and skinny models. Specifically the <strong>slim black and blue models with back patch detailing:</strong> a small Acne Studios leather or woven patch at the rear waistband, clean minimalist hardware, and a cut that has barely changed since Johansson got it right in the early 2000s.</p>
+    <p>These are the jeans that built the brand's reputation and they earn that reputation every time you handle them. The back patch reads simply — brand name, sometimes a style code — and functions as the only branding on the garment. There is no logo down the leg, no embroidered script, no need to announce anything. The cut and the material do the announcing.</p>
+
+    <div class="info-grid">
+      <div class="info-cell">
+        <div class="info-cell-label">Signature Cut</div>
+        <div class="info-cell-value">Slim, Skinny, Max Cash (wide)</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-label">Signature Detail</div>
+        <div class="info-cell-value">Rear leather/woven brand patch</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-label">Core Colourways</div>
+        <div class="info-cell-value">Indigo raw, Washed black, Mid blue</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-label">Hardware</div>
+        <div class="info-cell-value">Minimal — brushed silver or brass</div>
+      </div>
+    </div>
+
+    <div class="chapter">The Material</div>
+    <h2>Soft Stretch Denim: What Sets Acne Apart in Hand</h2>
+    <p>The reason Acne jeans feel different from similarly priced competitors comes down to the fabric blend. The brand has consistently sourced <strong>high-quality stretch denim — typically a cotton-elastane blend — that delivers softness at first handle</strong>, but more importantly retains structure over years of wear. This is not the kind of stretch denim that bags at the knee by week three. The weave is tight enough to hold shape; the elastane content is low enough that the fabric reads as pure denim to the eye.</p>
+    <p>In the classic slim models the fabric has a slight sheen when new that softens into a matte finish over time, following the wear patterns of the individual wearer. It is the kind of denim that actually improves with age — not in a romantic way, but literally: the fit becomes more personal, the fades more considered. <strong>This is what archive buyers are actually paying for</strong> when they seek out older Acne denim — a garment that has been lived in and is better for it.</p>
+
+    <div class="chapter">The Mainline</div>
+    <h2>Versatility as Philosophy: Colours, Materials, Treatments</h2>
+    <p>What distinguishes the Acne mainline denim from most competitors is the breadth of the programme. In any given season the brand offers not just multiple cuts but multiple material approaches: <strong>raw selvedge for the purist, coated denim for the maximalist, washed and distressed for the archivist, coloured denim for the risk-taker.</strong> The palette in recent seasons has moved beyond indigo and black into dusty pinks, sage greens, and off-whites — colourways that would feel gimmicky on lesser fabric but work because the material quality justifies the experiment.</p>
+    <p>This versatility is not accidental. Johansson has described the Acne denim programme as a conversation between different contexts — the same silhouette rendered in different materials asks different questions about where and how you wear it. A raw indigo slim is a year-round workhorse. The same cut in dusty rose is a statement piece that works exactly one way and works brilliantly. The brand understands that its customer is not one person.</p>
+
+    <div class="chapter">Blå Konst</div>
+    <h2>The Sub-Line That Closes the Distance Between Art and Clothing</h2>
+    <p><strong>Blå Konst</strong> — Swedish for Blue Art — is Acne's denim sub-line and the purest expression of Johansson's original intention. The line exists outside the seasonal collection framework and draws on a rotating set of inspirations: Scandinavian folk art, Japanese boro textile tradition, American workwear photography from the Depression era, and the kind of abstract expressionism that was happening in Stockholm's art scene at the same time Acne was being founded.</p>
+    <p>Blå Konst pieces are not trying to be commercial. The prints are stranger, the silhouettes more experimental, the references more obscure. A recent piece drew directly from Sami textile patterns — geometric forms that appear at first glance to be abstract but carry specific cultural meaning. Another referenced the work of Swedish painter Carl Larsson, taking his domestic interiors and fragmenting them into denim surface graphics that only resolve into legibility at close range.</p>
+    <p>The line has a cult following that is almost entirely separate from the mainline Acne customer. These are pieces for people who follow the brand closely enough to know what they're referencing — and that insider quality is part of what makes them interesting in the archive market. <strong>Blå Konst pieces tend to hold value better than mainline equivalents</strong> because production is more limited and the reference pool more specific.</p>
+
+    <div class="pull-quote">
+      <p>"Blå Konst is Acne admitting what it has always been: a creative studio that happens to make clothes, not a clothing brand that happens to be creative."</p>
+    </div>
+
+    <div class="chapter">The Verdict</div>
+    <h2>What to Buy and What to Know</h2>
+    <p>If you are coming to Acne denim for the first time, start with the <strong>slim black or indigo models from any season post-2010</strong>. The cut is consistent, the quality is reliable, and the back patch makes authentication straightforward. These are the pieces that will still be relevant in a decade because they were never chasing a moment to begin with.</p>
+    <p>If you already know Acne and want something with more character, look for <strong>Blå Konst pieces from 2018 onwards</strong>, when the sub-line found its most confident voice. The graphic experimentation deepened, the references became more specific, and the production quality kept pace with the ambition.</p>
+    <p>The SS25 wide leg models are an interesting proposition for anyone who wants to wear something that will be discussed — the silhouettes are bold enough to read as a choice rather than a default, and the print work is genuinely interesting. They will not suit every wardrobe. For the right person they are one of the better denim buys of the current season.</p>
+
+  </div>
+
+  <!-- CURATED COLLECTION -->
+  <div class="collection-section">
+    <div class="collection-inner">
+      <p class="collection-eyebrow">From the Sisukas Archive</p>
+      <h2 class="collection-title">Acne Studios — Current Listings</h2>
+      <p class="collection-desc">Pieces currently available from Sisukas. Add your Acne listings to listings.json with brand "Acne Studios" to populate this section automatically.</p>
+      <div class="collection-grid" id="acne-collection">
+        <div class="collection-empty">Acne Studios listings will appear here — add them to listings.json</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="article-footer">
+    <a href="../index.html" class="article-footer-logo">SISUKAS</a>
+    <div class="article-footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../shop.html">Shop</a>
+      <a href="../journal/">All Journal Posts</a>
+      <a href="mailto:hello@sisukas.com">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // Load Acne Studios listings from JSON and display them
+    async function loadAcneListings() {
+      try {
+        const res   = await fetch('../listings.json');
+        const items = await res.json();
+        const acne  = items.filter(i =>
+          i.brand && i.brand.toLowerCase().includes('acne'));
+
+        if (!acne.length) return; // keep placeholder
+
+        document.getElementById('acne-collection').innerHTML = acne.map(item => `
+          <a class="collection-card" href="../shop.html">
+            <div class="collection-card-img">
+              ${item.images?.[0]
+                ? `<img src="${item.images[0]}" alt="${item.title}" loading="lazy" />`
+                : ''}
+            </div>
+            <div class="collection-card-body">
+              <div class="collection-card-brand">${item.brand}</div>
+              <div class="collection-card-title">${item.title}</div>
+              <div class="collection-card-price">$${(item.sale_price || item.price).toLocaleString()}</div>
+            </div>
+          </a>
+        `).join('');
+      } catch {}
+    }
+
+    loadAcneListings();
+  </script>
+
+</body>
+</html>
