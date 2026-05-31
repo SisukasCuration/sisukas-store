@@ -138,7 +138,7 @@
   },
   {
     "id": 5,
-    "title": "Joe Fresh Goods x New balance 990v3 “Outside Clothes",
+    "title": "Joe Fresh Goods x New Balance 990v3 Outside Clothes",
     "brand": "New Balance",
     "price": 150,
     "sale_price": null,
@@ -149,7 +149,7 @@
     "era": "Unknown",
     "category": "footwear",
     "new": false,
-    "description": "Good condition. Marking on toe box",
+    "description": "Good condition. Marking on toe box.",
     "images": [
       "https://media-assets.grailed.com/prd/listing/temp/604b28d44a054b099c47ec97be224ceb?w=2200",
       "https://media-assets.grailed.com/prd/listing/temp/6e71958f4db94449bcd2942296daf1e7?w=2200",
@@ -163,8 +163,8 @@
       "https://media-assets.grailed.com/prd/listing/temp/02cc22cf62124e78b6126ccf1d73a00a?w=2200",
       "https://media-assets.grailed.com/prd/listing/temp/3020ed1dbb7641b981035064db0e6564?w=2200"
     ],
-    },
-    "grailed_url": "https://www.grailed.com/listings/96601416-balenciaga-balenciaga-lamb-leather-red-quilted-zip-up-jacket",
+    "measurements": {},
+    "grailed_url": "https://www.grailed.com/listings/YOUR-ID-HERE",
     "instagram": ""
   }
 ]
