@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sisukas — Nordic Archive Fashion</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ── HOME-SPECIFIC ── */
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Stave church arch SVG decoration */
+    .hero-arch {
+      position: absolute;
+      top: 70px; left: 50%;
+      transform: translateX(-50%);
+      width: min(700px, 95vw);
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    .hero-rune {
+      font-family: var(--ff-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      animation: fadeUp 1s 0.2s ease both;
+      opacity: 0;
+    }
+
+    .hero-title {
+      font-family: var(--ff-title);
+      font-size: clamp(3.5rem, 12vw, 9rem);
+      line-height: 0.95;
+      letter-spacing: 0.08em;
+      color: var(--parchment);
+      margin-bottom: 1rem;
+      animation: fadeUp 1s 0.4s ease both;
+      opacity: 0;
+      text-shadow:
+        0 0 80px rgba(201,168,76,0.15),
+        0 2px 40px rgba(0,0,0,0.8);
+    }
+
+    .hero-title span {
+      display: block;
+      color: var(--gold);
+      text-shadow: 0 0 60px rgba(201,168,76,0.4);
+    }
+
+    .hero-sub {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--smoke);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+      animation: fadeUp 1s 0.6s ease both;
+      opacity: 0;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 1s 0.8s ease both;
+      opacity: 0;
+    }
+
+    /* SCROLL INDICATOR */
+    .scroll-cue {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      animation: fadeIn 1s 1.5s ease both;
+      opacity: 0;
+    }
+    .scroll-cue span {
+      font-family: var(--ff-mono);
+      font-size: 0.45rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--ash);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(180deg, var(--gold-dim), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(1.1); }
+    }
+
+    /* COLLECTION INTRO */
+    .collection-intro {
+      padding: 6rem 2.5rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+    .collection-intro h2 {
+      font-family: var(--ff-title);
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      line-height: 1.1;
+      color: var(--parchment);
+    }
+    .collection-intro h2 em {
+      display: block;
+      font-family: var(--ff-italic);
+      font-style: italic;
+      color: var(--gold);
+      font-size: 0.65em;
+    }
+    .collection-intro p {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--smoke);
+    }
+
+    /* FEATURED CATEGORIES */
+    .categories {
+      padding: 4rem 2.5rem;
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .categories-label {
+      font-family: var(--ff-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+    }
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(201,168,76,0.1);
+    }
+    .cat-card {
+      background: linear-gradient(160deg, rgba(26,18,8,0.9), rgba(13,17,23,0.95));
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .cat-card:hover { background: rgba(201,168,76,0.08); }
+    .cat-icon {
+      font-size: 2rem;
+      filter: sepia(1) saturate(0.5);
+    }
+    .cat-name {
+      font-family: var(--ff-body);
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--parchment);
+    }
+    .cat-count {
+      font-family: var(--ff-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--ash);
+    }
+
+    /* MANIFESTO */
+    .manifesto {
+      padding: 6rem 2.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .manifesto-rune {
+      font-family: var(--ff-mono);
+      font-size: 1.5rem;
+      letter-spacing: 0.5em;
+      color: var(--gold-dim);
+      margin-bottom: 2rem;
+      opacity: 0.6;
+    }
+    .manifesto h2 {
+      font-family: var(--ff-title);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: var(--parchment);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+    .manifesto p {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--smoke);
+    }
+
+    /* PREVIEW STRIP */
+    .preview-strip {
+      padding: 0 2.5rem 5rem;
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .strip-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 1.5rem;
+    }
+    .strip-header h3 {
+      font-family: var(--ff-body);
+      font-size: 1.3rem;
+      letter-spacing: 0.1em;
+      color: var(--parchment);
+    }
+    .strip-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(201,168,76,0.08);
+    }
+
+    @media (max-width: 768px) {
+      .collection-intro { grid-template-columns: 1fr; gap: 2rem; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .strip-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: 3.5rem; }
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">SISUKAS</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="shop.html" class="nav-shop">Shop</a>
+      <a href="shop.html?gender=mens">Mens</a>
+      <a href="shop.html?gender=womens">Womens</a>
+      <a href="shop.html?filter=sale">Sale</a>
+      <a href="#" class="nav-cart nav-cart-link" id="open-cart">Cart <span id="cart-count-nav"></span></a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <!-- Stave Church Arch SVG -->
+    <svg class="hero-arch" viewBox="0 0 700 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer arch -->
+      <path d="M50 900 L50 400 Q50 50 350 50 Q650 50 650 400 L650 900" stroke="#c9a84c" stroke-width="2" fill="none"/>
+      <!-- Inner arch -->
+      <path d="M100 900 L100 420 Q100 120 350 120 Q600 120 600 420 L600 900" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.5"/>
+      <!-- Dragon head decorations at top -->
+      <circle cx="350" cy="50" r="8" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+      <circle cx="350" cy="120" r="5" fill="none" stroke="#c9a84c" stroke-width="1"/>
+      <!-- Cross beams / stave details -->
+      <line x1="50" y1="500" x2="650" y2="500" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+      <line x1="50" y1="650" x2="650" y2="650" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+      <!-- Corner knot work -->
+      <rect x="40" y="490" width="20" height="20" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.5" transform="rotate(45 50 500)"/>
+      <rect x="640" y="490" width="20" height="20" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.5" transform="rotate(45 650 500)"/>
+      <!-- Rune marks along arch -->
+      <line x1="80" y1="300" x2="95" y2="300" stroke="#c9a84c" stroke-width="1" opacity="0.6"/>
+      <line x1="87" y1="290" x2="87" y2="310" stroke="#c9a84c" stroke-width="1" opacity="0.6"/>
+      <line x1="605" y1="300" x2="620" y2="300" stroke="#c9a84c" stroke-width="1" opacity="0.6"/>
+      <line x1="612" y1="290" x2="612" y2="310" stroke="#c9a84c" stroke-width="1" opacity="0.6"/>
+    </svg>
+
+    <p class="hero-rune">ᛊᛁᛊᚢᚲᚨᛊ — Arctic Archive — Est. Now</p>
+    <h1 class="hero-title">
+      SISU
+      <span>KAS</span>
+    </h1>
+    <p class="hero-sub">Nordic-curated designer archive. Each piece carries the cold clarity of the north — uncompromising, enduring, rare.</p>
+    <div class="hero-ctas">
+      <a href="shop.html" class="btn btn-gold">Enter the Archive</a>
+      <a href="shop.html?filter=sale" class="btn btn-outline">Discounted</a>
+    </div>
+
+    <div class="scroll-cue">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <div class="rune-divider">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ᚷ ᚹ ᚺ ᚾ ᛁ ᛃ ᛇ ᛈ ᛉ ᛊ</div>
+
+  <!-- COLLECTION INTRO -->
+  <section class="collection-intro">
+    <div class="anim-up">
+      <h2>The Archive<em>Curated with intention</em></h2>
+    </div>
+    <div class="anim-up" style="animation-delay:0.15s">
+      <p>Designer menswear and womenswear sourced for those who understand that true luxury is not manufactured — it is found. Rare pieces, authenticated, priced honestly.</p>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories">
+    <p class="categories-label">Shop by Category</p>
+    <div class="categories-grid">
+      <a class="cat-card" href="shop.html?gender=mens">
+        <div class="cat-icon">⚔</div>
+        <div class="cat-name">Mens</div>
+        <div class="cat-count" id="count-mens">— pieces</div>
+      </a>
+      <a class="cat-card" href="shop.html?gender=womens">
+        <div class="cat-icon">✦</div>
+        <div class="cat-name">Womens</div>
+        <div class="cat-count" id="count-womens">— pieces</div>
+      </a>
+      <a class="cat-card" href="shop.html?filter=sale">
+        <div class="cat-icon">◈</div>
+        <div class="cat-name">Discounted</div>
+        <div class="cat-count" id="count-sale">— pieces</div>
+      </a>
+      <a class="cat-card" href="shop.html">
+        <div class="cat-icon">᛭</div>
+        <div class="cat-name">All Pieces</div>
+        <div class="cat-count" id="count-all">— pieces</div>
+      </a>
+    </div>
+  </section>
+
+  <div class="rune-divider">᛭ ᛭ ᛭</div>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto">
+    <div class="manifesto-rune">ᚠᚢᚦ</div>
+    <h2>The Spirit of Sisu</h2>
+    <p>Sisu is the Finnish soul — resilience forged in winter, strength that endures. Sisukas carries that spirit into fashion: pieces that do not follow trends, but outlast them. The archive does not age. It deepens.</p>
+  </section>
+
+  <!-- PREVIEW STRIP (populated from JSON) -->
+  <section class="preview-strip">
+    <div class="strip-header">
+      <h3>Latest Arrivals</h3>
+      <a href="shop.html" class="btn btn-ghost" style="padding:0.6rem 1.2rem">View All →</a>
+    </div>
+    <div class="strip-grid" id="preview-grid">
+      <div class="state-msg">Loading...</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-brand">
+      <h3>SISUKAS</h3>
+      <p>Nordic archive fashion.<br/>Rare pieces, honest prices.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop All</a>
+      <a href="shop.html?gender=mens">Mens</a>
+      <a href="shop.html?gender=womens">Womens</a>
+      <a href="shop.html?filter=sale">Sale</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="https://www.instagram.com" target="_blank">Instagram</a>
+      <a href="https://www.grailed.com" target="_blank">Grailed</a>
+      <a href="mailto:hello@sisukas.com">hello@sisukas.com</a>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Sisukas. All rights reserved.</p>
+      <p>Payments secured · All sales final</p>
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div class="cart-backdrop" id="cart-backdrop">
+    <div class="cart-drawer">
+      <div class="cart-header">
+        <span class="cart-title">Your Cart</span>
+        <button class="cart-close" id="close-cart">×</button>
+      </div>
+      <div class="cart-items" id="cart-items-list"></div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span class="cart-total-label">Total</span>
+          <span class="cart-total-price" id="cart-total">$0</span>
+        </div>
+        <button class="btn btn-gold" style="width:100%;text-align:center;display:block;padding:1rem" onclick="alert('Payment processing coming soon. Contact us at hello@sisukas.com to purchase.')">
+          Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── CART STATE (shared via localStorage across pages) ──
+    function getCart() {
+      try { return JSON.parse(localStorage.getItem('sisukas_cart') || '[]'); } catch { return []; }
+    }
+    function saveCart(cart) {
+      localStorage.setItem('sisukas_cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+    function updateCartUI() {
+      const cart = getCart();
+      const total = cart.reduce((s, i) => s + i.price, 0);
+      const countEl = document.getElementById('cart-count-nav');
+      if (countEl) countEl.textContent = cart.length ? `(${cart.length})` : '';
+      const totalEl = document.getElementById('cart-total');
+      if (totalEl) totalEl.textContent = `$${total}`;
+      const listEl = document.getElementById('cart-items-list');
+      if (!listEl) return;
+      listEl.innerHTML = cart.length ? cart.map(item => `
+        <div class="cart-item">
+          ${item.image ? `<img class="cart-item-img" src="${item.image}" alt="${item.title}">` : '<div class="cart-item-img"></div>'}
+          <div class="cart-item-info">
+            <div class="cart-item-brand">${item.brand || ''}</div>
+            <div class="cart-item-title">${item.title}</div>
+            <div class="cart-item-size">${item.size || ''}</div>
+            <div class="cart-item-price">$${item.price}</div>
+          </div>
+          <button class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</button>
+        </div>
+      `).join('') : '<div class="cart-empty">Your cart is empty</div>';
+    }
+    function removeFromCart(id) {
+      saveCart(getCart().filter(i => i.id !== id));
+    }
+
+    // ── CART DRAWER TOGGLE ──
+    document.getElementById('open-cart')?.addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('cart-backdrop').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+    document.getElementById('close-cart')?.addEventListener('click', () => {
+      document.getElementById('cart-backdrop').classList.remove('open');
+      document.body.style.overflow = '';
+    });
+    document.getElementById('cart-backdrop')?.addEventListener('click', e => {
+      if (e.target === document.getElementById('cart-backdrop')) {
+        document.getElementById('cart-backdrop').classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    });
+
+    // ── LOAD PREVIEW ITEMS ──
+    async function loadPreview() {
+      try {
+        const res = await fetch('./listings.json');
+        const items = await res.json();
+        const mens = items.filter(i => i.gender === 'mens').length;
+        const womens = items.filter(i => i.gender === 'womens').length;
+        const sale = items.filter(i => i.sale_price).length;
+        document.getElementById('count-mens').textContent = `${mens} pieces`;
+        document.getElementById('count-womens').textContent = `${womens} pieces`;
+        document.getElementById('count-sale').textContent = `${sale} pieces`;
+        document.getElementById('count-all').textContent = `${items.length} pieces`;
+
+        // Show 4 newest
+        const preview = items.slice(0, 4);
+        document.getElementById('preview-grid').innerHTML = preview.map(item => `
+          <div class="card" onclick="window.location='shop.html'">
+            <div class="card-img">
+              ${item.images?.[0] ? `<img src="${item.images[0]}" alt="${item.title}" loading="lazy"/>` : `<div class="card-placeholder">No Image</div>`}
+              <div class="card-overlay"><span>View</span></div>
+              ${item.sale_price ? '<div class="card-badge sale">Sale</div>' : ''}
+            </div>
+            <div class="card-body">
+              <div class="card-brand">${item.brand || ''}</div>
+              <div class="card-title">${item.title}</div>
+              <div class="card-meta">
+                <span class="card-price">
+                  ${item.sale_price ? `<s>$${item.price}</s> $${item.sale_price}` : `$${item.price}`}
+                </span>
+                <span class="card-size">${item.size || ''}</span>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } catch(e) {
+        document.getElementById('preview-grid').innerHTML = '<div class="state-msg">Add items to listings.json</div>';
+      }
+    }
+
+    updateCartUI();
+    loadPreview();
+  </script>
+</body>
+</html>

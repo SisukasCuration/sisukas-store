@@ -1,0 +1,111 @@
+[
+  {
+    "id": 1,
+    "title": "Washed Denim Chore Coat",
+    "brand": "Helmut Lang",
+    "price": 385,
+    "sale_price": null,
+    "size": "M",
+    "gender": "mens",
+    "condition": "Excellent",
+    "color": "Indigo",
+    "era": "SS2001",
+    "category": "outerwear",
+    "new": true,
+    "description": "Early 2000s Helmut Lang raw-edge denim chore coat. Heavy washed indigo with signature minimal hardware. Single chest pocket, clean interior. Minor fading throughout consistent with age — exactly as intended.",
+    "images": [
+      "https://via.placeholder.com/600x800/1a1208/c9a84c?text=Image+1",
+      "https://via.placeholder.com/600x800/1a1208/c9a84c?text=Image+2",
+      "https://via.placeholder.com/600x800/1a1208/c9a84c?text=Image+3"
+    ],
+    "measurements": {
+      "chest": 42,
+      "shoulder": 18.5,
+      "sleeve": 25,
+      "length": 27
+    },
+    "grailed_url": "https://www.grailed.com/listings/YOUR-ID-HERE",
+    "instagram": ""
+  },
+  {
+    "id": 2,
+    "title": "Technical Shell Cargo Trouser",
+    "brand": "Acronym",
+    "price": 620,
+    "sale_price": 480,
+    "size": "S",
+    "gender": "mens",
+    "condition": "Excellent",
+    "color": "Black",
+    "era": "FW2019",
+    "category": "bottoms",
+    "new": false,
+    "description": "ACRONYM P10-DS technical cargo trouser in black Schoeller fabric. Gravity pocket system, articulated patterning, waterproof zip pockets. No visible wear, worn twice.",
+    "images": [
+      "https://via.placeholder.com/600x800/0d1117/b8d4e8?text=Image+1",
+      "https://via.placeholder.com/600x800/0d1117/b8d4e8?text=Image+2"
+    ],
+    "measurements": {
+      "waist": 30,
+      "hip": 38,
+      "inseam": 30,
+      "rise": 11,
+      "length": 42
+    },
+    "grailed_url": "https://www.grailed.com/listings/YOUR-ID-HERE",
+    "instagram": ""
+  },
+  {
+    "id": 3,
+    "title": "Chunky Rib Knit Crewneck",
+    "brand": "Comme des Garçons",
+    "price": 290,
+    "sale_price": null,
+    "size": "L",
+    "gender": "unisex",
+    "condition": "Good",
+    "color": "Charcoal",
+    "era": "FW2015",
+    "category": "tops",
+    "new": false,
+    "description": "CDG SHIRT chunky rib knit crewneck. Dropped shoulders, relaxed boxy fit. Minor pilling on inner collar only — invisible when worn. One of those pieces that improves with age.",
+    "images": [
+      "https://via.placeholder.com/600x800/2e1f0a/e8dfc8?text=Image+1"
+    ],
+    "measurements": {
+      "chest": 46,
+      "shoulder": 20,
+      "sleeve": 24,
+      "length": 26
+    },
+    "grailed_url": "https://www.grailed.com/listings/YOUR-ID-HERE",
+    "instagram": ""
+  },
+  {
+    "id": 4,
+    "title": "Arc'teryx Beta SL Jacket",
+    "brand": "Arc'teryx",
+    "price": 320,
+    "sale_price": 240,
+    "size": "XS",
+    "gender": "womens",
+    "condition": "Very Good",
+    "color": "Bone White",
+    "era": "2020",
+    "category": "outerwear",
+    "new": false,
+    "description": "Arc'teryx Beta SL hardshell in bone white. Gore-Tex 2-layer construction, fully seam-sealed, packable. Perfect layering piece. Light wash marks on inner cuffs, invisible when worn.",
+    "images": [
+      "https://via.placeholder.com/600x800/080b0f/ddeef8?text=Image+1",
+      "https://via.placeholder.com/600x800/080b0f/ddeef8?text=Image+2"
+    ],
+    "measurements": {
+      "chest": 36,
+      "shoulder": 15,
+      "sleeve": 23,
+      "length": 24
+    },
+    "grailed_url": "https://www.grailed.com/listings/YOUR-ID-HERE",
+    "instagram": ""
+  }
+]
