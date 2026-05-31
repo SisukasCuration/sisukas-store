@@ -6,9 +6,8 @@
   <title>Sisukas — Nordic Archive Fashion</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ── HOME-SPECIFIC ── */
-
-    /* HERO */
+ 
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -16,74 +15,103 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 8rem 2rem 4rem;
+      padding: 9rem 2rem 5rem;
       position: relative;
       z-index: 2;
+      overflow: hidden;
     }
-
-    /* Stave church arch SVG decoration */
-    .hero-arch {
+ 
+    /* Stave church SVG scene — snow-covered, atmospheric */
+    .hero-church {
       position: absolute;
-      top: 70px; left: 50%;
+      bottom: 0;
+      left: 50%;
       transform: translateX(-50%);
-      width: min(700px, 95vw);
-      opacity: 0.12;
+      width: min(900px, 110vw);
       pointer-events: none;
+      opacity: 0.09;
+      z-index: 0;
     }
-
-    .hero-rune {
+ 
+    /* Falling snow particles */
+    .snowfield {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .snowfield span {
+      position: absolute;
+      top: -10px;
+      border-radius: 50%;
+      background: white;
+      opacity: 0;
+      animation: snowfall linear infinite;
+    }
+    @keyframes snowfall {
+      0%   { transform: translateY(0) translateX(0);   opacity: 0; }
+      10%  { opacity: 0.7; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(100vh) translateX(40px); opacity: 0; }
+    }
+ 
+    .hero-content { position: relative; z-index: 2; }
+ 
+    .hero-eyebrow {
       font-family: var(--ff-mono);
       font-size: 0.55rem;
       letter-spacing: 0.5em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 2rem;
+      color: var(--oak-mid);
+      margin-bottom: 1.8rem;
+      opacity: 0.7;
       animation: fadeUp 1s 0.2s ease both;
-      opacity: 0;
     }
-
+ 
     .hero-title {
       font-family: var(--ff-title);
-      font-size: clamp(3.5rem, 12vw, 9rem);
-      line-height: 0.95;
-      letter-spacing: 0.08em;
-      color: var(--parchment);
-      margin-bottom: 1rem;
+      font-size: clamp(4rem, 13vw, 10rem);
+      line-height: 0.92;
+      letter-spacing: 0.06em;
+      color: var(--oak-dark);
+      margin-bottom: 0.6rem;
       animation: fadeUp 1s 0.4s ease both;
-      opacity: 0;
       text-shadow:
-        0 0 80px rgba(201,168,76,0.15),
-        0 2px 40px rgba(0,0,0,0.8);
+        0 2px 0 rgba(255,255,255,0.8),
+        0 4px 40px rgba(61,43,26,0.08);
     }
-
-    .hero-title span {
-      display: block;
-      color: var(--gold);
-      text-shadow: 0 0 60px rgba(201,168,76,0.4);
+ 
+    .hero-title-sub {
+      font-family: var(--ff-title);
+      font-size: clamp(1.5rem, 4vw, 3.2rem);
+      letter-spacing: 0.35em;
+      color: var(--oak-light);
+      margin-bottom: 2rem;
+      animation: fadeUp 1s 0.55s ease both;
+      font-weight: 400;
     }
-
-    .hero-sub {
+ 
+    .hero-tagline {
       font-family: var(--ff-italic);
       font-style: italic;
-      font-size: clamp(1rem, 2.5vw, 1.3rem);
-      color: var(--smoke);
-      max-width: 480px;
-      line-height: 1.7;
-      margin-bottom: 3rem;
-      animation: fadeUp 1s 0.6s ease both;
-      opacity: 0;
+      font-size: clamp(0.95rem, 2vw, 1.2rem);
+      color: var(--text-light);
+      max-width: 420px;
+      margin: 0 auto 3rem;
+      line-height: 1.75;
+      animation: fadeUp 1s 0.7s ease both;
     }
-
+ 
     .hero-ctas {
       display: flex;
       gap: 1rem;
-      flex-wrap: wrap;
       justify-content: center;
-      animation: fadeUp 1s 0.8s ease both;
-      opacity: 0;
+      flex-wrap: wrap;
+      animation: fadeUp 1s 0.85s ease both;
     }
-
-    /* SCROLL INDICATOR */
+ 
+    /* Scroll cue */
     .scroll-cue {
       position: absolute;
       bottom: 2.5rem;
@@ -93,186 +121,256 @@
       flex-direction: column;
       align-items: center;
       gap: 0.5rem;
-      animation: fadeIn 1s 1.5s ease both;
+      z-index: 2;
+      animation: fadeIn 1.2s 1.8s ease both;
       opacity: 0;
     }
-    .scroll-cue span {
+    .scroll-cue-text {
       font-family: var(--ff-mono);
-      font-size: 0.45rem;
-      letter-spacing: 0.4em;
+      font-size: 0.44rem;
+      letter-spacing: 0.45em;
       text-transform: uppercase;
-      color: var(--ash);
+      color: var(--oak-light);
+      opacity: 0.5;
     }
     .scroll-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(180deg, var(--gold-dim), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
+      width: 1px; height: 38px;
+      background: linear-gradient(180deg, var(--oak-light), transparent);
+      animation: scrollPulse 2.2s ease-in-out infinite;
     }
     @keyframes scrollPulse {
       0%, 100% { opacity: 0.3; transform: scaleY(1); }
-      50%       { opacity: 1;   transform: scaleY(1.1); }
+      50%       { opacity: 0.8; transform: scaleY(1.12); }
     }
-
-    /* COLLECTION INTRO */
-    .collection-intro {
-      padding: 6rem 2.5rem 2rem;
-      max-width: 900px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
+ 
+    /* ── BAND — thin oak stripe ── */
+    .oak-band {
       position: relative;
       z-index: 2;
+      background: var(--oak-dark);
+      padding: 1.2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
     }
-    .collection-intro h2 {
-      font-family: var(--ff-title);
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      line-height: 1.1;
-      color: var(--parchment);
+    .oak-band-item {
+      font-family: var(--ff-mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(247,248,250,0.45);
     }
-    .collection-intro h2 em {
-      display: block;
-      font-family: var(--ff-italic);
-      font-style: italic;
-      color: var(--gold);
-      font-size: 0.65em;
+    .oak-band-item strong {
+      color: var(--gold-pale);
+      font-weight: 400;
+      margin-right: 0.5rem;
     }
-    .collection-intro p {
-      font-family: var(--ff-italic);
-      font-style: italic;
-      font-size: 1rem;
-      line-height: 1.85;
-      color: var(--smoke);
-    }
-
-    /* FEATURED CATEGORIES */
-    .categories {
-      padding: 4rem 2.5rem;
+ 
+    /* ── INTRO SPLIT ── */
+    .intro {
       position: relative;
       z-index: 2;
       max-width: 1100px;
       margin: 0 auto;
-    }
-    .categories-label {
-      font-family: var(--ff-mono);
-      font-size: 0.55rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 2rem;
-    }
-    .categories-grid {
+      padding: 7rem 2.5rem 4rem;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: rgba(201,168,76,0.1);
-    }
-    .cat-card {
-      background: linear-gradient(160deg, rgba(26,18,8,0.9), rgba(13,17,23,0.95));
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      text-decoration: none;
-      transition: background 0.3s;
-      display: flex;
-      flex-direction: column;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
       align-items: center;
-      gap: 1rem;
     }
-    .cat-card:hover { background: rgba(201,168,76,0.08); }
-    .cat-icon {
-      font-size: 2rem;
-      filter: sepia(1) saturate(0.5);
-    }
-    .cat-name {
-      font-family: var(--ff-body);
-      font-size: 0.9rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--parchment);
-    }
-    .cat-count {
-      font-family: var(--ff-mono);
-      font-size: 0.5rem;
-      letter-spacing: 0.2em;
-      color: var(--ash);
-    }
-
-    /* MANIFESTO */
-    .manifesto {
-      padding: 6rem 2.5rem;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    .manifesto-rune {
-      font-family: var(--ff-mono);
-      font-size: 1.5rem;
-      letter-spacing: 0.5em;
-      color: var(--gold-dim);
-      margin-bottom: 2rem;
-      opacity: 0.6;
-    }
-    .manifesto h2 {
+    .intro-left h2 {
       font-family: var(--ff-title);
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      color: var(--parchment);
-      margin-bottom: 1.5rem;
-      line-height: 1.2;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1.1;
+      color: var(--oak-dark);
+      margin-bottom: 1.2rem;
     }
-    .manifesto p {
+    .intro-left h2 em {
+      display: block;
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: 0.58em;
+      color: var(--oak-light);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.3rem;
+    }
+    .intro-right p {
       font-family: var(--ff-italic);
       font-style: italic;
       font-size: 1.05rem;
       line-height: 1.9;
-      color: var(--smoke);
+      color: var(--text-mid);
+      margin-bottom: 1.4rem;
     }
-
-    /* PREVIEW STRIP */
-    .preview-strip {
-      padding: 0 2.5rem 5rem;
+    .intro-right p:last-of-type { margin-bottom: 0; }
+ 
+    /* ── CATEGORY TILES ── */
+    .categories {
       position: relative;
       z-index: 2;
       max-width: 1100px;
       margin: 0 auto;
+      padding: 2rem 2.5rem 5rem;
     }
-    .strip-header {
+    .categories-label {
+      font-family: var(--ff-mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--oak-mid);
+      margin-bottom: 1.8rem;
+      opacity: 0.7;
+    }
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: var(--border-snow);
+    }
+    .cat-tile {
+      background: #fff;
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      transition: background 0.25s, transform 0.25s;
+      border: 1px solid transparent;
+    }
+    .cat-tile:hover {
+      background: var(--oak-dark);
+      transform: translateY(-2px);
+    }
+    .cat-tile:hover .cat-icon  { filter: invert(1) sepia(0) brightness(10); }
+    .cat-tile:hover .cat-name  { color: var(--snow); }
+    .cat-tile:hover .cat-count { color: rgba(247,248,250,0.45); }
+    .cat-icon {
+      font-size: 1.8rem;
+      transition: filter 0.25s;
+      opacity: 0.7;
+    }
+    .cat-name {
+      font-family: var(--ff-body);
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--oak-dark);
+      transition: color 0.25s;
+    }
+    .cat-count {
+      font-family: var(--ff-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.2em;
+      color: var(--text-light);
+      transition: color 0.25s;
+    }
+ 
+    /* ── STAVE CHURCH FEATURE SECTION ── */
+    .church-section {
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      background: linear-gradient(180deg, var(--frost-white) 0%, var(--ice-blue) 100%);
+      padding: 6rem 2.5rem;
+      text-align: center;
+    }
+    /* Large decorative stave church behind text */
+    .church-section-svg {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(800px, 95vw);
+      opacity: 0.07;
+      pointer-events: none;
+    }
+    .church-section-content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .church-rune {
+      font-family: var(--ff-mono);
+      font-size: 0.9rem;
+      letter-spacing: 0.5em;
+      color: var(--oak-light);
+      margin-bottom: 1.5rem;
+      opacity: 0.5;
+    }
+    .church-section h2 {
+      font-family: var(--ff-title);
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      color: var(--oak-dark);
+      margin-bottom: 1.2rem;
+      line-height: 1.15;
+    }
+    .church-section p {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      line-height: 1.85;
+      margin-bottom: 2.5rem;
+    }
+ 
+    /* ── PREVIEW STRIP ── */
+    .preview {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 2.5rem;
+    }
+    .preview-header {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
-    .strip-header h3 {
+    .preview-header h3 {
       font-family: var(--ff-body);
-      font-size: 1.3rem;
-      letter-spacing: 0.1em;
-      color: var(--parchment);
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      letter-spacing: 0.08em;
+      color: var(--oak-dark);
     }
-    .strip-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: rgba(201,168,76,0.08);
+    .preview-header h3 span {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      color: var(--oak-light);
+      font-size: 0.7em;
+      margin-left: 0.5rem;
     }
-
-    @media (max-width: 768px) {
-      .collection-intro { grid-template-columns: 1fr; gap: 2rem; }
+ 
+    /* Oak accent line before previews */
+    .oak-rule {
+      width: 40px;
+      height: 2px;
+      background: var(--oak-dark);
+      margin-bottom: 0.6rem;
+    }
+ 
+    @media (max-width: 900px) {
+      .intro { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 1.5rem 3rem; }
       .categories-grid { grid-template-columns: repeat(2, 1fr); }
-      .strip-grid { grid-template-columns: repeat(2, 1fr); }
     }
-    @media (max-width: 480px) {
-      .hero-title { font-size: 3.5rem; }
-      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 600px) {
+      .hero { padding: 8rem 1.2rem 5rem; }
+      .categories { padding: 2rem 1.2rem 3rem; }
+      .preview { padding: 3rem 1.2rem; }
+      .church-section { padding: 4rem 1.5rem; }
+      .oak-band { gap: 1.2rem; padding: 1rem 1.5rem; }
     }
   </style>
 </head>
-<body>
-
+<body class="page-light">
+ 
   <!-- NAV -->
-  <nav class="nav">
+  <nav class="nav nav-light">
     <a href="index.html" class="nav-logo">SISUKAS</a>
     <div class="nav-links">
       <a href="index.html" class="active">Home</a>
@@ -280,117 +378,197 @@
       <a href="shop.html?gender=mens">Mens</a>
       <a href="shop.html?gender=womens">Womens</a>
       <a href="shop.html?filter=sale">Sale</a>
-      <a href="#" class="nav-cart nav-cart-link" id="open-cart">Cart <span id="cart-count-nav"></span></a>
+      <button class="nav-cart-btn" id="open-cart">Cart <span id="cart-count-nav"></span></button>
     </div>
   </nav>
-
+ 
   <!-- HERO -->
   <section class="hero">
-    <!-- Stave Church Arch SVG -->
-    <svg class="hero-arch" viewBox="0 0 700 900" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Outer arch -->
-      <path d="M50 900 L50 400 Q50 50 350 50 Q650 50 650 400 L650 900" stroke="#c9a84c" stroke-width="2" fill="none"/>
-      <!-- Inner arch -->
-      <path d="M100 900 L100 420 Q100 120 350 120 Q600 120 600 420 L600 900" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.5"/>
-      <!-- Dragon head decorations at top -->
-      <circle cx="350" cy="50" r="8" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
-      <circle cx="350" cy="120" r="5" fill="none" stroke="#c9a84c" stroke-width="1"/>
-      <!-- Cross beams / stave details -->
-      <line x1="50" y1="500" x2="650" y2="500" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
-      <line x1="50" y1="650" x2="650" y2="650" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
-      <!-- Corner knot work -->
-      <rect x="40" y="490" width="20" height="20" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.5" transform="rotate(45 50 500)"/>
-      <rect x="640" y="490" width="20" height="20" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.5" transform="rotate(45 650 500)"/>
-      <!-- Rune marks along arch -->
-      <line x1="80" y1="300" x2="95" y2="300" stroke="#c9a84c" stroke-width="1" opacity="0.6"/>
-      <line x1="87" y1="290" x2="87" y2="310" stroke="#c9a84c" stroke-width="1" opacity="0.6"/>
-      <line x1="605" y1="300" x2="620" y2="300" stroke="#c9a84c" stroke-width="1" opacity="0.6"/>
-      <line x1="612" y1="290" x2="612" y2="310" stroke="#c9a84c" stroke-width="1" opacity="0.6"/>
+ 
+    <!-- Stave church silhouette -->
+    <svg class="hero-church" viewBox="0 0 900 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Snow ground -->
+      <ellipse cx="450" cy="590" rx="450" ry="30" fill="#3d2b1a"/>
+      <!-- Snow mounds -->
+      <ellipse cx="100" cy="580" rx="130" ry="22" fill="#3d2b1a" opacity="0.6"/>
+      <ellipse cx="800" cy="575" rx="120" ry="18" fill="#3d2b1a" opacity="0.5"/>
+      <!-- Main stave church body -->
+      <rect x="300" y="340" width="300" height="250" fill="#3d2b1a"/>
+      <!-- Main roof -->
+      <polygon points="280,340 620,340 450,180" fill="#3d2b1a"/>
+      <!-- Upper tower body -->
+      <rect x="390" y="200" width="120" height="160" fill="#2e1f0a"/>
+      <!-- Upper tower roof -->
+      <polygon points="375,200 525,200 450,80" fill="#2e1f0a"/>
+      <!-- Spire body -->
+      <rect x="430" y="90" width="40" height="100" fill="#1a1208"/>
+      <!-- Spire tip -->
+      <polygon points="425,90 475,90 450,20" fill="#1a1208"/>
+      <!-- Cross at top -->
+      <rect x="444" y="5" width="12" height="30" fill="#1a1208"/>
+      <rect x="432" y="12" width="36" height="8" fill="#1a1208"/>
+      <!-- Dragon head finials -->
+      <ellipse cx="280" cy="338" rx="14" ry="8" fill="#2e1f0a"/>
+      <ellipse cx="620" cy="338" rx="14" ry="8" fill="#2e1f0a"/>
+      <ellipse cx="375" cy="198" rx="10" ry="6" fill="#2e1f0a"/>
+      <ellipse cx="525" cy="198" rx="10" ry="6" fill="#2e1f0a"/>
+      <!-- Church entrance porch -->
+      <rect x="390" y="460" width="120" height="130" fill="#2e1f0a"/>
+      <polygon points="380,460 520,460 450,400" fill="#2e1f0a"/>
+      <!-- Door arch -->
+      <path d="M415 590 L415 490 Q450 460 485 490 L485 590" fill="#3d2b1a"/>
+      <!-- Side windows -->
+      <rect x="320" y="380" width="35" height="50" rx="3" fill="#2e1f0a"/>
+      <rect x="545" y="380" width="35" height="50" rx="3" fill="#2e1f0a"/>
+      <!-- Decorative carved bands -->
+      <rect x="300" y="355" width="300" height="6" fill="#2e1f0a"/>
+      <rect x="300" y="430" width="300" height="4" fill="#2e1f0a"/>
+      <!-- Snow on roofs -->
+      <path d="M280,340 Q380,330 450,185 Q520,330 620,340" fill="white" opacity="0.9"/>
+      <path d="M375,200 Q415,192 450,82 Q485,192 525,200" fill="white" opacity="0.9"/>
+      <path d="M380,460 Q420,452 450,402 Q480,452 520,460" fill="white" opacity="0.9"/>
+      <!-- Snow on ground around church -->
+      <path d="M290,590 Q350,570 450,565 Q550,570 610,590" fill="white" opacity="0.7"/>
+      <!-- Pine trees flanking -->
+      <!-- Left tree -->
+      <polygon points="150,500 190,500 170,420" fill="#1a1208"/>
+      <polygon points="140,450 200,450 170,370" fill="#1a1208"/>
+      <polygon points="130,400 210,400 170,320" fill="#1a1208"/>
+      <rect x="162" y="500" width="16" height="40" fill="#1a1208"/>
+      <!-- Snow on left tree -->
+      <polygon points="155,500 185,500 170,430" fill="white" opacity="0.5"/>
+      <polygon points="145,450 195,450 170,385" fill="white" opacity="0.4"/>
+      <!-- Right tree -->
+      <polygon points="710,500 750,500 730,420" fill="#1a1208"/>
+      <polygon points="700,450 760,450 730,370" fill="#1a1208"/>
+      <polygon points="690,400 770,400 730,320" fill="#1a1208"/>
+      <rect x="722" y="500" width="16" height="40" fill="#1a1208"/>
+      <!-- Snow on right tree -->
+      <polygon points="715,500 745,500 730,430" fill="white" opacity="0.5"/>
+      <polygon points="705,450 755,450 730,385" fill="white" opacity="0.4"/>
     </svg>
-
-    <p class="hero-rune">ᛊᛁᛊᚢᚲᚨᛊ — Arctic Archive — Est. Now</p>
-    <h1 class="hero-title">
-      SISU
-      <span>KAS</span>
-    </h1>
-    <p class="hero-sub">Nordic-curated designer archive. Each piece carries the cold clarity of the north — uncompromising, enduring, rare.</p>
-    <div class="hero-ctas">
-      <a href="shop.html" class="btn btn-gold">Enter the Archive</a>
-      <a href="shop.html?filter=sale" class="btn btn-outline">Discounted</a>
+ 
+    <!-- Snow particles -->
+    <div class="snowfield" id="snowfield"></div>
+ 
+    <div class="hero-content">
+      <p class="hero-eyebrow">ᛊᛁᛊᚢᚲᚨᛊ — Nordic Curation — Archive Fashion</p>
+      <h1 class="hero-title">SISUKAS</h1>
+      <p class="hero-title-sub">NORDIC ARCHIVE</p>
+      <p class="hero-tagline">Designer menswear and womenswear sourced with the precision of the north. Rare, authentic, enduring.</p>
+      <div class="hero-ctas">
+        <a href="shop.html" class="btn btn-oak">Enter the Archive</a>
+        <a href="shop.html?filter=sale" class="btn btn-snow">Discounted</a>
+      </div>
     </div>
-
+ 
     <div class="scroll-cue">
-      <span>Scroll</span>
+      <span class="scroll-cue-text">Scroll</span>
       <div class="scroll-line"></div>
     </div>
   </section>
-
-  <div class="rune-divider">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ᚷ ᚹ ᚺ ᚾ ᛁ ᛃ ᛇ ᛈ ᛉ ᛊ</div>
-
-  <!-- COLLECTION INTRO -->
-  <section class="collection-intro">
-    <div class="anim-up">
-      <h2>The Archive<em>Curated with intention</em></h2>
+ 
+  <!-- OAK BAND -->
+  <div class="oak-band">
+    <span class="oak-band-item"><strong>Free</strong> Authenticity Guarantee</span>
+    <span class="oak-band-item"><strong>200+</strong> Archive Pieces</span>
+    <span class="oak-band-item"><strong>Also on</strong> Grailed</span>
+    <span class="oak-band-item"><strong>DM</strong> for Inquiries</span>
+  </div>
+ 
+  <div class="divider-light" style="padding: 2rem 0;">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ</div>
+ 
+  <!-- INTRO SPLIT -->
+  <section class="intro">
+    <div class="intro-left anim-up">
+      <div class="oak-rule"></div>
+      <h2>
+        <em>The Archive</em>
+        Curated with the cold clarity of the north
+      </h2>
+      <a href="shop.html" class="btn btn-oak" style="margin-top:2rem; display:inline-block">Shop All Pieces</a>
     </div>
-    <div class="anim-up" style="animation-delay:0.15s">
-      <p>Designer menswear and womenswear sourced for those who understand that true luxury is not manufactured — it is found. Rare pieces, authenticated, priced honestly.</p>
+    <div class="intro-right anim-up" style="animation-delay:0.15s">
+      <p>Sisukas sources designer and archive fashion for those who understand that true luxury cannot be manufactured — only found. Each piece is selected for quality, rarity, and staying power.</p>
+      <p>Mens, womens, and unisex pieces spanning outerwear, tops, bottoms, footwear, and accessories. Priced honestly. Authenticated personally.</p>
     </div>
   </section>
-
-  <!-- CATEGORIES -->
+ 
+  <!-- CATEGORY TILES -->
   <section class="categories">
-    <p class="categories-label">Shop by Category</p>
+    <p class="categories-label">Browse by Category</p>
     <div class="categories-grid">
-      <a class="cat-card" href="shop.html?gender=mens">
-        <div class="cat-icon">⚔</div>
-        <div class="cat-name">Mens</div>
-        <div class="cat-count" id="count-mens">— pieces</div>
+      <a class="cat-tile" href="shop.html?gender=mens">
+        <span class="cat-icon">⚔</span>
+        <span class="cat-name">Mens</span>
+        <span class="cat-count" id="count-mens">— pieces</span>
       </a>
-      <a class="cat-card" href="shop.html?gender=womens">
-        <div class="cat-icon">✦</div>
-        <div class="cat-name">Womens</div>
-        <div class="cat-count" id="count-womens">— pieces</div>
+      <a class="cat-tile" href="shop.html?gender=womens">
+        <span class="cat-icon">✦</span>
+        <span class="cat-name">Womens</span>
+        <span class="cat-count" id="count-womens">— pieces</span>
       </a>
-      <a class="cat-card" href="shop.html?filter=sale">
-        <div class="cat-icon">◈</div>
-        <div class="cat-name">Discounted</div>
-        <div class="cat-count" id="count-sale">— pieces</div>
+      <a class="cat-tile" href="shop.html?filter=sale">
+        <span class="cat-icon">◈</span>
+        <span class="cat-name">Discounted</span>
+        <span class="cat-count" id="count-sale">— pieces</span>
       </a>
-      <a class="cat-card" href="shop.html">
-        <div class="cat-icon">᛭</div>
-        <div class="cat-name">All Pieces</div>
-        <div class="cat-count" id="count-all">— pieces</div>
+      <a class="cat-tile" href="shop.html">
+        <span class="cat-icon">᛭</span>
+        <span class="cat-name">All Pieces</span>
+        <span class="cat-count" id="count-all">— pieces</span>
       </a>
     </div>
   </section>
-
-  <div class="rune-divider">᛭ ᛭ ᛭</div>
-
-  <!-- MANIFESTO -->
-  <section class="manifesto">
-    <div class="manifesto-rune">ᚠᚢᚦ</div>
-    <h2>The Spirit of Sisu</h2>
-    <p>Sisu is the Finnish soul — resilience forged in winter, strength that endures. Sisukas carries that spirit into fashion: pieces that do not follow trends, but outlast them. The archive does not age. It deepens.</p>
-  </section>
-
-  <!-- PREVIEW STRIP (populated from JSON) -->
-  <section class="preview-strip">
-    <div class="strip-header">
-      <h3>Latest Arrivals</h3>
-      <a href="shop.html" class="btn btn-ghost" style="padding:0.6rem 1.2rem">View All →</a>
+ 
+  <!-- CHURCH FEATURE / MANIFESTO -->
+  <section class="church-section">
+    <!-- Repeated church in background of this section -->
+    <svg class="church-section-svg" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="250" y="280" width="300" height="220" fill="#3d2b1a"/>
+      <polygon points="230,280 570,280 400,140" fill="#3d2b1a"/>
+      <rect x="345" y="160" width="110" height="140" fill="#2e1f0a"/>
+      <polygon points="330,160 470,160 400,60" fill="#2e1f0a"/>
+      <rect x="385" y="70" width="30" height="80" fill="#1a1208"/>
+      <polygon points="378,70 422,70 400,10" fill="#1a1208"/>
+      <rect x="394" y="2" width="12" height="26" fill="#1a1208"/>
+      <rect x="383" y="8" width="34" height="8" fill="#1a1208"/>
+      <ellipse cx="230" cy="278" rx="12" ry="7" fill="#2e1f0a"/>
+      <ellipse cx="570" cy="278" rx="12" ry="7" fill="#2e1f0a"/>
+      <rect x="340" y="380" width="120" height="120" fill="#2e1f0a"/>
+      <polygon points="328,380 472,380 400,320" fill="#2e1f0a"/>
+      <path d="M365 500 L365 410 Q400 382 435 410 L435 500" fill="#3d2b1a"/>
+      <path d="M230,280 Q320,270 400,145 Q480,270 570,280" fill="white" opacity="0.85"/>
+      <path d="M330,160 Q368,153 400,62 Q432,153 470,160" fill="white" opacity="0.85"/>
+    </svg>
+    <div class="church-section-content">
+      <div class="church-rune">ᚠᚢᚦᚨᚱᚲ</div>
+      <h2>The Spirit of Sisu</h2>
+      <p>Sisu is the Finnish word for an inner strength that endures beyond all reason — resilience forged in winter, clarity found in cold. Sisukas carries that spirit into fashion: pieces that do not follow trends, but outlast them.</p>
+      <a href="shop.html" class="btn btn-oak">Explore the Collection</a>
     </div>
-    <div class="strip-grid" id="preview-grid">
-      <div class="state-msg">Loading...</div>
+  </section>
+ 
+  <div class="divider-light" style="padding: 2rem 0; margin: 0 2.5rem;">᛭ ᛭ ᛭</div>
+ 
+  <!-- LATEST ARRIVALS PREVIEW -->
+  <section class="preview">
+    <div class="preview-header">
+      <h3>Latest Arrivals <span>— just in</span></h3>
+      <a href="shop.html" class="btn btn-snow" style="padding:0.6rem 1.2rem">View All →</a>
+    </div>
+    <div class="product-grid grid-light" id="preview-grid">
+      <div class="state-msg state-msg-light">Loading archive...</div>
     </div>
   </section>
-
+ 
   <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="footer-brand">
+  <footer class="footer-light">
+    <div>
       <h3>SISUKAS</h3>
-      <p>Nordic archive fashion.<br/>Rare pieces, honest prices.</p>
+      <p>Nordic archive fashion.<br/>Rare pieces, honest prices,<br/>curated with intention.</p>
     </div>
-    <div class="footer-col">
+    <div>
       <h4>Navigate</h4>
       <a href="index.html">Home</a>
       <a href="shop.html">Shop All</a>
@@ -398,18 +576,18 @@
       <a href="shop.html?gender=womens">Womens</a>
       <a href="shop.html?filter=sale">Sale</a>
     </div>
-    <div class="footer-col">
+    <div>
       <h4>Contact</h4>
       <a href="https://www.instagram.com" target="_blank">Instagram</a>
       <a href="https://www.grailed.com" target="_blank">Grailed</a>
       <a href="mailto:hello@sisukas.com">hello@sisukas.com</a>
     </div>
-    <div class="footer-bottom">
+    <div class="footer-bottom-light">
       <p>© 2026 Sisukas. All rights reserved.</p>
-      <p>Payments secured · All sales final</p>
+      <p>All sales final · Payments secured</p>
     </div>
   </footer>
-
+ 
   <!-- CART DRAWER -->
   <div class="cart-backdrop" id="cart-backdrop">
     <div class="cart-drawer">
@@ -423,15 +601,34 @@
           <span class="cart-total-label">Total</span>
           <span class="cart-total-price" id="cart-total">$0</span>
         </div>
-        <button class="btn btn-gold" style="width:100%;text-align:center;display:block;padding:1rem" onclick="alert('Payment processing coming soon. Contact us at hello@sisukas.com to purchase.')">
+        <button class="btn btn-gold" style="width:100%;text-align:center;display:block;padding:1rem"
+          onclick="alert('Payment processing coming soon. Contact us at hello@sisukas.com to complete your purchase.')">
           Checkout
         </button>
       </div>
     </div>
   </div>
-
+ 
   <script>
-    // ── CART STATE (shared via localStorage across pages) ──
+    // ── SNOW PARTICLES ──
+    (function() {
+      const field = document.getElementById('snowfield');
+      for (let i = 0; i < 38; i++) {
+        const s = document.createElement('span');
+        const size = Math.random() * 4 + 1.5;
+        s.style.cssText = `
+          left: ${Math.random() * 100}%;
+          width: ${size}px;
+          height: ${size}px;
+          animation-duration: ${Math.random() * 12 + 8}s;
+          animation-delay: ${Math.random() * 15}s;
+          opacity: ${Math.random() * 0.5 + 0.2};
+        `;
+        field.appendChild(s);
+      }
+    })();
+ 
+    // ── CART ──
     function getCart() {
       try { return JSON.parse(localStorage.getItem('sisukas_cart') || '[]'); } catch { return []; }
     }
@@ -439,11 +636,12 @@
       localStorage.setItem('sisukas_cart', JSON.stringify(cart));
       updateCartUI();
     }
+    function removeFromCart(id) { saveCart(getCart().filter(i => i.id !== id)); }
     function updateCartUI() {
       const cart = getCart();
       const total = cart.reduce((s, i) => s + i.price, 0);
-      const countEl = document.getElementById('cart-count-nav');
-      if (countEl) countEl.textContent = cart.length ? `(${cart.length})` : '';
+      const nav = document.getElementById('cart-count-nav');
+      if (nav) nav.textContent = cart.length ? `(${cart.length})` : '';
       const totalEl = document.getElementById('cart-total');
       if (totalEl) totalEl.textContent = `$${total}`;
       const listEl = document.getElementById('cart-items-list');
@@ -461,68 +659,68 @@
         </div>
       `).join('') : '<div class="cart-empty">Your cart is empty</div>';
     }
-    function removeFromCart(id) {
-      saveCart(getCart().filter(i => i.id !== id));
-    }
-
-    // ── CART DRAWER TOGGLE ──
-    document.getElementById('open-cart')?.addEventListener('click', e => {
+ 
+    document.getElementById('open-cart').addEventListener('click', e => {
       e.preventDefault();
       document.getElementById('cart-backdrop').classList.add('open');
       document.body.style.overflow = 'hidden';
     });
-    document.getElementById('close-cart')?.addEventListener('click', () => {
+    document.getElementById('close-cart').addEventListener('click', () => {
       document.getElementById('cart-backdrop').classList.remove('open');
       document.body.style.overflow = '';
     });
-    document.getElementById('cart-backdrop')?.addEventListener('click', e => {
+    document.getElementById('cart-backdrop').addEventListener('click', e => {
       if (e.target === document.getElementById('cart-backdrop')) {
         document.getElementById('cart-backdrop').classList.remove('open');
         document.body.style.overflow = '';
       }
     });
-
-    // ── LOAD PREVIEW ITEMS ──
+ 
+    // ── LOAD PREVIEW ──
     async function loadPreview() {
       try {
         const res = await fetch('./listings.json');
         const items = await res.json();
-        const mens = items.filter(i => i.gender === 'mens').length;
-        const womens = items.filter(i => i.gender === 'womens').length;
-        const sale = items.filter(i => i.sale_price).length;
-        document.getElementById('count-mens').textContent = `${mens} pieces`;
-        document.getElementById('count-womens').textContent = `${womens} pieces`;
-        document.getElementById('count-sale').textContent = `${sale} pieces`;
-        document.getElementById('count-all').textContent = `${items.length} pieces`;
-
-        // Show 4 newest
+        document.getElementById('count-mens').textContent   = `${items.filter(i => i.gender === 'mens').length} pieces`;
+        document.getElementById('count-womens').textContent = `${items.filter(i => i.gender === 'womens').length} pieces`;
+        document.getElementById('count-sale').textContent   = `${items.filter(i => i.sale_price).length} pieces`;
+        document.getElementById('count-all').textContent    = `${items.length} pieces`;
+ 
         const preview = items.slice(0, 4);
-        document.getElementById('preview-grid').innerHTML = preview.map(item => `
-          <div class="card" onclick="window.location='shop.html'">
-            <div class="card-img">
-              ${item.images?.[0] ? `<img src="${item.images[0]}" alt="${item.title}" loading="lazy"/>` : `<div class="card-placeholder">No Image</div>`}
-              <div class="card-overlay"><span>View</span></div>
-              ${item.sale_price ? '<div class="card-badge sale">Sale</div>' : ''}
-            </div>
-            <div class="card-body">
-              <div class="card-brand">${item.brand || ''}</div>
-              <div class="card-title">${item.title}</div>
-              <div class="card-meta">
-                <span class="card-price">
-                  ${item.sale_price ? `<s>$${item.price}</s> $${item.sale_price}` : `$${item.price}`}
-                </span>
-                <span class="card-size">${item.size || ''}</span>
+        document.getElementById('preview-grid').innerHTML = preview.length
+          ? preview.map((item, i) => `
+            <div class="card-light" style="animation:fadeUp 0.6s ${i*0.08}s ease both;opacity:0"
+              onclick="window.location='shop.html'">
+              <div class="card-img">
+                ${item.images?.[0]
+                  ? `<img src="${item.images[0]}" alt="${item.title}" loading="lazy"/>`
+                  : `<div class="card-placeholder-light">No Image</div>`}
+                <div class="card-overlay-light"><span>View Piece</span></div>
+                ${item.sale_price ? '<div class="card-badge badge-sale">Sale</div>' : ''}
+                ${item.new ? '<div class="card-badge badge-new-light">New</div>' : ''}
+              </div>
+              <div class="card-body-light">
+                <div class="card-brand-light">${item.brand || ''}</div>
+                <div class="card-title-light">${item.title}</div>
+                <div class="card-meta">
+                  <span class="card-price-light">
+                    ${item.sale_price ? `<s>$${item.price}</s> $${item.sale_price}` : `$${item.price}`}
+                  </span>
+                  <span class="card-size-light">${item.size || ''}</span>
+                </div>
               </div>
             </div>
-          </div>
-        `).join('');
-      } catch(e) {
-        document.getElementById('preview-grid').innerHTML = '<div class="state-msg">Add items to listings.json</div>';
+          `).join('')
+          : '<div class="state-msg state-msg-light">Add items to listings.json</div>';
+      } catch {
+        document.getElementById('preview-grid').innerHTML =
+          '<div class="state-msg state-msg-light">Add items to listings.json to populate the store</div>';
       }
     }
-
+ 
     updateCartUI();
     loadPreview();
   </script>
 </body>
 </html>
+ 
