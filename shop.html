@@ -578,6 +578,261 @@
     .action-btn-ghost { background: transparent; color: var(--smoke); border: 1px solid rgba(90,99,112,0.3); }
     .action-btn-ghost:hover { color: var(--parchment); border-color: var(--smoke); }
 
+
+    /* ── AUTHENTICATION LEDGER BADGE + PANEL ── */
+    .auth-ledger-badge {
+      position: absolute;
+      right: var(--sp-3);
+      bottom: var(--sp-3);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(201,168,76,0.58);
+      background: rgba(8,9,11,0.86);
+      color: var(--parchment);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-mono);
+      font-size: 0.95rem;
+      line-height: 1;
+      z-index: 6;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.48), inset 0 0 0 1px rgba(247,248,250,0.05);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .auth-ledger-badge:hover,
+    .auth-ledger-badge:focus-visible {
+      transform: scale(1.08);
+      border-color: var(--accent-gold);
+      background: rgba(15,17,20,0.94);
+      color: var(--accent-gold);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.58), 0 0 0 3px rgba(201,168,76,0.12);
+      outline: none;
+    }
+
+    .auth-ledger-badge::after {
+      content: "Ledger";
+      position: absolute;
+      right: 0;
+      bottom: calc(100% + 8px);
+      opacity: 0;
+      transform: translateY(4px);
+      pointer-events: none;
+      background: rgba(8,9,11,0.95);
+      border: 1px solid rgba(201,168,76,0.28);
+      color: var(--parchment);
+      font-family: var(--ff-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.32rem 0.52rem;
+      white-space: nowrap;
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .auth-ledger-badge:hover::after,
+    .auth-ledger-badge:focus-visible::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .modal-gallery-wrap {
+      position: relative;
+      margin-bottom: var(--sp-2);
+    }
+
+    .modal-gallery-wrap .gallery-main {
+      margin-bottom: 0;
+    }
+
+    .auth-ledger-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--sp-6);
+      background: rgba(8,9,11,0.76);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-enter);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .auth-ledger-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .auth-ledger-panel {
+      width: min(560px, 100%);
+      max-height: min(720px, 88dvh);
+      overflow-y: auto;
+      background: var(--deep);
+      border: 1px solid rgba(201,168,76,0.24);
+      box-shadow: var(--shadow-modal);
+      transform: translateY(16px) scale(0.98);
+      transition: transform var(--transition-enter);
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-dim) transparent;
+    }
+
+    .auth-ledger-backdrop.open .auth-ledger-panel {
+      transform: translateY(0) scale(1);
+    }
+
+    .auth-ledger-header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--sp-4);
+      padding: var(--sp-5) var(--sp-5) var(--sp-4);
+      background: rgba(15,17,20,0.96);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .auth-ledger-kicker {
+      font-family: var(--ff-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: var(--sp-2);
+    }
+
+    .auth-ledger-title {
+      font-family: var(--ff-body);
+      font-size: var(--text-xl);
+      font-weight: 300;
+      line-height: 1.25;
+      color: var(--parchment);
+    }
+
+    .auth-ledger-close {
+      width: var(--touch-min);
+      height: var(--touch-min);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.16);
+      color: var(--smoke);
+      font-size: var(--text-xl);
+      cursor: pointer;
+      transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+    }
+
+    .auth-ledger-close:hover,
+    .auth-ledger-close:focus-visible {
+      color: var(--frost);
+      border-color: var(--accent-gold);
+      background: rgba(201,168,76,0.06);
+      outline: none;
+    }
+
+    .auth-ledger-content {
+      padding: var(--sp-5);
+    }
+
+    .auth-ledger-status {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-2);
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      border: 1px solid rgba(201,168,76,0.22);
+      background: rgba(201,168,76,0.06);
+      padding: var(--sp-2) var(--sp-3);
+      margin-bottom: var(--sp-4);
+    }
+
+    .auth-ledger-row {
+      display: grid;
+      grid-template-columns: minmax(130px, 0.82fr) 1.18fr;
+      gap: var(--sp-4);
+      padding: var(--sp-3) 0;
+      border-top: 1px solid rgba(201,168,76,0.09);
+    }
+
+    .auth-ledger-label {
+      font-family: var(--ff-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ash);
+    }
+
+    .auth-ledger-value {
+      font-size: var(--text-sm);
+      line-height: 1.65;
+      color: var(--parchment);
+    }
+
+    .auth-ledger-provenance {
+      margin-top: var(--sp-4);
+      padding: var(--sp-4);
+      border: 1px solid rgba(201,168,76,0.12);
+      background: rgba(201,168,76,0.04);
+    }
+
+    .auth-ledger-provenance h4 {
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: var(--sp-3);
+    }
+
+    .auth-ledger-provenance p {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: var(--text-sm);
+      line-height: 1.8;
+      color: var(--smoke);
+    }
+
+    @media (max-width: 560px) {
+      .auth-ledger-backdrop {
+        align-items: flex-end;
+        padding: var(--sp-3);
+      }
+
+      .auth-ledger-panel {
+        max-height: 88dvh;
+        width: 100%;
+      }
+
+      .auth-ledger-row {
+        grid-template-columns: 1fr;
+        gap: var(--sp-1);
+      }
+
+      .auth-ledger-badge {
+        width: 34px;
+        height: 34px;
+        right: var(--sp-2);
+        bottom: var(--sp-2);
+      }
+    }
+
+
     /* ── CART DRAWER ── */
     .cart-backdrop {
       position: fixed; inset: 0;
@@ -811,6 +1066,22 @@
     </div>
   </div>
 
+
+  <!-- AUTHENTICATION LEDGER MODAL -->
+  <div class="auth-ledger-backdrop" id="auth-ledger-backdrop"
+    role="dialog" aria-modal="true" aria-label="Authentication ledger" aria-hidden="true">
+    <div class="auth-ledger-panel" id="auth-ledger-panel" tabindex="-1">
+      <div class="auth-ledger-header">
+        <div>
+          <div class="auth-ledger-kicker">Authentication Ledger</div>
+          <h2 class="auth-ledger-title" id="auth-ledger-title">Verified Piece</h2>
+        </div>
+        <button class="auth-ledger-close" id="auth-ledger-close" aria-label="Close authentication ledger">×</button>
+      </div>
+      <div class="auth-ledger-content" id="auth-ledger-content"></div>
+    </div>
+  </div>
+
   <!-- CART DRAWER -->
   <div class="cart-backdrop" id="cart-backdrop"
     role="dialog" aria-modal="true" aria-label="Shopping cart" aria-hidden="true">
@@ -982,6 +1253,99 @@
     const titleMap = { mens: 'Mens Archive', womens: 'Womens Archive', unisex: 'Unisex', all: 'The Archive' };
     document.getElementById('page-title').textContent = titleMap[activeGender] || 'The Archive';
 
+
+    // ── AUTHENTICATION LEDGER ──
+    function escapeHTML(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function getAuthLedger(item) {
+      return item?.authLedger || item?.authenticationLedger || item?.authentication || null;
+    }
+
+    function hasAuthLedger(item) {
+      const ledger = getAuthLedger(item);
+      if (!ledger) return false;
+      return ledger.verified === true || ledger.enabled === true || Boolean(
+        ledger.tagVerified ||
+        ledger.hardwareVerified ||
+        ledger.stitchingConsistent ||
+        ledger.materialFeel ||
+        ledger.knownReplicaRisk ||
+        ledger.sellerConfidence ||
+        ledger.provenance
+      );
+    }
+
+    function ledgerField(ledger, keys, fallback = '—') {
+      for (const key of keys) {
+        if (ledger && ledger[key] !== undefined && ledger[key] !== null && String(ledger[key]).trim() !== '') {
+          return ledger[key];
+        }
+      }
+      return fallback;
+    }
+
+    function renderLedgerRow(label, value) {
+      return `
+        <div class="auth-ledger-row">
+          <div class="auth-ledger-label">${escapeHTML(label)}</div>
+          <div class="auth-ledger-value">${escapeHTML(value)}</div>
+        </div>`;
+    }
+
+    function openAuthLedger(id) {
+      const item = allItems.find(i => String(i.id) === String(id));
+      const ledger = getAuthLedger(item);
+      if (!item || !ledger) return;
+
+      const title = `${ledgerField(ledger, ['brand'], item.brand || 'Designer')} Verification`;
+      const provenance = ledgerField(ledger, ['provenance', 'provenanceNotes', 'notes'], 'No provenance note added yet.');
+
+      document.getElementById('auth-ledger-title').textContent = title;
+      document.getElementById('auth-ledger-content').innerHTML = `
+        <div class="auth-ledger-status">✓ Authenticated In-Hand</div>
+        ${renderLedgerRow('Brand', ledgerField(ledger, ['brand'], item.brand || '—'))}
+        ${renderLedgerRow('Tag Verified', ledgerField(ledger, ['tagVerified', 'tag_verified', 'labelVerified']))}
+        ${renderLedgerRow('Hardware Verified', ledgerField(ledger, ['hardwareVerified', 'hardware_verified', 'hardware']))}
+        ${renderLedgerRow('Stitching', ledgerField(ledger, ['stitchingConsistent', 'stitching_consistent', 'stitching']))}
+        ${renderLedgerRow('Material Feel', ledgerField(ledger, ['materialFeel', 'material_feel', 'material']))}
+        ${renderLedgerRow('Replica Risk', ledgerField(ledger, ['knownReplicaRisk', 'known_replica_risk', 'replicaRisk']))}
+        ${renderLedgerRow('Confidence', ledgerField(ledger, ['sellerConfidence', 'seller_confidence', 'confidence']))}
+        <div class="auth-ledger-provenance">
+          <h4>Provenance Notes</h4>
+          <p>${escapeHTML(provenance)}</p>
+        </div>
+      `;
+
+      const backdrop = document.getElementById('auth-ledger-backdrop');
+      backdrop.classList.add('open');
+      backdrop.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => document.getElementById('auth-ledger-close')?.focus(), 50);
+    }
+
+    function closeAuthLedger() {
+      const backdrop = document.getElementById('auth-ledger-backdrop');
+      backdrop.classList.remove('open');
+      backdrop.setAttribute('aria-hidden', 'true');
+
+      const itemModalOpen = document.getElementById('modal-backdrop')?.classList.contains('open');
+      const cartOpen = document.getElementById('cart-backdrop')?.classList.contains('open');
+      document.body.style.overflow = itemModalOpen || cartOpen ? 'hidden' : '';
+    }
+
+    document.getElementById('auth-ledger-close').addEventListener('click', closeAuthLedger);
+    document.getElementById('auth-ledger-backdrop').addEventListener('click', e => {
+      if (e.target === document.getElementById('auth-ledger-backdrop')) closeAuthLedger();
+    });
+
+
     // ── FILTER + SORT ──
     function getFiltered() {
       let items = [...allItems];
@@ -1028,6 +1392,15 @@
             </div>
             ${item.sale_price ? `<span class="badge badge-sale" aria-label="On sale">Sale</span>` : ''}
             ${item.new ? `<span class="badge badge-new" aria-label="New arrival">New</span>` : ''}
+            ${hasAuthLedger(item) ? `
+              <button
+                class="auth-ledger-badge"
+                type="button"
+                aria-label="Open authentication ledger for ${item.brand ? item.brand + ' ' : ''}${item.title}"
+                onclick="event.stopPropagation(); openAuthLedger(${item.id})"
+                onkeydown="event.stopPropagation(); if(event.key==='Enter'||event.key===' ') { event.preventDefault(); openAuthLedger(${item.id}); }">
+                ✓
+              </button>` : ''}
           </div>
           <div class="card-body">
             <div class="card-brand">${item.brand || ''}</div>
@@ -1060,10 +1433,21 @@
 
       document.getElementById('modal-inner').innerHTML = `
         ${currentImages.length > 0 ? `
-          <img class="gallery-main" id="gallery-main"
-            src="${currentImages[0]}"
-            alt="${item.brand || ''} ${item.title} — main photo"
-            width="720" height="960" />
+          <div class="modal-gallery-wrap">
+            <img class="gallery-main" id="gallery-main"
+              src="${currentImages[0]}"
+              alt="${item.brand || ''} ${item.title} — main photo"
+              width="720" height="960" />
+            ${hasAuthLedger(item) ? `
+              <button
+                class="auth-ledger-badge"
+                type="button"
+                aria-label="Open authentication ledger for ${item.brand ? item.brand + ' ' : ''}${item.title}"
+                onclick="event.stopPropagation(); openAuthLedger(${item.id})"
+                onkeydown="event.stopPropagation(); if(event.key==='Enter'||event.key===' ') { event.preventDefault(); openAuthLedger(${item.id}); }">
+                ✓
+              </button>` : ''}
+          </div>
           ${currentImages.length > 1 ? `
             <div class="gallery-thumbs" role="list" aria-label="Product photos">
               ${currentImages.map((img, i) => `
@@ -1148,6 +1532,10 @@
 
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
+        if (document.getElementById('auth-ledger-backdrop').classList.contains('open')) {
+          closeAuthLedger();
+          return;
+        }
         if (document.getElementById('modal-backdrop').classList.contains('open')) closeModal();
         if (document.getElementById('cart-backdrop').classList.contains('open')) closeCartDrawer();
       }
