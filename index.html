@@ -626,16 +626,31 @@
 
   <!-- SISU SECTION -->
   <section class="church-section" id="church-section">
-    <svg class="church-section-svg" id="church-svg" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="250" y="280" width="300" height="220" fill="#3d2b1a"/>
-      <polygon points="230,280 570,280 400,140" fill="#3d2b1a"/>
-      <rect x="345" y="160" width="110" height="140" fill="#2e1f0a"/>
-      <polygon points="330,160 470,160 400,60" fill="#2e1f0a"/>
-      <rect x="385" y="70" width="30" height="80" fill="#1a1208"/>
-      <polygon points="378,70 422,70 400,10" fill="#1a1208"/>
-      <path d="M230,280 Q320,270 400,145 Q480,270 570,280" fill="white" opacity="0.85"/>
-      <path d="M330,160 Q368,153 400,62 Q432,153 470,160" fill="white" opacity="0.85"/>
-    </svg>
+    <!-- Real cathedral photo as parallax background -->
+    <img
+      id="church-svg"
+      src="cathedral.jpg"
+      alt="Cathedral — Sisukas"
+      style="
+        position:absolute; inset:0;
+        width:100%; height:100%;
+        object-fit:cover;
+        object-position:center 40%;
+        display:block;
+        filter:saturate(0.6) brightness(0.45);
+        will-change:transform;
+        transform:scale(1.12) translateY(0);
+        z-index:0;
+      "
+    />
+    <!-- Overlay so text stays readable -->
+    <div style="
+      position:absolute; inset:0; z-index:1; pointer-events:none;
+      background:linear-gradient(180deg,
+        rgba(238,242,246,0.72) 0%,
+        rgba(220,232,240,0.55) 50%,
+        rgba(238,242,246,0.72) 100%);
+    "></div>
     <div class="church-section-content">
       <div class="church-rune">ᚠᚢᚦᚨᚱᚲ</div>
       <h2 class="reveal-text">The Spirit of Sisu</h2>
