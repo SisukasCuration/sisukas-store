@@ -42,7 +42,7 @@
       "materialFeel": "Pass",
       "knownReplicaRisk": "Very Low",
       "sellerConfidence": "Certain",
-      "provenance": "Purchased from verified private seller"
+      "provenance": "Purchased from private celebrity collector"
     }
   },
   {
@@ -169,15 +169,15 @@
     "grailed_url": "https://www.grailed.com/listings/96601416-balenciaga-balenciaga-lamb-leather-red-quilted-zip-up-jacket",
     "instagram": "",
     "authLedger": {
-      "verified": false,
-      "brand": "",
-      "tagVerified": "",
-      "hardwareVerified": "",
-      "stitchingConsistent": "",
-      "materialFeel": "",
-      "knownReplicaRisk": "",
-      "sellerConfidence": "",
-      "provenance": ""
+      "verified": true,
+      "brand": "BALENCIAGA",
+      "tagVerified": "Pass",
+      "hardwareVerified": "Pass",
+      "stitchingConsistent": "Pass",
+      "materialFeel": "Pass",
+      "knownReplicaRisk": "Low",
+      "sellerConfidence": "Certain",
+      "provenance": "Originally sourced from Vestiaire Collective"
     }
   },
   {
@@ -211,15 +211,15 @@
     "grailed_url": "https://www.grailed.com/listings/97356533-joe-freshgoods-x-new-balance-joe-fresh-goods-x-new-balance-990v3-outside-clothes",
     "instagram": "",
     "authLedger": {
-      "verified": false,
-      "brand": "",
-      "tagVerified": "",
-      "hardwareVerified": "",
-      "stitchingConsistent": "",
-      "materialFeel": "",
-      "knownReplicaRisk": "",
-      "sellerConfidence": "",
-      "provenance": ""
+      "verified": true,
+      "brand": "NEW BALANCE",
+      "tagVerified": "Pass",
+      "hardwareVerified": "Pass",
+      "stitchingConsistent": "Pass",
+      "materialFeel": "Pass",
+      "knownReplicaRisk": "High",
+      "sellerConfidence": "Extremely High",
+      "provenance": "Sourced from PFATL verified resell store"
     }
   },
   {
@@ -253,15 +253,14 @@
     "grailed_url": "https://www.grailed.com/listings/96190567-acne-studios-melk-used-blk-leather-back-patch-black-denim-jeans",
     "instagram": "",
     "authLedger": {
-      "verified": false,
-      "brand": "",
-      "tagVerified": "",
-      "hardwareVerified": "",
-      "stitchingConsistent": "",
-      "materialFeel": "",
-      "knownReplicaRisk": "",
-      "sellerConfidence": "",
-      "provenance": ""
+      "verified": true,
+      "brand": "ACNE STUDIOS",
+      "tagVerified": "Pass",
+      "hardwareVerified": "Pass",
+      "stitchingConsistent": "Pass",
+      "materialFeel": "Pass",
+      "knownReplicaRisk": "Low",
+      "sellerConfidence": "Certain"
     }
   },
   {
@@ -292,15 +291,15 @@
     "grailed_url": "https://www.grailed.com/listings/96972860-acne-studios-north-stay-black-leather-patch-denim-jeans",
     "instagram": "",
     "authLedger": {
-      "verified": false,
-      "brand": "",
-      "tagVerified": "",
-      "hardwareVerified": "",
-      "stitchingConsistent": "",
-      "materialFeel": "",
-      "knownReplicaRisk": "",
-      "sellerConfidence": "",
-      "provenance": ""
+      "verified": true,
+      "brand": "ACNE STUDIOS",
+      "tagVerified": "Pass",
+      "hardwareVerified": "Pass",
+      "stitchingConsistent": "Pass",
+      "materialFeel": "Pass",
+      "knownReplicaRisk": "Low",
+      "sellerConfidence": "Certain",
+      "provenance": "Purchased retail"
     }
   },
   {
@@ -334,15 +333,14 @@
     "grailed_url": "https://www.grailed.com/listings/96188059-acne-studios-boy-black-straight-fit-denim-jeans",
     "instagram": "",
     "authLedger": {
-      "verified": false,
-      "brand": "",
-      "tagVerified": "",
-      "hardwareVerified": "",
-      "stitchingConsistent": "",
-      "materialFeel": "",
-      "knownReplicaRisk": "",
-      "sellerConfidence": "",
-      "provenance": ""
+      "verified": true,
+      "brand": "ACNE STUDIOS",
+      "tagVerified": "Pass",
+      "hardwareVerified": "Pass",
+      "stitchingConsistent": "Pass",
+      "materialFeel": "Pass",
+      "knownReplicaRisk": "Low",
+      "sellerConfidence": "Certain"
     }
   },
   {
@@ -375,15 +373,15 @@
     "grailed_url": "https://www.grailed.com/listings/96187844-acne-studios-boy-bluebell-light-wash-blue-denim-jeans",
     "instagram": "",
     "authLedger": {
-      "verified": false,
-      "brand": "",
-      "tagVerified": "",
-      "hardwareVerified": "",
-      "stitchingConsistent": "",
-      "materialFeel": "",
-      "knownReplicaRisk": "",
-      "sellerConfidence": "",
-      "provenance": ""
+      "verified": true,
+      "brand": "ACNE STUDIOS",
+      "tagVerified": "Pass",
+      "hardwareVerified": "Pass",
+      "stitchingConsistent": "Pass",
+      "materialFeel": "Pass",
+      "knownReplicaRisk": "Low",
+      "sellerConfidence": "Certain",
+      "provenance": "Purchased retail"
     }
   },
   {
@@ -420,15 +418,15 @@
     "grailed_url": "https://www.grailed.com/listings/96601474-supreme-supreme-trademark-logo-black-red-hoodie",
     "instagram": "",
     "authLedger": {
-      "verified": false,
-      "brand": "",
-      "tagVerified": "",
-      "hardwareVerified": "",
-      "stitchingConsistent": "",
-      "materialFeel": "",
-      "knownReplicaRisk": "",
-      "sellerConfidence": "",
-      "provenance": ""
+      "verified": true,
+      "brand": "SUPREME",
+      "tagVerified": "Pass",
+      "hardwareVerified": "Pass",
+      "stitchingConsistent": "Pass",
+      "materialFeel": "Pass",
+      "knownReplicaRisk": "High",
+      "sellerConfidence": "Extremely High",
+      "provenance": "Purchased from PFATL verified resell store"
     }
   },
   {
