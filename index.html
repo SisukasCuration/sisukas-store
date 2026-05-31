@@ -7,7 +7,173 @@
   <link rel="stylesheet" href="style.css" />
   <style>
 
-    /* ── HERO ── */
+    /* ═══════════════════════════════════════════
+       CUSTOM CURSOR
+       ═══════════════════════════════════════════ */
+    * { cursor: none !important; }
+
+    .cursor-dot {
+      position: fixed;
+      width: 6px; height: 6px;
+      background: var(--oak-dark);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 80ms ease, background 200ms ease, width 200ms ease, height 200ms ease;
+      will-change: transform;
+    }
+
+    .cursor-ring {
+      position: fixed;
+      width: 32px; height: 32px;
+      border: 1.5px solid var(--oak-dark);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 120ms ease, width 200ms ease, height 200ms ease, opacity 200ms ease, border-color 200ms ease;
+      opacity: 0.5;
+      will-change: transform;
+    }
+
+    /* Cursor expands over interactive elements */
+    .cursor-expanded .cursor-ring {
+      width: 48px; height: 48px;
+      opacity: 0.25;
+      border-color: var(--oak-mid);
+    }
+    .cursor-expanded .cursor-dot {
+      width: 4px; height: 4px;
+      background: var(--oak-mid);
+    }
+
+    /* Hide custom cursor on mobile */
+    @media (hover: none) {
+      .cursor-dot, .cursor-ring { display: none; }
+      * { cursor: auto !important; }
+    }
+
+    /* ═══════════════════════════════════════════
+       BUTTON SYSTEM — 3 styles
+       ═══════════════════════════════════════════ */
+
+    /* Base */
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      cursor: none;
+      overflow: hidden;
+      border: none;
+      transition: color 300ms ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
+    }
+
+    /* ── STYLE 1: Border Draw (oak primary) ──
+       On hover a border animates drawing clockwise around the button */
+    .btn-oak {
+      background: var(--oak-dark);
+      color: var(--snow);
+    }
+
+    .btn-oak::before,
+    .btn-oak::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    /* Liquid fill sweep on hover */
+    .btn-oak::before {
+      background: var(--oak-mid);
+      transform: translateX(-101%);
+      transition: transform 400ms cubic-bezier(0.76, 0, 0.24, 1);
+      z-index: 0;
+    }
+
+    .btn-oak:hover::before { transform: translateX(0); }
+
+    .btn-oak span, .btn-oak-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── STYLE 2: Border Draw (snow/outline) ──
+       On hover, a white fill sweeps in from the bottom */
+    .btn-snow {
+      background: transparent;
+      color: var(--oak-dark);
+      box-shadow: inset 0 0 0 1.5px var(--oak-dark);
+    }
+
+    .btn-snow::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--oak-dark);
+      transform: translateY(101%);
+      transition: transform 350ms cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .btn-snow:hover { color: var(--snow); }
+    .btn-snow:hover::before { transform: translateY(0); }
+
+    .btn-snow span {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── STYLE 3: Magnetic pill (gold) ──
+       Rounds out on hover + glows. Used for CTAs */
+    .btn-gold {
+      background: var(--gold);
+      color: var(--void, #08090b);
+      border-radius: 100px;
+      padding: 0.85rem 2rem;
+      font-weight: 600;
+      transition: background 250ms ease, box-shadow 250ms ease, border-radius 250ms ease, transform 150ms ease;
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-pale, #d4aa6a);
+      box-shadow: 0 8px 40px rgba(184,137,58,0.35);
+    }
+
+    /* ── MAGNETIC BUTTON WRAPPER ──
+       JS applies translate to simulate magnetism */
+    .btn-magnetic {
+      display: inline-block;
+      transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* ── TEXT SWAP ARROW ── */
+    .btn-arrow {
+      display: inline-block;
+      transition: transform 300ms ease, opacity 300ms ease;
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+
+    .btn:hover .btn-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ═══════════════════════════════════════════
+       PARALLAX HERO
+       ═══════════════════════════════════════════ */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -21,30 +187,27 @@
       overflow: hidden;
     }
 
+    /* Church parallaxes slower than scroll */
     .hero-church {
       position: absolute;
       bottom: 0;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) translateY(0);
       width: min(900px, 110vw);
       pointer-events: none;
       opacity: 0.09;
       z-index: 0;
+      will-change: transform;
+      transition: transform 0ms linear; /* updated by JS */
     }
 
     .snowfield {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1;
-      overflow: hidden;
+      position: absolute; inset: 0;
+      pointer-events: none; z-index: 1; overflow: hidden;
     }
     .snowfield span {
-      position: absolute;
-      top: -10px;
-      border-radius: 50%;
-      background: white;
-      opacity: 0;
+      position: absolute; top: -10px;
+      border-radius: 50%; background: white; opacity: 0;
       animation: snowfall linear infinite;
     }
     @keyframes snowfall {
@@ -54,7 +217,17 @@
       100% { transform: translateY(100vh) translateX(40px); opacity: 0; }
     }
 
-    .hero-content { position: relative; z-index: 2; }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      /* subtle float animation */
+      animation: heroFloat 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroFloat {
+      0%   { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
 
     .hero-eyebrow {
       font-family: var(--ff-mono);
@@ -67,6 +240,7 @@
       animation: fadeUp 1s 0.2s ease both;
     }
 
+    /* ── GLITCH TITLE ── */
     .hero-title {
       font-family: var(--ff-title);
       font-size: clamp(4rem, 13vw, 10rem);
@@ -76,6 +250,21 @@
       margin-bottom: 0.6rem;
       animation: fadeUp 1s 0.4s ease both;
       text-shadow: 0 2px 0 rgba(255,255,255,0.8), 0 4px 40px rgba(61,43,26,0.08);
+      position: relative;
+    }
+
+    /* Subtle glitch on hover */
+    .hero-title:hover {
+      animation: glitch 500ms steps(2) 1;
+    }
+
+    @keyframes glitch {
+      0%   { text-shadow: 2px 0 rgba(61,43,26,0.3), -2px 0 rgba(61,43,26,0.1); }
+      20%  { text-shadow: -2px 0 rgba(61,43,26,0.3), 2px 0 rgba(61,43,26,0.1); clip-path: inset(20% 0 60% 0); }
+      40%  { text-shadow: 2px 0 rgba(61,43,26,0.2), -1px 0 rgba(61,43,26,0.1); clip-path: inset(60% 0 20% 0); }
+      60%  { text-shadow: -1px 0 rgba(61,43,26,0.2), 1px 0 rgba(61,43,26,0.05); }
+      80%  { text-shadow: 1px 0 rgba(61,43,26,0.1); clip-path: none; }
+      100% { text-shadow: 0 2px 0 rgba(255,255,255,0.8), 0 4px 40px rgba(61,43,26,0.08); }
     }
 
     .hero-title-sub {
@@ -101,32 +290,49 @@
 
     .hero-ctas {
       display: flex;
-      gap: 1rem;
+      gap: 1.5rem;
       justify-content: center;
       flex-wrap: wrap;
       animation: fadeUp 1s 0.85s ease both;
     }
 
-    .scroll-cue {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
+    /* Live piece count badge */
+    .hero-count {
+      display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      z-index: 2;
-      animation: fadeIn 1.2s 1.8s ease both;
-      opacity: 0;
-    }
-    .scroll-cue-text {
       font-family: var(--ff-mono);
-      font-size: 0.44rem;
-      letter-spacing: 0.45em;
+      font-size: 0.48rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--oak-light);
-      opacity: 0.5;
+      margin-bottom: 2rem;
+      animation: fadeUp 1s 0.65s ease both;
+    }
+
+    .hero-count-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #2d9e4f;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .scroll-cue {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      z-index: 2;
+      animation: fadeIn 1.2s 1.8s ease both; opacity: 0;
+    }
+    .scroll-cue-text {
+      font-family: var(--ff-mono); font-size: 0.44rem;
+      letter-spacing: 0.45em; text-transform: uppercase;
+      color: var(--oak-light); opacity: 0.5;
     }
     .scroll-line {
       width: 1px; height: 38px;
@@ -138,35 +344,88 @@
       50%       { opacity: 0.8; transform: scaleY(1.12); }
     }
 
-    /* ── OAK BAND ── */
+    /* ═══════════════════════════════════════════
+       OAK BAND — marquee scroll
+       ═══════════════════════════════════════════ */
     .oak-band {
       position: relative;
       z-index: 2;
       background: var(--oak-dark);
-      padding: 1.2rem 2.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 3rem;
-      flex-wrap: wrap;
+      padding: 1rem 0;
+      overflow: hidden;
     }
+
+    .oak-band-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 28s linear infinite;
+      width: max-content;
+    }
+
+    .oak-band:hover .oak-band-track { animation-play-state: paused; }
+
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
     .oak-band-item {
       font-family: var(--ff-mono);
       font-size: 0.52rem;
       letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: rgba(247,248,250,0.45);
-    }
-    .oak-band-item strong {
-      color: var(--gold-pale);
-      font-weight: 400;
-      margin-right: 0.5rem;
+      color: rgba(247,248,250,0.4);
+      padding: 0 3rem;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    /* ── CAROUSEL ── */
+    .oak-band-item strong {
+      color: var(--gold-pale, #d4aa6a);
+      font-weight: 400;
+      margin-right: 0.4rem;
+    }
+
+    .oak-band-sep {
+      color: rgba(247,248,250,0.15);
+      padding: 0 1rem;
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════════
+       SCROLL-REVEAL TEXT
+       ═══════════════════════════════════════════ */
+    .reveal-text {
+      overflow: hidden;
+    }
+
+    .reveal-text .word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(100%);
+      transition: opacity 600ms ease, transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-text.revealed .word {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger each word */
+    .reveal-text .word:nth-child(1)  { transition-delay: 0ms; }
+    .reveal-text .word:nth-child(2)  { transition-delay: 60ms; }
+    .reveal-text .word :nth-child(3)  { transition-delay: 120ms; }
+    .reveal-text .word:nth-child(4)  { transition-delay: 180ms; }
+    .reveal-text .word:nth-child(5)  { transition-delay: 240ms; }
+    .reveal-text .word:nth-child(6)  { transition-delay: 300ms; }
+    .reveal-text .word:nth-child(7)  { transition-delay: 360ms; }
+    .reveal-text .word:nth-child(8)  { transition-delay: 420ms; }
+
+    /* ═══════════════════════════════════════════
+       CAROUSEL — with 3D tilt
+       ═══════════════════════════════════════════ */
     .carousel-section {
-      position: relative;
-      z-index: 2;
+      position: relative; z-index: 2;
       padding: 4rem 0 3rem;
     }
 
@@ -205,78 +464,95 @@
       gap: 0.4rem;
     }
 
+    /* Border-draw carousel buttons */
     .carousel-btn {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: relative;
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
       background: transparent;
-      border: 1px solid var(--border-oak);
       color: var(--oak-mid);
       font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 150ms ease;
-      border-radius: 2px;
+      cursor: none;
+      overflow: hidden;
+      border: none;
       user-select: none;
     }
 
-    .carousel-btn:hover:not(:disabled) {
-      background: var(--oak-dark);
-      color: var(--snow);
-      border-color: var(--oak-dark);
+    /* SVG border that draws on hover */
+    .carousel-btn svg.btn-border {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
     }
 
-    .carousel-btn:disabled {
-      opacity: 0.25;
-      cursor: not-allowed;
+    .carousel-btn svg.btn-border rect {
+      fill: none;
+      stroke: var(--oak-dark);
+      stroke-width: 1.5;
+      stroke-dasharray: 160;
+      stroke-dashoffset: 160;
+      transition: stroke-dashoffset 400ms cubic-bezier(0.76, 0, 0.24, 1);
     }
 
-    /* Viewport clips the track */
+    .carousel-btn:hover svg.btn-border rect { stroke-dashoffset: 0; }
+    .carousel-btn:hover { color: var(--oak-dark); }
+
+    .carousel-btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(61,43,26,0.06);
+      transform: scale(0);
+      border-radius: 50%;
+      transition: transform 300ms ease;
+    }
+    .carousel-btn:hover::before { transform: scale(1.5); border-radius: 0; }
+
+    .carousel-btn:disabled { opacity: 0.22; pointer-events: none; }
+
     .carousel-viewport {
       overflow: hidden;
-      cursor: grab;
+      cursor: none;
       user-select: none;
       -webkit-user-select: none;
-      padding: 0.5rem 0 1rem; /* breathing room for card shadows */
+      padding: 1rem 0 1.5rem;
     }
 
-    .carousel-viewport.dragging { cursor: grabbing; }
+    .carousel-viewport.dragging { }
 
-    /* Track is wider than viewport — scroll happens here */
     .carousel-track {
       display: flex;
       gap: 2px;
-      /* width set by JS based on item count */
       transition: transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
       will-change: transform;
-      padding: 0 2.5rem; /* matches header padding so first card aligns */
+      padding: 0 2.5rem;
     }
 
-    /* No transition during drag */
     .carousel-track.no-transition { transition: none; }
 
-    /* Each card in carousel */
+    /* 3D tilt card */
     .carousel-card {
       flex-shrink: 0;
-      /* 7 visible: calc((100vw - 5rem - 6 * 2px) / 7) */
       width: calc((min(1100px, 100vw) - 5rem - 12px) / 7);
       background: #fff;
       border: 1px solid var(--border-snow);
       overflow: hidden;
-      cursor: pointer;
-      transition: box-shadow 250ms ease, transform 250ms ease, border-color 250ms ease;
+      cursor: none;
+      transition: box-shadow 300ms ease, border-color 300ms ease;
       box-shadow: 0 2px 12px rgba(61,43,26,0.04);
+      /* tilt transform applied by JS */
+      transform-style: preserve-3d;
+      transform: perspective(800px) rotateX(0) rotateY(0);
+      will-change: transform;
     }
 
     .carousel-card:hover {
-      box-shadow: 0 6px 28px rgba(61,43,26,0.1);
-      transform: translateY(-3px);
-      border-color: rgba(61,43,26,0.18);
+      box-shadow: 0 12px 40px rgba(61,43,26,0.15);
+      border-color: rgba(61,43,26,0.2);
     }
 
-    .carousel-card:hover .carousel-card-img img { transform: scale(1.05); }
-    .carousel-card:hover .carousel-card-overlay { opacity: 1; }
+    .carousel-card:hover .carousel-card-img img { transform: scale(1.06); }
+    .carousel-card:hover .carousel-card-overlay  { opacity: 1; }
 
     .carousel-card-img {
       position: relative;
@@ -287,52 +563,40 @@
 
     .carousel-card-img img {
       width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      pointer-events: none; /* prevent img drag interfering */
+      object-fit: cover; display: block;
+      transition: transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      pointer-events: none;
     }
 
     .carousel-card-placeholder {
       width: 100%; height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-family: var(--ff-mono);
-      font-size: 0.42rem;
-      letter-spacing: 0.2em;
+      font-size: 0.42rem; letter-spacing: 0.2em;
       color: var(--iron-light);
     }
 
     .carousel-card-overlay {
       position: absolute; inset: 0;
-      background: rgba(61,43,26,0.28);
-      opacity: 0;
-      transition: opacity 250ms ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: rgba(61,43,26,0.3);
+      opacity: 0; transition: opacity 250ms ease;
+      display: flex; align-items: center; justify-content: center;
       pointer-events: none;
     }
 
     .carousel-card-overlay span {
       font-family: var(--ff-mono);
-      font-size: 0.48rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.55);
+      font-size: 0.48rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: #fff;
+      border: 1px solid rgba(255,255,255,0.6);
       padding: 0.4rem 0.9rem;
     }
 
     .carousel-card-badge {
-      position: absolute;
-      top: 0.5rem; left: 0.5rem;
-      font-family: var(--ff-mono);
-      font-size: 0.4rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.4rem;
+      position: absolute; top: 0.5rem; left: 0.5rem;
+      font-family: var(--ff-mono); font-size: 0.4rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.2rem 0.4rem; pointer-events: none;
     }
     .carousel-badge-sale { background: #7a1a1a; color: #f7dede; }
     .carousel-badge-new  { background: var(--oak-dark); color: var(--snow); }
@@ -343,321 +607,258 @@
     }
 
     .carousel-card-brand {
-      font-family: var(--ff-mono);
-      font-size: 0.45rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--oak-mid);
-      margin-bottom: 0.2rem;
-      line-height: 1;
+      font-family: var(--ff-mono); font-size: 0.45rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--oak-mid); margin-bottom: 0.2rem; line-height: 1;
     }
 
     .carousel-card-title {
-      font-size: 0.72rem;
-      font-weight: 400;
-      line-height: 1.3;
-      color: var(--text-dark);
-      margin-bottom: 0.4rem;
+      font-size: 0.72rem; font-weight: 400; line-height: 1.3;
+      color: var(--text-dark); margin-bottom: 0.4rem;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
 
     .carousel-card-price {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--oak-dark);
-      font-variant-numeric: tabular-nums;
+      font-size: 0.85rem; font-weight: 600;
+      color: var(--oak-dark); font-variant-numeric: tabular-nums;
     }
+    .carousel-card-price s { color: var(--iron-light); font-size: 0.7rem; font-weight: 400; margin-right: 0.2rem; }
 
-    .carousel-card-price s {
-      color: var(--iron-light);
-      font-size: 0.7rem;
-      font-weight: 400;
-      margin-right: 0.2rem;
-    }
-
-    /* Dot indicators */
     .carousel-dots {
-      display: flex;
-      justify-content: center;
-      gap: 6px;
-      padding: 1rem 0 0;
+      display: flex; justify-content: center; gap: 6px; padding: 1rem 0 0;
     }
 
     .carousel-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--border-oak);
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      transition: background 200ms ease, transform 200ms ease;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--border-oak); border: none; cursor: none; padding: 0;
+      transition: background 200ms ease, transform 200ms ease, width 200ms ease;
+      border-radius: 3px;
     }
 
     .carousel-dot.active {
       background: var(--oak-dark);
-      transform: scale(1.3);
+      width: 20px;
+      transform: none;
     }
 
     .carousel-loading {
-      font-family: var(--ff-mono);
-      font-size: 0.55rem;
-      letter-spacing: 0.25em;
-      color: var(--iron-light);
-      padding: 4rem 2.5rem;
+      font-family: var(--ff-mono); font-size: 0.55rem;
+      letter-spacing: 0.25em; color: var(--iron-light); padding: 4rem 2.5rem;
     }
 
-    /* Mobile: show 2.5 cards so scroll is obvious */
     @media (max-width: 768px) {
-      .carousel-card {
-        width: calc((100vw - 3rem - 4px) / 2.5);
-      }
+      .carousel-card { width: calc((100vw - 3rem - 4px) / 2.5); }
       .carousel-header { padding: 0 1.2rem 1.5rem; }
       .carousel-track { padding: 0 1.2rem; }
     }
 
-    /* ── CHURCH / SISU SECTION (no button) ── */
+    /* ═══════════════════════════════════════════
+       CHURCH SECTION — parallax inner
+       ═══════════════════════════════════════════ */
     .church-section {
-      position: relative;
-      z-index: 2;
-      overflow: hidden;
+      position: relative; z-index: 2; overflow: hidden;
       background: linear-gradient(180deg, var(--frost-white) 0%, var(--ice-blue) 100%);
-      padding: 6rem 2.5rem;
+      padding: 7rem 2.5rem;
       text-align: center;
     }
+
     .church-section-svg {
-      position: absolute;
-      bottom: 0; left: 50%;
-      transform: translateX(-50%);
+      position: absolute; bottom: 0; left: 50%;
+      transform: translateX(-50%) translateY(0);
       width: min(800px, 95vw);
-      opacity: 0.07;
-      pointer-events: none;
+      opacity: 0.07; pointer-events: none;
+      will-change: transform;
     }
+
     .church-section-content {
-      position: relative;
-      z-index: 1;
-      max-width: 600px;
-      margin: 0 auto;
+      position: relative; z-index: 1;
+      max-width: 600px; margin: 0 auto;
     }
+
     .church-rune {
-      font-family: var(--ff-mono);
-      font-size: 0.9rem;
-      letter-spacing: 0.5em;
-      color: var(--oak-light);
-      margin-bottom: 1.5rem;
-      opacity: 0.5;
+      font-family: var(--ff-mono); font-size: 0.9rem;
+      letter-spacing: 0.5em; color: var(--oak-light);
+      margin-bottom: 1.5rem; opacity: 0.5;
     }
+
     .church-section h2 {
       font-family: var(--ff-title);
       font-size: clamp(1.6rem, 4vw, 2.8rem);
-      color: var(--oak-dark);
-      margin-bottom: 1.2rem;
-      line-height: 1.15;
+      color: var(--oak-dark); margin-bottom: 1.2rem; line-height: 1.15;
     }
+
     .church-section p {
-      font-family: var(--ff-italic);
-      font-style: italic;
-      font-size: 1.05rem;
-      color: var(--text-mid);
-      line-height: 1.85;
-      /* no margin-bottom since no button below */
+      font-family: var(--ff-italic); font-style: italic;
+      font-size: 1.05rem; color: var(--text-mid); line-height: 1.85;
     }
 
-
-
-    /* ── JOURNAL SECTIONS (shared styles) ── */
+    /* ═══════════════════════════════════════════
+       JOURNAL SECTIONS
+       ═══════════════════════════════════════════ */
     .journal-section {
-      position: relative;
-      z-index: 2;
-      max-width: 1100px;
-      margin: 0 auto;
+      position: relative; z-index: 2;
+      max-width: 1100px; margin: 0 auto;
       padding: 5rem 2.5rem;
     }
 
-    .journal-section + .journal-section {
-      padding-top: 0;
-    }
+    .journal-section + .journal-section { padding-top: 0; }
 
     .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 0.6rem;
+      display: flex; justify-content: space-between;
+      align-items: flex-end; margin-bottom: 0.6rem;
     }
 
     .section-eyebrow {
-      font-family: var(--ff-mono);
-      font-size: 0.5rem;
-      letter-spacing: 0.38em;
-      text-transform: uppercase;
-      color: var(--oak-mid);
-      opacity: 0.65;
-      margin-bottom: 0.4rem;
+      font-family: var(--ff-mono); font-size: 0.5rem;
+      letter-spacing: 0.38em; text-transform: uppercase;
+      color: var(--oak-mid); opacity: 0.65; margin-bottom: 0.4rem;
     }
 
     .section-title {
       font-family: var(--ff-title);
       font-size: clamp(1.2rem, 3vw, 1.9rem);
-      color: var(--oak-dark);
-      line-height: 1.1;
+      color: var(--oak-dark); line-height: 1.1;
     }
 
+    /* Border-draw link */
     .section-link {
-      font-family: var(--ff-mono);
-      font-size: 0.52rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--oak-mid);
-      text-decoration: none;
-      border-bottom: 1px solid var(--border-oak);
-      padding-bottom: 2px;
-      transition: color 0.2s, border-color 0.2s;
-      white-space: nowrap;
-      align-self: flex-end;
+      position: relative;
+      font-family: var(--ff-mono); font-size: 0.52rem;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--oak-mid); text-decoration: none;
+      padding-bottom: 3px;
+      white-space: nowrap; align-self: flex-end;
+      overflow: hidden;
     }
-    .section-link:hover { color: var(--oak-dark); border-color: var(--oak-dark); }
+
+    .section-link::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 100%; height: 1px;
+      background: var(--oak-dark);
+      transform: translateX(-101%);
+      transition: transform 350ms cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .section-link:hover { color: var(--oak-dark); }
+    .section-link:hover::after { transform: translateX(0); }
 
     .section-desc {
-      font-family: var(--ff-italic);
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--text-light);
-      margin-bottom: 2rem;
-      line-height: 1.7;
-      max-width: 600px;
+      font-family: var(--ff-italic); font-style: italic;
+      font-size: 0.95rem; color: var(--text-light);
+      margin-bottom: 2rem; line-height: 1.7; max-width: 600px;
     }
 
-    /* ── JOURNAL CARDS GRID ── */
     .journal-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 2px;
-      background: var(--border-snow);
+      gap: 2px; background: var(--border-snow);
     }
 
     .journal-card {
-      background: #fff;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+      background: #fff; text-decoration: none;
+      display: flex; flex-direction: column; overflow: hidden;
       border: 1px solid transparent;
-      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+      transition: border-color 300ms ease, box-shadow 300ms ease, transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
       box-shadow: 0 2px 12px rgba(61,43,26,0.04);
     }
+
     .journal-card:hover {
       border-color: rgba(61,43,26,0.15);
-      box-shadow: 0 6px 30px rgba(61,43,26,0.1);
-      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(61,43,26,0.12);
+      transform: translateY(-4px);
     }
-    .journal-card:hover .journal-card-img img { transform: scale(1.04); }
+
+    .journal-card:hover .journal-card-img img { transform: scale(1.05); }
+    .journal-card:hover .journal-card-read { gap: 0.8rem; color: var(--oak-dark); }
 
     .journal-card-img {
-      aspect-ratio: 16/9;
-      overflow: hidden;
-      background: var(--ice-blue);
-      position: relative;
+      aspect-ratio: 16/9; overflow: hidden;
+      background: var(--ice-blue); position: relative;
     }
+
     .journal-card-img img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
+
     .journal-card-img-placeholder {
       width: 100%; height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--ff-mono);
-      font-size: 0.5rem;
-      letter-spacing: 0.2em;
-      color: var(--iron-light);
-      text-transform: uppercase;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--ff-mono); font-size: 0.5rem;
+      letter-spacing: 0.2em; color: var(--iron-light); text-transform: uppercase;
     }
 
     .journal-card-tag {
-      position: absolute;
-      top: 0.75rem; left: 0.75rem;
-      font-family: var(--ff-mono);
-      font-size: 0.45rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
+      position: absolute; top: 0.75rem; left: 0.75rem;
+      font-family: var(--ff-mono); font-size: 0.45rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
       padding: 0.22rem 0.55rem;
-      background: var(--oak-dark);
-      color: var(--snow);
+      background: var(--oak-dark); color: var(--snow);
     }
 
     .journal-card-body {
       padding: 1.2rem 1.4rem 1.6rem;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
+      display: flex; flex-direction: column; flex: 1;
       border-top: 1px solid var(--border-snow);
     }
 
     .journal-card-meta {
-      font-family: var(--ff-mono);
-      font-size: 0.48rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--oak-light);
-      margin-bottom: 0.5rem;
+      font-family: var(--ff-mono); font-size: 0.48rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--oak-light); margin-bottom: 0.5rem;
     }
 
     .journal-card-title {
-      font-family: var(--ff-body);
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.3;
-      color: var(--oak-dark);
-      margin-bottom: 0.6rem;
+      font-family: var(--ff-body); font-size: 1rem;
+      font-weight: 400; line-height: 1.3;
+      color: var(--oak-dark); margin-bottom: 0.6rem;
     }
 
     .journal-card-hook {
-      font-family: var(--ff-italic);
-      font-style: italic;
-      font-size: 0.88rem;
-      line-height: 1.65;
-      color: var(--text-mid);
-      flex: 1;
-      margin-bottom: 1rem;
+      font-family: var(--ff-italic); font-style: italic;
+      font-size: 0.88rem; line-height: 1.65;
+      color: var(--text-mid); flex: 1; margin-bottom: 1rem;
     }
 
     .journal-card-read {
-      font-family: var(--ff-mono);
-      font-size: 0.5rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
+      font-family: var(--ff-mono); font-size: 0.5rem;
+      letter-spacing: 0.28em; text-transform: uppercase;
       color: var(--oak-mid);
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: color 0.2s, gap 0.2s;
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: color 250ms ease, gap 300ms cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .journal-card:hover .journal-card-read { color: var(--oak-dark); gap: 0.7rem; }
 
-    /* ── AUTH LEDGER cards — slightly different tint ── */
-    .auth-card {
-      background: var(--frost-white);
-    }
-    .auth-card .journal-card-img { background: var(--winter-sky); }
-    .auth-card .journal-card-tag { background: var(--iron); }
+    .auth-card { background: var(--frost-white, #eef2f6); }
+    .auth-card .journal-card-img { background: var(--winter-sky, #c8dce8); }
+    .auth-card .journal-card-tag { background: var(--iron, #4a4e54); }
 
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════ */
     @media (max-width: 900px) {
       .journal-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
       .hero { padding: 8rem 1.2rem 5rem; }
       .church-section { padding: 4rem 1.5rem; }
-      .oak-band { gap: 1.2rem; padding: 1rem 1.5rem; }
       .journal-section { padding: 3rem 1.2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-content { animation: none; }
+      .oak-band-track { animation: none; }
+      .reveal-text .word { opacity: 1; transform: none; transition: none; }
+      @keyframes glitch { 0%, 100% { text-shadow: none; } }
     }
   </style>
 </head>
 <body class="page-light">
+
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor-dot"  id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
 
   <!-- NAV -->
   <nav class="nav nav-light">
@@ -673,8 +874,8 @@
   </nav>
 
   <!-- HERO -->
-  <section class="hero">
-    <svg class="hero-church" viewBox="0 0 900 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <section class="hero" id="hero">
+    <svg class="hero-church" id="hero-church" viewBox="0 0 900 600" fill="none" xmlns="http://www.w3.org/2000/svg">
       <ellipse cx="450" cy="590" rx="450" ry="30" fill="#3d2b1a"/>
       <ellipse cx="100" cy="580" rx="130" ry="22" fill="#3d2b1a" opacity="0.6"/>
       <ellipse cx="800" cy="575" rx="120" ry="18" fill="#3d2b1a" opacity="0.5"/>
@@ -722,9 +923,25 @@
       <h1 class="hero-title">SISUKAS</h1>
       <p class="hero-title-sub">DESIGNER ARCHIVE</p>
       <p class="hero-tagline">Designer menswear and womenswear sourced with the precision of the north. Rare, authentic, enduring.</p>
+      <!-- Live piece count -->
+      <div class="hero-count">
+        <span class="hero-count-dot"></span>
+        <span id="live-count">— pieces</span> available now
+      </div>
       <div class="hero-ctas">
-        <a href="shop.html" class="btn btn-oak">Enter the Archive</a>
-        <a href="shop.html?filter=sale" class="btn btn-snow">Discounted</a>
+        <!-- Magnetic button wrapper -->
+        <div class="btn-magnetic" id="mag-1">
+          <a href="shop.html" class="btn btn-oak">
+            <span>Enter the Archive</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        </div>
+        <div class="btn-magnetic" id="mag-2">
+          <a href="shop.html?filter=sale" class="btn btn-snow">
+            <span>Discounted</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -734,21 +951,43 @@
     </div>
   </section>
 
-  <!-- OAK BAND -->
-  <div class="oak-band">
-    <span class="oak-band-item"><strong>Free</strong> Authenticity Guarantee</span>
-    <span class="oak-band-item"><strong>200+</strong> Archive Pieces</span>
-    <span class="oak-band-item"><strong>Also on</strong> Grailed</span>
-    <span class="oak-band-item"><strong>DM</strong> for Inquiries</span>
+  <!-- OAK BAND — marquee -->
+  <div class="oak-band" aria-hidden="true">
+    <div class="oak-band-track" id="oak-band-track">
+      <!-- duplicated for seamless loop -->
+      <span class="oak-band-item"><strong>Free</strong> Authenticity Guarantee</span>
+      <span class="oak-band-sep">᛭</span>
+      <span class="oak-band-item"><strong>200+</strong> Archive Pieces</span>
+      <span class="oak-band-sep">᛭</span>
+      <span class="oak-band-item"><strong>Also on</strong> Grailed</span>
+      <span class="oak-band-sep">᛭</span>
+      <span class="oak-band-item"><strong>DM</strong> for Inquiries</span>
+      <span class="oak-band-sep">᛭</span>
+      <span class="oak-band-item"><strong>Nordic</strong> Curation</span>
+      <span class="oak-band-sep">᛭</span>
+      <span class="oak-band-item"><strong>Rare</strong> Designer Pieces</span>
+      <span class="oak-band-sep">᛭</span>
+      <!-- duplicate set for seamless loop -->
+      <span class="oak-band-item"><strong>Free</strong> Authenticity Guarantee</span>
+      <span class="oak-band-sep">᛭</span>
+      <span class="oak-band-item"><strong>200+</strong> Archive Pieces</span>
+      <span class="oak-band-sep">᛭</span>
+      <span class="oak-band-item"><strong>Also on</strong> Grailed</span>
+      <span class="oak-band-sep">᛭</span>
+      <span class="oak-band-item"><strong>DM</strong> for Inquiries</span>
+      <span class="oak-band-sep">᛭</span>
+      <span class="oak-band-item"><strong>Nordic</strong> Curation</span>
+      <span class="oak-band-sep">᛭</span>
+      <span class="oak-band-item"><strong>Rare</strong> Designer Pieces</span>
+      <span class="oak-band-sep">᛭</span>
+    </div>
   </div>
 
   <div class="divider-light" style="padding: 2rem 0;">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ</div>
 
-
-
-  <!-- SPIRIT OF SISU — no button -->
-  <section class="church-section">
-    <svg class="church-section-svg" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- SPIRIT OF SISU — scroll reveal text -->
+  <section class="church-section" id="church-section">
+    <svg class="church-section-svg" id="church-svg" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="250" y="280" width="300" height="220" fill="#3d2b1a"/>
       <polygon points="230,280 570,280 400,140" fill="#3d2b1a"/>
       <rect x="345" y="160" width="110" height="140" fill="#2e1f0a"/>
@@ -767,7 +1006,7 @@
     </svg>
     <div class="church-section-content">
       <div class="church-rune">ᚠᚢᚦᚨᚱᚲ</div>
-      <h2>The Spirit of Sisu</h2>
+      <h2 class="reveal-text" id="sisu-heading">The Spirit of Sisu</h2>
       <p>Sisu is the Finnish word for an inner strength that endures beyond all reason — resilience forged in winter, clarity found in cold. Sisukas carries that spirit into fashion: pieces that do not follow trends, but outlast them.</p>
     </div>
   </section>
@@ -782,57 +1021,55 @@
         <h2 class="carousel-title">Latest Arrivals</h2>
       </div>
       <div class="carousel-controls">
-        <button class="carousel-btn" id="carousel-prev" aria-label="Previous">←</button>
-        <button class="carousel-btn" id="carousel-next" aria-label="Next">→</button>
-        <a href="shop.html" class="btn btn-snow" style="padding:0.5rem 1.2rem; margin-left:0.5rem">View All →</a>
+        <button class="carousel-btn" id="carousel-prev" aria-label="Previous">
+          <svg class="btn-border" viewBox="0 0 40 40"><rect x="0.75" y="0.75" width="38.5" height="38.5"/></svg>
+          ←
+        </button>
+        <button class="carousel-btn" id="carousel-next" aria-label="Next">
+          <svg class="btn-border" viewBox="0 0 40 40"><rect x="0.75" y="0.75" width="38.5" height="38.5"/></svg>
+          →
+        </button>
+        <div class="btn-magnetic" style="margin-left:0.5rem">
+          <a href="shop.html" class="btn btn-snow" style="padding:0.5rem 1.2rem">
+            <span>View All</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        </div>
       </div>
     </div>
-    <!-- Track wraps all cards, draggable -->
     <div class="carousel-viewport" id="carousel-viewport">
       <div class="carousel-track" id="carousel-track">
         <div class="carousel-loading">Loading archive...</div>
       </div>
     </div>
-    <!-- Dot indicators -->
     <div class="carousel-dots" id="carousel-dots"></div>
   </section>
 
   <div class="divider-light" style="padding: 2rem 0; margin: 0 2.5rem;">᛭ ᛭ ᛭</div>
 
-  <!-- ══════════════════════════════════════
-       THE ARCHIVE JOURNAL
-       Brand features, style deep dives,
-       curated collection showcases
-       ══════════════════════════════════════ -->
+  <!-- ARCHIVE JOURNAL -->
   <section class="journal-section">
-
     <div class="section-header">
       <div>
         <p class="section-eyebrow">Weekly — Brand Features & Collections</p>
-        <h2 class="section-title">The Archive Journal</h2>
+        <h2 class="section-title reveal-text">The Archive Journal</h2>
       </div>
       <a href="journal/" class="section-link">All Posts →</a>
     </div>
     <p class="section-desc">Deep dives into the brands we carry — their history, their seasons, what makes a piece worth owning. Each post ends with a curated selection from our current inventory.</p>
-
     <div class="journal-grid">
-
-      <!-- POST 1: Acne Studios SS25 Jeans -->
       <a class="journal-card" href="journal/acne-studios-ss25.html">
         <div class="journal-card-img">
-          <!-- Replace src with a real image URL when you have one -->
           <div class="journal-card-img-placeholder">Acne Studios — SS25</div>
           <span class="journal-card-tag">Brand Feature</span>
         </div>
         <div class="journal-card-body">
           <div class="journal-card-meta">Vol. 01 — May 2026 — Denim</div>
           <h3 class="journal-card-title">Acne Studios SS25: The Jean That Rewrote the Silhouette</h3>
-          <p class="journal-card-hook">How a Swedish house channelled 70s Scandinavian workwear, Japanese selvedge tradition, and the ghost of Helmut Lang into the season's most-discussed denim drop — and what to look for in the archive.</p>
+          <p class="journal-card-hook">How a Swedish house channelled 70s Scandinavian workwear, Japanese selvedge tradition, and the ghost of Helmut Lang into the season's most-discussed denim drop.</p>
           <span class="journal-card-read">Read the Feature →</span>
         </div>
       </a>
-
-      <!-- PLACEHOLDER CARD 2 — swap in next post -->
       <a class="journal-card" href="journal/">
         <div class="journal-card-img">
           <div class="journal-card-img-placeholder">Coming Soon</div>
@@ -845,30 +1082,22 @@
           <span class="journal-card-read">Follow for Updates →</span>
         </div>
       </a>
-
     </div>
   </section>
 
   <div class="divider-light" style="padding: 1rem 0; margin: 0 2.5rem;">᛭ ᛭ ᛭</div>
 
-  <!-- ══════════════════════════════════════
-       AUTHENTICATION LEDGER
-       Weekly authentication guides per brand
-       ══════════════════════════════════════ -->
+  <!-- AUTHENTICATION LEDGER -->
   <section class="journal-section" style="padding-top: 3rem;">
-
     <div class="section-header">
       <div>
         <p class="section-eyebrow">Weekly — Know What You're Buying</p>
-        <h2 class="section-title">Authentication Ledger</h2>
+        <h2 class="section-title reveal-text">Authentication Ledger</h2>
       </div>
       <a href="auth/" class="section-link">All Guides →</a>
     </div>
     <p class="section-desc">Brand-specific authentication guides written from first-hand experience. Hardware, stitching, labels, materials — everything you need to know before you buy or sell.</p>
-
     <div class="journal-grid">
-
-      <!-- AUTH 1: Givenchy Leather -->
       <a class="journal-card auth-card" href="auth/givenchy-leather.html">
         <div class="journal-card-img">
           <div class="journal-card-img-placeholder">Givenchy — Leather Goods</div>
@@ -877,12 +1106,10 @@
         <div class="journal-card-body">
           <div class="journal-card-meta">Issue 01 — May 2026 — Givenchy</div>
           <h3 class="journal-card-title">How to Authenticate Givenchy Leather Jackets</h3>
-          <p class="journal-card-hook">From the embossed leather interior tag to the branded zipper pulls, stitching density, and lambskin grain — a full breakdown of what separates a real Givenchy from a convincing fake.</p>
+          <p class="journal-card-hook">From the embossed leather interior tag to the branded zipper pulls, stitching density, and lambskin grain — a full breakdown of what separates real from fake.</p>
           <span class="journal-card-read">Read the Guide →</span>
         </div>
       </a>
-
-      <!-- AUTH PLACEHOLDER 2 -->
       <a class="journal-card auth-card" href="auth/">
         <div class="journal-card-img">
           <div class="journal-card-img-placeholder">Coming Soon</div>
@@ -891,11 +1118,10 @@
         <div class="journal-card-body">
           <div class="journal-card-meta">Issue 02 — Coming Soon</div>
           <h3 class="journal-card-title">Next Authentication Guide Loading...</h3>
-          <p class="journal-card-hook">A new brand authentication breakdown every week — Balenciaga, Kapital, Arc'teryx, and more coming soon. Built from pieces we've personally handled.</p>
+          <p class="journal-card-hook">A new brand authentication breakdown every week — Balenciaga, Kapital, Arc'teryx, and more. Built from pieces we've personally handled.</p>
           <span class="journal-card-read">Follow for Updates →</span>
         </div>
       </a>
-
     </div>
   </section>
 
@@ -949,209 +1175,353 @@
   </div>
 
   <script>
-    // ── SNOW ──
-    (function() {
-      const field = document.getElementById('snowfield');
-      for (let i = 0; i < 38; i++) {
-        const s = document.createElement('span');
-        const size = Math.random() * 4 + 1.5;
-        s.style.cssText = `
-          left: ${Math.random() * 100}%;
-          width: ${size}px;
-          height: ${size}px;
-          animation-duration: ${Math.random() * 12 + 8}s;
-          animation-delay: ${Math.random() * 15}s;
-          opacity: ${Math.random() * 0.5 + 0.2};
-        `;
-        field.appendChild(s);
-      }
-    })();
+  // ═══════════════════════════════════════════
+  // CUSTOM CURSOR
+  // ═══════════════════════════════════════════
+  (function() {
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    if (!dot || !ring) return;
 
-    // ── CART ──
-    function getCart() {
-      try { return JSON.parse(localStorage.getItem('sisukas_cart') || '[]'); } catch { return []; }
-    }
-    function saveCart(cart) { localStorage.setItem('sisukas_cart', JSON.stringify(cart)); updateCartUI(); }
-    function removeFromCart(id) { saveCart(getCart().filter(i => i.id !== id)); }
-    function updateCartUI() {
-      const cart  = getCart();
-      const total = cart.reduce((s, i) => s + i.price, 0);
-      const nav   = document.getElementById('cart-count-nav');
-      if (nav) nav.textContent = cart.length ? `(${cart.length})` : '';
-      const totalEl = document.getElementById('cart-total');
-      if (totalEl) totalEl.textContent = `$${total}`;
-      const listEl = document.getElementById('cart-items-list');
-      if (!listEl) return;
-      listEl.innerHTML = cart.length ? cart.map(item => `
-        <div class="cart-item">
-          ${item.image ? `<img class="cart-item-img" src="${item.image}" alt="${item.title}">` : '<div class="cart-item-img"></div>'}
-          <div class="cart-item-info">
-            <div class="cart-item-brand">${item.brand || ''}</div>
-            <div class="cart-item-title">${item.title}</div>
-            <div class="cart-item-size">${item.size || ''}</div>
-            <div class="cart-item-price">$${item.price}</div>
-          </div>
-          <button class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</button>
-        </div>
-      `).join('') : '<div class="cart-empty">Your cart is empty</div>';
-    }
+    let mouseX = -100, mouseY = -100;
+    let ringX  = -100, ringY  = -100;
+    let raf;
 
-    document.getElementById('open-cart').addEventListener('click', e => {
-      e.preventDefault();
-      document.getElementById('cart-backdrop').classList.add('open');
-      document.body.style.overflow = 'hidden';
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top  = mouseY + 'px';
     });
-    document.getElementById('close-cart').addEventListener('click', () => {
+
+    // Ring lags behind dot with lerp
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      ring.style.left = ringX + 'px';
+      ring.style.top  = ringY + 'px';
+      raf = requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    // Expand cursor over interactive elements
+    const interactors = 'a, button, [role="button"], .carousel-card, .journal-card';
+    document.addEventListener('mouseover', e => {
+      if (e.target.closest(interactors)) {
+        document.body.classList.add('cursor-expanded');
+      }
+    });
+    document.addEventListener('mouseout', e => {
+      if (e.target.closest(interactors)) {
+        document.body.classList.remove('cursor-expanded');
+      }
+    });
+
+    // Hide cursor when leaving window
+    document.addEventListener('mouseleave', () => {
+      dot.style.opacity  = '0';
+      ring.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+      dot.style.opacity  = '1';
+      ring.style.opacity = '1';
+    });
+  })();
+
+  // ═══════════════════════════════════════════
+  // PARALLAX — hero church + sisu svg
+  // ═══════════════════════════════════════════
+  (function() {
+    const church    = document.getElementById('hero-church');
+    const churchSvg = document.getElementById('church-svg');
+    let ticking = false;
+
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+
+          // Hero church moves up at 0.4x scroll speed (parallax slower)
+          if (church) {
+            church.style.transform = `translateX(-50%) translateY(${scrollY * 0.35}px)`;
+          }
+
+          // Sisu section SVG moves at 0.2x
+          if (churchSvg) {
+            const rect = churchSvg.closest('.church-section')?.getBoundingClientRect();
+            if (rect) {
+              const offset = (window.innerHeight - rect.top) * 0.15;
+              churchSvg.style.transform = `translateX(-50%) translateY(${-offset}px)`;
+            }
+          }
+
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  // ═══════════════════════════════════════════
+  // MAGNETIC BUTTONS
+  // ═══════════════════════════════════════════
+  (function() {
+    const magnets = document.querySelectorAll('.btn-magnetic');
+    const STRENGTH = 0.35; // 0 = no pull, 1 = full follow
+
+    magnets.forEach(magnet => {
+      magnet.addEventListener('mousemove', e => {
+        const rect = magnet.getBoundingClientRect();
+        const cx   = rect.left + rect.width  / 2;
+        const cy   = rect.top  + rect.height / 2;
+        const dx   = (e.clientX - cx) * STRENGTH;
+        const dy   = (e.clientY - cy) * STRENGTH;
+        magnet.style.transform = `translate(${dx}px, ${dy}px)`;
+      });
+
+      magnet.addEventListener('mouseleave', () => {
+        magnet.style.transform = 'translate(0, 0)';
+      });
+    });
+  })();
+
+  // ═══════════════════════════════════════════
+  // SCROLL REVEAL TEXT
+  // ═══════════════════════════════════════════
+  (function() {
+    const targets = document.querySelectorAll('.reveal-text');
+
+    // Wrap each word in a span
+    targets.forEach(el => {
+      const text = el.textContent;
+      el.innerHTML = text
+        .split(' ')
+        .map(w => `<span class="word">${w}&nbsp;</span>`)
+        .join('');
+    });
+
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    targets.forEach(el => obs.observe(el));
+  })();
+
+  // ═══════════════════════════════════════════
+  // CARD 3D TILT
+  // ═══════════════════════════════════════════
+  function applyTilt(card) {
+    card.addEventListener('mousemove', e => {
+      const rect   = card.getBoundingClientRect();
+      const cx     = rect.left + rect.width  / 2;
+      const cy     = rect.top  + rect.height / 2;
+      const dx     = (e.clientX - cx) / (rect.width  / 2);
+      const dy     = (e.clientY - cy) / (rect.height / 2);
+      const tiltX  = dy * -6;  // degrees
+      const tiltY  = dx *  6;
+      card.style.transform = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-4px)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+    });
+  }
+
+  // Also tilt journal cards
+  document.querySelectorAll('.journal-card').forEach(applyTilt);
+
+  // ═══════════════════════════════════════════
+  // SNOW
+  // ═══════════════════════════════════════════
+  (function() {
+    const field = document.getElementById('snowfield');
+    if (!field) return;
+    for (let i = 0; i < 38; i++) {
+      const s = document.createElement('span');
+      const size = Math.random() * 4 + 1.5;
+      s.style.cssText = `
+        left: ${Math.random() * 100}%;
+        width: ${size}px; height: ${size}px;
+        animation-duration: ${Math.random() * 12 + 8}s;
+        animation-delay: ${Math.random() * 15}s;
+        opacity: ${Math.random() * 0.5 + 0.2};
+      `;
+      field.appendChild(s);
+    }
+  })();
+
+  // ═══════════════════════════════════════════
+  // CART
+  // ═══════════════════════════════════════════
+  function getCart() {
+    try { return JSON.parse(localStorage.getItem('sisukas_cart') || '[]'); } catch { return []; }
+  }
+  function saveCart(cart) { localStorage.setItem('sisukas_cart', JSON.stringify(cart)); updateCartUI(); }
+  function removeFromCart(id) { saveCart(getCart().filter(i => i.id !== id)); }
+  function updateCartUI() {
+    const cart  = getCart();
+    const total = cart.reduce((s, i) => s + i.price, 0);
+    const nav   = document.getElementById('cart-count-nav');
+    if (nav) nav.textContent = cart.length ? `(${cart.length})` : '';
+    const totalEl = document.getElementById('cart-total');
+    if (totalEl) totalEl.textContent = `$${total}`;
+    const listEl = document.getElementById('cart-items-list');
+    if (!listEl) return;
+    listEl.innerHTML = cart.length ? cart.map(item => `
+      <div class="cart-item">
+        ${item.image ? `<img class="cart-item-img" src="${item.image}" alt="${item.title}">` : '<div class="cart-item-img"></div>'}
+        <div class="cart-item-info">
+          <div class="cart-item-brand">${item.brand || ''}</div>
+          <div class="cart-item-title">${item.title}</div>
+          <div class="cart-item-size">${item.size || ''}</div>
+          <div class="cart-item-price">$${item.price}</div>
+        </div>
+        <button class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</button>
+      </div>
+    `).join('') : '<div class="cart-empty">Your cart is empty</div>';
+  }
+
+  document.getElementById('open-cart').addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('cart-backdrop').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+  document.getElementById('close-cart').addEventListener('click', () => {
+    document.getElementById('cart-backdrop').classList.remove('open');
+    document.body.style.overflow = '';
+  });
+  document.getElementById('cart-backdrop').addEventListener('click', e => {
+    if (e.target === document.getElementById('cart-backdrop')) {
       document.getElementById('cart-backdrop').classList.remove('open');
       document.body.style.overflow = '';
-    });
-    document.getElementById('cart-backdrop').addEventListener('click', e => {
-      if (e.target === document.getElementById('cart-backdrop')) {
-        document.getElementById('cart-backdrop').classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    });
+    }
+  });
 
-    // ── LOAD PREVIEW ──
-    // ── CAROUSEL ──
-    async function initCarousel() {
-      const track    = document.getElementById('carousel-track');
-      const viewport = document.getElementById('carousel-viewport');
-      const dotsEl   = document.getElementById('carousel-dots');
-      const prevBtn  = document.getElementById('carousel-prev');
-      const nextBtn  = document.getElementById('carousel-next');
+  // ═══════════════════════════════════════════
+  // CAROUSEL + LIVE COUNT
+  // ═══════════════════════════════════════════
+  async function initCarousel() {
+    const track    = document.getElementById('carousel-track');
+    const viewport = document.getElementById('carousel-viewport');
+    const dotsEl   = document.getElementById('carousel-dots');
+    const prevBtn  = document.getElementById('carousel-prev');
+    const nextBtn  = document.getElementById('carousel-next');
 
-      let items = [];
-      try {
-        const res = await fetch('./listings.json');
-        items = await res.json();
-      } catch {
-        track.innerHTML = '<div class="carousel-loading">Add items to listings.json to populate the store</div>';
-        return;
-      }
-
-      // Most recent 15 — reverse order (highest id = newest)
-      const cards = [...items].sort((a,b) => b.id - a.id).slice(0, 15);
-
-      if (!cards.length) {
-        track.innerHTML = '<div class="carousel-loading">No listings yet</div>';
-        return;
-      }
-
-      // Render cards
-      track.innerHTML = cards.map(item => `
-        <div class="carousel-card" onclick="window.location='shop.html'" tabindex="0"
-          role="button" aria-label="${item.brand ? item.brand + ' ' : ''}${item.title}">
-          <div class="carousel-card-img">
-            ${item.images?.[0]
-              ? `<img src="${item.images[0]}" alt="${item.title}" loading="lazy" draggable="false" />`
-              : `<div class="carousel-card-placeholder">No Image</div>`}
-            <div class="carousel-card-overlay"><span>View</span></div>
-            ${item.sale_price ? `<span class="carousel-card-badge carousel-badge-sale">Sale</span>` : ''}
-            ${item.new        ? `<span class="carousel-card-badge carousel-badge-new">New</span>`  : ''}
-          </div>
-          <div class="carousel-card-body">
-            <div class="carousel-card-brand">${item.brand || ''}</div>
-            <div class="carousel-card-title">${item.title}</div>
-            <div class="carousel-card-price">
-              ${item.sale_price
-                ? `<s>$${item.price}</s> $${item.sale_price}`
-                : `$${item.price.toLocaleString()}`}
-            </div>
-          </div>
-        </div>
-      `).join('');
-
-      // ── CAROUSEL STATE ──
-      const VISIBLE  = window.innerWidth <= 768 ? 2.5 : 7;
-      const STEP     = Math.floor(VISIBLE);   // pages advance by full visible count
-      const total    = cards.length;
-      const maxIndex = Math.max(0, total - Math.ceil(VISIBLE));
-      let   current  = 0;
-      let   isDragging = false;
-      let   startX   = 0;
-      let   startTranslate = 0;
-      let   currentTranslate = 0;
-
-      // Build dots — one per "page"
-      const pageCount = Math.ceil(total / STEP);
-      dotsEl.innerHTML = Array.from({ length: pageCount }, (_, i) =>
-        `<button class="carousel-dot ${i === 0 ? 'active' : ''}"
-          aria-label="Page ${i+1}" onclick="goToPage(${i})"></button>`
-      ).join('');
-
-      function getCardWidth() {
-        return track.children[0]?.offsetWidth + 2 || 0; // +2 for gap
-      }
-
-      function getTranslateForIndex(idx) {
-        return -(idx * getCardWidth());
-      }
-
-      function goTo(idx) {
-        current = Math.max(0, Math.min(idx, maxIndex));
-        currentTranslate = getTranslateForIndex(current);
-        track.classList.remove('no-transition');
-        track.style.transform = `translateX(${currentTranslate}px)`;
-        // update dots
-        const page = Math.floor(current / STEP);
-        document.querySelectorAll('.carousel-dot').forEach((d, i) =>
-          d.classList.toggle('active', i === page));
-        // update buttons
-        prevBtn.disabled = current <= 0;
-        nextBtn.disabled = current >= maxIndex;
-      }
-
-      window.goToPage = (p) => goTo(p * STEP);
-
-      prevBtn.addEventListener('click', () => goTo(current - STEP));
-      nextBtn.addEventListener('click', () => goTo(current + STEP));
-
-      // ── DRAG / SWIPE ──
-      function onDragStart(x) {
-        isDragging = true;
-        startX = x;
-        startTranslate = currentTranslate;
-        track.classList.add('no-transition');
-        viewport.classList.add('dragging');
-      }
-
-      function onDragMove(x) {
-        if (!isDragging) return;
-        const delta = x - startX;
-        track.style.transform = `translateX(${startTranslate + delta}px)`;
-      }
-
-      function onDragEnd(x) {
-        if (!isDragging) return;
-        isDragging = false;
-        viewport.classList.remove('dragging');
-        const delta = x - startX;
-        const cardW = getCardWidth();
-        // Snap: if dragged more than 30% of a card width, advance
-        if (Math.abs(delta) > cardW * 0.3) {
-          goTo(delta < 0 ? current + STEP : current - STEP);
-        } else {
-          goTo(current); // snap back
-        }
-      }
-
-      // Mouse events
-      viewport.addEventListener('mousedown', e => { e.preventDefault(); onDragStart(e.clientX); });
-      window.addEventListener('mousemove',   e => { if (isDragging) onDragMove(e.clientX); });
-      window.addEventListener('mouseup',     e => { onDragEnd(e.clientX); });
-
-      // Touch events
-      viewport.addEventListener('touchstart', e => onDragStart(e.touches[0].clientX), { passive: true });
-      viewport.addEventListener('touchmove',  e => onDragMove(e.touches[0].clientX),  { passive: true });
-      viewport.addEventListener('touchend',   e => onDragEnd(e.changedTouches[0].clientX));
-
-      // Init state
-      goTo(0);
+    let items = [];
+    try {
+      const res = await fetch('./listings.json');
+      items = await res.json();
+    } catch {
+      track.innerHTML = '<div class="carousel-loading">Add items to listings.json to populate the store</div>';
+      return;
     }
 
-    updateCartUI();
-    initCarousel();
+    // Live count in hero
+    const liveCount = document.getElementById('live-count');
+    if (liveCount) liveCount.textContent = `${items.length} piece${items.length !== 1 ? 's' : ''}`;
+
+    const cards = [...items].sort((a,b) => b.id - a.id).slice(0, 15);
+
+    if (!cards.length) {
+      track.innerHTML = '<div class="carousel-loading">No listings yet</div>';
+      return;
+    }
+
+    track.innerHTML = cards.map(item => `
+      <div class="carousel-card" onclick="window.location='shop.html'" tabindex="0"
+        role="button" aria-label="${item.brand ? item.brand + ' ' : ''}${item.title}">
+        <div class="carousel-card-img">
+          ${item.images?.[0]
+            ? `<img src="${item.images[0]}" alt="${item.title}" loading="lazy" draggable="false" />`
+            : `<div class="carousel-card-placeholder">No Image</div>`}
+          <div class="carousel-card-overlay"><span>View</span></div>
+          ${item.sale_price ? `<span class="carousel-card-badge carousel-badge-sale">Sale</span>` : ''}
+          ${item.new        ? `<span class="carousel-card-badge carousel-badge-new">New</span>`  : ''}
+        </div>
+        <div class="carousel-card-body">
+          <div class="carousel-card-brand">${item.brand || ''}</div>
+          <div class="carousel-card-title">${item.title}</div>
+          <div class="carousel-card-price">
+            ${item.sale_price
+              ? `<s>$${item.price}</s> $${item.sale_price}`
+              : `$${item.price.toLocaleString()}`}
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    // Apply tilt to carousel cards
+    track.querySelectorAll('.carousel-card').forEach(applyTilt);
+
+    const VISIBLE  = window.innerWidth <= 768 ? 2.5 : 7;
+    const STEP     = Math.floor(VISIBLE);
+    const total    = cards.length;
+    const maxIndex = Math.max(0, total - Math.ceil(VISIBLE));
+    let   current  = 0;
+    let   isDragging = false;
+    let   startX = 0, startTranslate = 0, currentTranslate = 0;
+
+    const pageCount = Math.ceil(total / STEP);
+    dotsEl.innerHTML = Array.from({ length: pageCount }, (_, i) =>
+      `<button class="carousel-dot ${i === 0 ? 'active' : ''}"
+        aria-label="Page ${i+1}" onclick="goToPage(${i})"></button>`
+    ).join('');
+
+    function getCardWidth() { return (track.children[0]?.offsetWidth || 0) + 2; }
+
+    function goTo(idx) {
+      current = Math.max(0, Math.min(idx, maxIndex));
+      currentTranslate = -(current * getCardWidth());
+      track.classList.remove('no-transition');
+      track.style.transform = `translateX(${currentTranslate}px)`;
+      const page = Math.floor(current / STEP);
+      document.querySelectorAll('.carousel-dot').forEach((d, i) =>
+        d.classList.toggle('active', i === page));
+      prevBtn.disabled = current <= 0;
+      nextBtn.disabled = current >= maxIndex;
+    }
+
+    window.goToPage = p => goTo(p * STEP);
+    prevBtn.addEventListener('click', () => goTo(current - STEP));
+    nextBtn.addEventListener('click', () => goTo(current + STEP));
+
+    function onDragStart(x) {
+      isDragging = true; startX = x; startTranslate = currentTranslate;
+      track.classList.add('no-transition');
+    }
+    function onDragMove(x) {
+      if (!isDragging) return;
+      track.style.transform = `translateX(${startTranslate + (x - startX)}px)`;
+    }
+    function onDragEnd(x) {
+      if (!isDragging) return;
+      isDragging = false;
+      const delta = x - startX;
+      const cw    = getCardWidth();
+      goTo(Math.abs(delta) > cw * 0.3
+        ? (delta < 0 ? current + STEP : current - STEP)
+        : current);
+    }
+
+    viewport.addEventListener('mousedown',  e => { e.preventDefault(); onDragStart(e.clientX); });
+    window.addEventListener('mousemove',    e => { if (isDragging) onDragMove(e.clientX); });
+    window.addEventListener('mouseup',      e => onDragEnd(e.clientX));
+    viewport.addEventListener('touchstart', e => onDragStart(e.touches[0].clientX), { passive: true });
+    viewport.addEventListener('touchmove',  e => onDragMove(e.touches[0].clientX),  { passive: true });
+    viewport.addEventListener('touchend',   e => onDragEnd(e.changedTouches[0].clientX));
+
+    goTo(0);
+  }
+
+  updateCartUI();
+  initCarousel();
   </script>
 </body>
 </html>
