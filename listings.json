@@ -1,30 +1,36 @@
 [
   {
     "id": 1,
-    "title": "Washed Denim Chore Coat",
-    "brand": "Helmut Lang",
-    "price": 385,
-    "sale_price": null,
-    "size": "M",
+    "title": "Black Lambskin Quilted Zip Up Leather Moto Jacket",
+    "brand": "Givenchy",
+    "price": 200,
+    "sale_price": 1750,
+    "size": "L",
     "gender": "mens",
     "condition": "Excellent",
-    "color": "Indigo",
-    "era": "SS2001",
+    "color": "Black",
+    "era": "Unknown",
     "category": "outerwear",
-    "new": true,
-    "description": "Early 2000s Helmut Lang raw-edge denim chore coat. Heavy washed indigo with signature minimal hardware. Single chest pocket, clean interior. Minor fading throughout consistent with age — exactly as intended.",
+    "new": false,
+    "description": "Incredibly rare piece, you wont find another.
+
+Super soft lambskin outer, plush lined interior.
+
+Fits generally true to size, although sleeves are a tad long, more of a racer jacket style.
+
+Condition is excellent and barely has wear.",
     "images": [
       "https://via.placeholder.com/600x800/1a1208/c9a84c?text=Image+1",
       "https://via.placeholder.com/600x800/1a1208/c9a84c?text=Image+2",
       "https://via.placeholder.com/600x800/1a1208/c9a84c?text=Image+3"
     ],
     "measurements": {
-      "chest": 42,
-      "shoulder": 18.5,
-      "sleeve": 25,
-      "length": 27
+      "chest": 22,
+      "shoulder": 20,
+      "sleeve": 26,
+      "length": 25
     },
-    "grailed_url": "https://www.grailed.com/listings/YOUR-ID-HERE",
+    "grailed_url": "https://www.grailed.com/listings/95314394-givenchy-black-lambskin-quilted-zip-up-leather-moto-jacket?g_aidx=Listing_by_high_price_production&g_aqid=b8ad3269ea1b12313f19d92fae290d50",
     "instagram": ""
   },
   {
