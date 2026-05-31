@@ -164,7 +164,134 @@
       "https://media-assets.grailed.com/prd/listing/temp/3020ed1dbb7641b981035064db0e6564?w=2200"
     ],
     "measurements": {},
-    "grailed_url": "https://www.grailed.com/listings/YOUR-ID-HERE",
+    "grailed_url": "https://www.grailed.com/listings/97356533-joe-freshgoods-x-new-balance-joe-fresh-goods-x-new-balance-990v3-outside-clothes",
+    "instagram": ""
+  },
+  {
+    "id": 6,
+    "title": "Melk Used Blk Leather Back Patch Denim Jeans",
+    "brand": "Acne Studios",
+    "price": 100,
+    "sale_price": null,
+    "size": "US 29",
+    "gender": "mens",
+    "condition": "Good",
+    "color": "Black",
+    "era": "Unknown",
+    "category": "bottoms",
+    "new": false,
+    "description": "Excellent condition. Marked size 27 but waist measures around 29 inches — see measurements. Soft, flexible denim with the classic Acne Studios leather back patch.",
+    "images": [
+      "https://media-assets.grailed.com/prd/listing/temp/d6e6a95ea6574d528b711f3be71ddbea?w=2200",
+      "https://media-assets.grailed.com/prd/listing/temp/bfd26d8c2f8541beb4e13aeeb48050e6?w=2200",
+      "https://media-assets.grailed.com/prd/listing/temp/b61c9917585443f6b87bc632b6b7a7a1?w=2200",
+      "https://media-assets.grailed.com/prd/listing/temp/975c0ecda50a4ef6bc1852cc5bbc9e71?w=2200",
+      "https://media-assets.grailed.com/prd/listing/temp/118af61c25c2490fbef3df603c05ebaf?w=2200",
+      "https://media-assets.grailed.com/prd/listing/temp/87dc474d52ac41bd8be504993a254e39?w=2200",
+      "https://media-assets.grailed.com/prd/listing/temp/6ce8d253087941f5a92fbea1b5fac968?w=2200",
+      "https://media-assets.grailed.com/prd/listing/temp/b434ac13b541450aa1e8826ce2a26e4d?w=2200"
+    ],
+    "measurements": {
+      "waist": 29,
+      "inseam": 25.5
+    },
+    "grailed_url": "https://www.grailed.com/listings/96190567-acne-studios-melk-used-blk-leather-back-patch-black-denim-jeans",
+    "instagram": ""
+  },
+  {
+    "id": 7,
+    "title": "North Stay Black Leather Patch Denim Jeans",
+    "brand": "Acne Studios",
+    "price": 130,
+    "sale_price": null,
+    "size": "US 33",
+    "gender": "mens",
+    "condition": "New With Tags",
+    "color": "Black",
+    "era": "Unknown",
+    "category": "bottoms",
+    "new": true,
+    "description": "Brand new with tags. Soft, flexible denim with leather back patch. Waist measures closer to a 34 around despite the tagged size.",
+    "images": [
+      "https://via.placeholder.com/600x800/1a1208/c9a84c?text=Add+Images"
+    ],
+    "measurements": {
+      "waist": 34,
+      "inseam": 33
+    },
+    "grailed_url": "https://www.grailed.com/listings/96972860-acne-studios-north-stay-black-leather-patch-denim-jeans",
+    "instagram": ""
+  },
+  {
+    "id": 8,
+    "title": "Boy Black Straight Fit Denim Jeans",
+    "brand": "Acne Studios",
+    "price": 80,
+    "sale_price": null,
+    "size": "US 35",
+    "gender": "mens",
+    "condition": "Good",
+    "color": "Black",
+    "era": "Unknown",
+    "category": "bottoms",
+    "new": false,
+    "description": "Great condition overall. Light discoloration in two small line spots, barely visible. Fits a 35 waist despite being marked a size 31 — see measurements.",
+    "images": [
+      "https://via.placeholder.com/600x800/1a1208/c9a84c?text=Add+Images"
+    ],
+    "measurements": {
+      "waist": 35,
+      "inseam": 30
+    },
+    "grailed_url": "https://www.grailed.com/listings/96188059-acne-studios-boy-black-straight-fit-denim-jeans",
+    "instagram": ""
+  },
+  {
+    "id": 9,
+    "title": "Boy Bluebell Light Wash Denim Jeans",
+    "brand": "Acne Studios",
+    "price": 90,
+    "sale_price": null,
+    "size": "US 30 / EU 46",
+    "gender": "mens",
+    "condition": "Good",
+    "color": "Blue",
+    "era": "Unknown",
+    "category": "bottoms",
+    "new": false,
+    "description": "Great condition. Very soft denim in a classic light wash blue. Marked size 26 but measures close to 30 waist — see measurements.",
+    "images": [
+      "https://via.placeholder.com/600x800/1a1208/c9a84c?text=Add+Images"
+    ],
+    "measurements": {
+      "waist": 30,
+      "inseam": 29
+    },
+    "grailed_url": "https://www.grailed.com/listings/96187844-acne-studios-boy-bluebell-light-wash-blue-denim-jeans",
+    "instagram": ""
+  },
+  {
+    "id": 10,
+    "title": "Trademark Logo Hoodie",
+    "brand": "Supreme",
+    "price": 99,
+    "sale_price": null,
+    "size": "M / EU 48-50",
+    "gender": "mens",
+    "condition": "Good",
+    "color": "Black / Red",
+    "era": "Unknown",
+    "category": "tops",
+    "new": false,
+    "description": "Size medium, fits slightly oversized. Thick material. Classic Supreme trademark logo graphic in red on black.",
+    "images": [
+      "https://via.placeholder.com/600x800/1a1208/c9a84c?text=Add+Images"
+    ],
+    "measurements": {
+      "chest": 24,
+      "length": 27.5
+    },
+    "grailed_url": "https://www.grailed.com/listings/96601474-supreme-supreme-trademark-logo-black-red-hoodie",
     "instagram": ""
   }
 ]
