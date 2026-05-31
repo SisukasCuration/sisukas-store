@@ -1,0 +1,8 @@
+{
+  "name": "sisukas-store",
+  "version": "1.0.0",
+  "description": "Sisukas Nordic Archive Fashion Store",
+  "dependencies": {
+    "stripe": "^14.0.0"
+  }
+}
