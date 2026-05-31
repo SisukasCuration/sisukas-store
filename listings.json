@@ -35,7 +35,7 @@
     "instagram": "",
     "authLedger": {
       "verified": true,
-      "brand": "Pass",
+      "brand": "GIVENCHY",
       "tagVerified": "Pass",
       "hardwareVerified": "Pass",
       "stitchingConsistent": "Pass",
@@ -78,15 +78,15 @@
     "grailed_url": "https://www.grailed.com/listings/97357483-kapital-smiley-print-black-sweatpants",
     "instagram": "",
     "authLedger": {
-      "verified": false,
-      "brand": "",
-      "tagVerified": "",
-      "hardwareVerified": "",
-      "stitchingConsistent": "",
-      "materialFeel": "",
-      "knownReplicaRisk": "",
-      "sellerConfidence": "",
-      "provenance": ""
+      "verified": true,
+      "brand": "KAPITAL",
+      "tagVerified": "Pass",
+      "hardwareVerified": "N/A",
+      "stitchingConsistent": "Pass",
+      "materialFeel": "Pass",
+      "knownReplicaRisk": "Moderate",
+      "sellerConfidence": "Extremely High",
+      "provenance": "Purchased from RINKAN Shinjuku"
     }
   },
   {
@@ -124,15 +124,15 @@
     "grailed_url": "https://www.grailed.com/listings/96175911-warner-bros-looney-tunes-black-leather-patched-bomber-jacket",
     "instagram": "",
     "authLedger": {
-      "verified": false,
-      "brand": "",
-      "tagVerified": "",
-      "hardwareVerified": "",
-      "stitchingConsistent": "",
-      "materialFeel": "",
-      "knownReplicaRisk": "",
-      "sellerConfidence": "",
-      "provenance": ""
+      "verified": true,
+      "brand": "WARNER BROS",
+      "tagVerified": "Pass",
+      "hardwareVerified": "Pass",
+      "stitchingConsistent": "PAss",
+      "materialFeel": "Pass",
+      "knownReplicaRisk": "Moderate",
+      "sellerConfidence": "Extremely High",
+      "provenance": "Purchased in shopping mall liquidation sale"
     }
   },
   {
