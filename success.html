@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Confirmed — Sisukas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400&family=Cinzel:wght@300;400&family=IM+Fell+English:ital@0;1&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --void:       #08090b;
+      --deep:       #0f1114;
+      --panel:      #161a1e;
+      --frost:      #c8dce8;
+      --parchment:  #e8dfc8;
+      --smoke:      #8a9299;
+      --ash:        #5a6370;
+      --gold:       #c9a84c;
+      --gold-dim:   #7a6130;
+      --border:     rgba(201,168,76,0.15);
+      --ff-title:   'Cinzel Decorative', serif;
+      --ff-body:    'Cinzel', serif;
+      --ff-italic:  'IM Fell English', serif;
+      --ff-mono:    'Share Tech Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--void);
+      color: var(--parchment);
+      font-family: var(--ff-body);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      overflow: hidden;
+    }
+
+    /* Aurora background */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(20,50,30,0.5) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 20% 100%, rgba(26,18,8,0.6) 0%, transparent 50%);
+      pointer-events: none;
+      animation: auroraSuccess 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes auroraSuccess {
+      0%   { opacity: 0.6; filter: hue-rotate(0deg); }
+      100% { opacity: 1;   filter: hue-rotate(20deg); }
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      background: var(--deep);
+      border: 1px solid var(--border);
+      padding: 3rem 2.5rem;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+      animation: riseIn 0.7s cubic-bezier(0,0,0.2,1) both;
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Animated checkmark circle */
+    .check-wrap {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 2rem;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: popIn 0.5s 0.3s cubic-bezier(0,0,0.2,1) both;
+      box-shadow: 0 0 30px rgba(201,168,76,0.2);
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.6); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .check-wrap svg {
+      width: 32px;
+      height: 32px;
+      stroke: var(--gold);
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 50;
+      stroke-dashoffset: 50;
+      animation: drawCheck 0.4s 0.7s ease forwards;
+    }
+
+    @keyframes drawCheck {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .eyebrow {
+      font-family: var(--ff-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+      opacity: 0.8;
+    }
+
+    h1 {
+      font-family: var(--ff-title);
+      font-size: clamp(1.4rem, 5vw, 2.2rem);
+      line-height: 1.15;
+      color: var(--parchment);
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.1em;
+    }
+
+    .sub {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--smoke);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+    }
+
+    /* Divider */
+    .rule {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 1.8rem 0;
+    }
+
+    /* Order details block */
+    .order-info {
+      background: var(--panel);
+      border: 1px solid rgba(201,168,76,0.08);
+      padding: 1rem 1.2rem;
+      text-align: left;
+      margin-bottom: 2rem;
+    }
+
+    .order-info-label {
+      font-family: var(--ff-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .order-id {
+      font-family: var(--ff-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--smoke);
+      word-break: break-all;
+    }
+
+    /* What happens next */
+    .next-steps {
+      text-align: left;
+      margin-bottom: 2rem;
+    }
+
+    .next-steps-title {
+      font-family: var(--ff-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .step {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(201,168,76,0.06);
+    }
+
+    .step:last-child { border-bottom: none; }
+
+    .step-num {
+      font-family: var(--ff-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      min-width: 20px;
+      padding-top: 2px;
+    }
+
+    .step-text {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--smoke);
+      line-height: 1.5;
+    }
+
+    /* Buttons */
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 150ms cubic-bezier(0.4,0,0.2,1);
+      border-radius: 2px;
+    }
+
+    .btn:active { transform: scale(0.98); }
+    .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--void);
+      font-weight: 600;
+    }
+
+    .btn-primary:hover { background: var(--parchment); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--smoke);
+      border: 1px solid rgba(90,99,112,0.3);
+    }
+
+    .btn-ghost:hover { color: var(--frost); border-color: var(--smoke); }
+
+    /* Nav logo */
+    .nav-logo {
+      position: fixed;
+      top: 1.5rem; left: 2rem;
+      font-family: var(--ff-title);
+      font-size: 1rem;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-decoration: none;
+      z-index: 10;
+      text-shadow: 0 0 20px rgba(201,168,76,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="nav-logo">SISUKAS</a>
+
+  <div class="card">
+
+    <div class="check-wrap">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <polyline points="4 12 9 17 20 6"></polyline>
+      </svg>
+    </div>
+
+    <p class="eyebrow">Payment Confirmed</p>
+    <h1>Order Received</h1>
+    <p class="sub">Your piece is secured. We'll be in touch shortly to confirm details and arrange shipment.</p>
+
+    <div class="order-info" id="order-info" style="display:none">
+      <div class="order-info-label">Order Reference</div>
+      <div class="order-id" id="order-id">—</div>
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="next-steps">
+      <div class="next-steps-title">What happens next</div>
+      <div class="step">
+        <span class="step-num">01</span>
+        <span class="step-text">You'll receive a receipt from Stripe at your email address.</span>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <span class="step-text">We'll reach out within 24 hours to confirm your order and shipping details.</span>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <span class="step-text">Your item ships within 2–3 business days. Tracking provided on dispatch.</span>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <span class="step-text">Questions? Email <a href="mailto:hello@sisukas.com" style="color:var(--gold)">hello@sisukas.com</a> any time.</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a href="shop.html" class="btn btn-primary">Continue Browsing</a>
+      <a href="index.html" class="btn btn-ghost">Return Home</a>
+    </div>
+
+  </div>
+
+  <script>
+    // Extract session ID from URL and display it
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get('session_id');
+
+    if (sessionId) {
+      document.getElementById('order-id').textContent = sessionId;
+      document.getElementById('order-info').style.display = 'block';
+    }
+
+    // Clear the cart on successful payment
+    try { localStorage.removeItem('sisukas_cart'); } catch {}
+  </script>
+
+</body>
+</html>
