@@ -163,98 +163,259 @@
       margin-right: 0.5rem;
     }
 
-    /* ── INTRO SPLIT ── */
-    .intro {
+    /* ── CAROUSEL ── */
+    .carousel-section {
       position: relative;
       z-index: 2;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 7rem 2.5rem 4rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
+      padding: 4rem 0 3rem;
     }
-    .intro-left h2 {
-      font-family: var(--ff-title);
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      line-height: 1.1;
-      color: var(--oak-dark);
-      margin-bottom: 1.2rem;
-    }
-    .intro-left h2 em {
-      display: block;
-      font-family: var(--ff-italic);
-      font-style: italic;
-      font-size: 0.58em;
-      color: var(--oak-light);
-      letter-spacing: 0.05em;
-      margin-bottom: 0.3rem;
-    }
-    .intro-right p {
-      font-family: var(--ff-italic);
-      font-style: italic;
-      font-size: 1.05rem;
-      line-height: 1.9;
-      color: var(--text-mid);
-      margin-bottom: 1.4rem;
-    }
-    .intro-right p:last-of-type { margin-bottom: 0; }
 
-    /* ── CATEGORY TILES ── */
-    .categories {
-      position: relative;
-      z-index: 2;
+    .carousel-header {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 2rem 2.5rem 5rem;
+      padding: 0 2.5rem 1.8rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
-    .categories-label {
+
+    .carousel-eyebrow {
       font-family: var(--ff-mono);
-      font-size: 0.52rem;
+      font-size: 0.5rem;
       letter-spacing: 0.38em;
       text-transform: uppercase;
       color: var(--oak-mid);
-      margin-bottom: 1.8rem;
-      opacity: 0.7;
+      opacity: 0.65;
+      margin-bottom: 0.3rem;
     }
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2px;
-      background: var(--border-snow);
-    }
-    .cat-tile {
-      background: #fff;
-      padding: 2.5rem 1.5rem 2rem;
-      text-align: center;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.8rem;
-      transition: background 0.25s, transform 0.25s;
-      border: 1px solid transparent;
-    }
-    .cat-tile:hover { background: var(--oak-dark); transform: translateY(-2px); }
-    .cat-tile:hover .cat-icon  { filter: invert(1) sepia(0) brightness(10); }
-    .cat-tile:hover .cat-name  { color: var(--snow); }
-    .cat-tile:hover .cat-count { color: rgba(247,248,250,0.45); }
-    .cat-icon { font-size: 1.8rem; transition: filter 0.25s; opacity: 0.7; }
-    .cat-name {
+
+    .carousel-title {
       font-family: var(--ff-body);
-      font-size: 0.82rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      letter-spacing: 0.08em;
       color: var(--oak-dark);
-      transition: color 0.25s;
+      line-height: 1;
     }
-    .cat-count {
+
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .carousel-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--border-oak);
+      color: var(--oak-mid);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 150ms ease;
+      border-radius: 2px;
+      user-select: none;
+    }
+
+    .carousel-btn:hover:not(:disabled) {
+      background: var(--oak-dark);
+      color: var(--snow);
+      border-color: var(--oak-dark);
+    }
+
+    .carousel-btn:disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+    }
+
+    /* Viewport clips the track */
+    .carousel-viewport {
+      overflow: hidden;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      padding: 0.5rem 0 1rem; /* breathing room for card shadows */
+    }
+
+    .carousel-viewport.dragging { cursor: grabbing; }
+
+    /* Track is wider than viewport — scroll happens here */
+    .carousel-track {
+      display: flex;
+      gap: 2px;
+      /* width set by JS based on item count */
+      transition: transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+      padding: 0 2.5rem; /* matches header padding so first card aligns */
+    }
+
+    /* No transition during drag */
+    .carousel-track.no-transition { transition: none; }
+
+    /* Each card in carousel */
+    .carousel-card {
+      flex-shrink: 0;
+      /* 7 visible: calc((100vw - 5rem - 6 * 2px) / 7) */
+      width: calc((min(1100px, 100vw) - 5rem - 12px) / 7);
+      background: #fff;
+      border: 1px solid var(--border-snow);
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 250ms ease, transform 250ms ease, border-color 250ms ease;
+      box-shadow: 0 2px 12px rgba(61,43,26,0.04);
+    }
+
+    .carousel-card:hover {
+      box-shadow: 0 6px 28px rgba(61,43,26,0.1);
+      transform: translateY(-3px);
+      border-color: rgba(61,43,26,0.18);
+    }
+
+    .carousel-card:hover .carousel-card-img img { transform: scale(1.05); }
+    .carousel-card:hover .carousel-card-overlay { opacity: 1; }
+
+    .carousel-card-img {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: var(--ice-blue);
+    }
+
+    .carousel-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      pointer-events: none; /* prevent img drag interfering */
+    }
+
+    .carousel-card-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-mono);
+      font-size: 0.42rem;
+      letter-spacing: 0.2em;
+      color: var(--iron-light);
+    }
+
+    .carousel-card-overlay {
+      position: absolute; inset: 0;
+      background: rgba(61,43,26,0.28);
+      opacity: 0;
+      transition: opacity 250ms ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .carousel-card-overlay span {
       font-family: var(--ff-mono);
       font-size: 0.48rem;
-      letter-spacing: 0.2em;
-      color: var(--text-light);
-      transition: color 0.25s;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.55);
+      padding: 0.4rem 0.9rem;
+    }
+
+    .carousel-card-badge {
+      position: absolute;
+      top: 0.5rem; left: 0.5rem;
+      font-family: var(--ff-mono);
+      font-size: 0.4rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.4rem;
+    }
+    .carousel-badge-sale { background: #7a1a1a; color: #f7dede; }
+    .carousel-badge-new  { background: var(--oak-dark); color: var(--snow); }
+
+    .carousel-card-body {
+      padding: 0.6rem 0.75rem 0.8rem;
+      border-top: 1px solid var(--border-snow);
+    }
+
+    .carousel-card-brand {
+      font-family: var(--ff-mono);
+      font-size: 0.45rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--oak-mid);
+      margin-bottom: 0.2rem;
+      line-height: 1;
+    }
+
+    .carousel-card-title {
+      font-size: 0.72rem;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--text-dark);
+      margin-bottom: 0.4rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .carousel-card-price {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--oak-dark);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .carousel-card-price s {
+      color: var(--iron-light);
+      font-size: 0.7rem;
+      font-weight: 400;
+      margin-right: 0.2rem;
+    }
+
+    /* Dot indicators */
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 1rem 0 0;
+    }
+
+    .carousel-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--border-oak);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: background 200ms ease, transform 200ms ease;
+    }
+
+    .carousel-dot.active {
+      background: var(--oak-dark);
+      transform: scale(1.3);
+    }
+
+    .carousel-loading {
+      font-family: var(--ff-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      color: var(--iron-light);
+      padding: 4rem 2.5rem;
+    }
+
+    /* Mobile: show 2.5 cards so scroll is obvious */
+    @media (max-width: 768px) {
+      .carousel-card {
+        width: calc((100vw - 3rem - 4px) / 2.5);
+      }
+      .carousel-header { padding: 0 1.2rem 1.5rem; }
+      .carousel-track { padding: 0 1.2rem; }
     }
 
     /* ── CHURCH / SISU SECTION (no button) ── */
@@ -304,38 +465,7 @@
       /* no margin-bottom since no button below */
     }
 
-    /* ── PREVIEW STRIP ── */
-    .preview {
-      position: relative;
-      z-index: 2;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 5rem 2.5rem;
-    }
-    .preview-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 2rem;
-    }
-    .preview-header h3 {
-      font-family: var(--ff-body);
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
-      letter-spacing: 0.08em;
-      color: var(--oak-dark);
-    }
-    .preview-header h3 span {
-      font-family: var(--ff-italic);
-      font-style: italic;
-      color: var(--oak-light);
-      font-size: 0.7em;
-      margin-left: 0.5rem;
-    }
-    .oak-rule {
-      width: 40px; height: 2px;
-      background: var(--oak-dark);
-      margin-bottom: 0.6rem;
-    }
+
 
     /* ── JOURNAL SECTIONS (shared styles) ── */
     .journal-section {
@@ -517,14 +647,10 @@
     .auth-card .journal-card-tag { background: var(--iron); }
 
     @media (max-width: 900px) {
-      .intro { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 1.5rem 3rem; }
-      .categories-grid { grid-template-columns: repeat(2, 1fr); }
       .journal-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
       .hero { padding: 8rem 1.2rem 5rem; }
-      .categories { padding: 2rem 1.2rem 3rem; }
-      .preview { padding: 3rem 1.2rem; }
       .church-section { padding: 4rem 1.5rem; }
       .oak-band { gap: 1.2rem; padding: 1rem 1.5rem; }
       .journal-section { padding: 3rem 1.2rem; }
@@ -618,48 +744,7 @@
 
   <div class="divider-light" style="padding: 2rem 0;">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ</div>
 
-  <!-- INTRO SPLIT -->
-  <section class="intro">
-    <div class="intro-left anim-up">
-      <div class="oak-rule"></div>
-      <h2>
-        <em>The Archive</em>
-        Curated with the cold clarity of the north
-      </h2>
-      <a href="shop.html" class="btn btn-oak" style="margin-top:2rem; display:inline-block">Shop All Pieces</a>
-    </div>
-    <div class="intro-right anim-up" style="animation-delay:0.15s">
-      <p>Sisukas sources designer and archive fashion for those who understand that true luxury cannot be manufactured — only found. Each piece is selected for quality, rarity, and staying power.</p>
-      <p>Mens, womens, and unisex pieces spanning outerwear, tops, bottoms, footwear, and accessories. Priced honestly. Authenticated personally.</p>
-    </div>
-  </section>
 
-  <!-- CATEGORY TILES -->
-  <section class="categories">
-    <p class="categories-label">Browse by Category</p>
-    <div class="categories-grid">
-      <a class="cat-tile" href="shop.html?gender=mens">
-        <span class="cat-icon">⚔</span>
-        <span class="cat-name">Mens</span>
-        <span class="cat-count" id="count-mens">— pieces</span>
-      </a>
-      <a class="cat-tile" href="shop.html?gender=womens">
-        <span class="cat-icon">✦</span>
-        <span class="cat-name">Womens</span>
-        <span class="cat-count" id="count-womens">— pieces</span>
-      </a>
-      <a class="cat-tile" href="shop.html?filter=sale">
-        <span class="cat-icon">◈</span>
-        <span class="cat-name">Discounted</span>
-        <span class="cat-count" id="count-sale">— pieces</span>
-      </a>
-      <a class="cat-tile" href="shop.html">
-        <span class="cat-icon">᛭</span>
-        <span class="cat-name">All Pieces</span>
-        <span class="cat-count" id="count-all">— pieces</span>
-      </a>
-    </div>
-  </section>
 
   <!-- SPIRIT OF SISU — no button -->
   <section class="church-section">
@@ -689,15 +774,27 @@
 
   <div class="divider-light" style="padding: 2rem 0; margin: 0 2.5rem;">᛭ ᛭ ᛭</div>
 
-  <!-- LATEST ARRIVALS -->
-  <section class="preview">
-    <div class="preview-header">
-      <h3>Latest Arrivals <span>— just in</span></h3>
-      <a href="shop.html" class="btn btn-snow" style="padding:0.6rem 1.2rem">View All →</a>
+  <!-- LATEST ARRIVALS CAROUSEL -->
+  <section class="carousel-section">
+    <div class="carousel-header">
+      <div>
+        <p class="carousel-eyebrow">Just In</p>
+        <h2 class="carousel-title">Latest Arrivals</h2>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" id="carousel-prev" aria-label="Previous">←</button>
+        <button class="carousel-btn" id="carousel-next" aria-label="Next">→</button>
+        <a href="shop.html" class="btn btn-snow" style="padding:0.5rem 1.2rem; margin-left:0.5rem">View All →</a>
+      </div>
     </div>
-    <div class="product-grid grid-light" id="preview-grid">
-      <div class="state-msg state-msg-light">Loading archive...</div>
+    <!-- Track wraps all cards, draggable -->
+    <div class="carousel-viewport" id="carousel-viewport">
+      <div class="carousel-track" id="carousel-track">
+        <div class="carousel-loading">Loading archive...</div>
+      </div>
     </div>
+    <!-- Dot indicators -->
+    <div class="carousel-dots" id="carousel-dots"></div>
   </section>
 
   <div class="divider-light" style="padding: 2rem 0; margin: 0 2.5rem;">᛭ ᛭ ᛭</div>
@@ -916,48 +1013,145 @@
     });
 
     // ── LOAD PREVIEW ──
-    async function loadPreview() {
-      try {
-        const res   = await fetch('./listings.json');
-        const items = await res.json();
-        document.getElementById('count-mens').textContent   = `${items.filter(i => i.gender === 'mens').length} pieces`;
-        document.getElementById('count-womens').textContent = `${items.filter(i => i.gender === 'womens').length} pieces`;
-        document.getElementById('count-sale').textContent   = `${items.filter(i => i.sale_price).length} pieces`;
-        document.getElementById('count-all').textContent    = `${items.length} pieces`;
+    // ── CAROUSEL ──
+    async function initCarousel() {
+      const track    = document.getElementById('carousel-track');
+      const viewport = document.getElementById('carousel-viewport');
+      const dotsEl   = document.getElementById('carousel-dots');
+      const prevBtn  = document.getElementById('carousel-prev');
+      const nextBtn  = document.getElementById('carousel-next');
 
-        const preview = items.slice(0, 4);
-        document.getElementById('preview-grid').innerHTML = preview.length
-          ? preview.map((item, i) => `
-              <div class="card-light" style="animation:fadeUp 0.6s ${i*0.08}s ease both;opacity:0"
-                onclick="window.location='shop.html'">
-                <div class="card-img">
-                  ${item.images?.[0]
-                    ? `<img src="${item.images[0]}" alt="${item.title}" loading="lazy"/>`
-                    : `<div class="card-placeholder-light">No Image</div>`}
-                  <div class="card-overlay-light"><span>View Piece</span></div>
-                  ${item.sale_price ? '<div class="card-badge badge-sale">Sale</div>' : ''}
-                  ${item.new ? '<div class="card-badge badge-new-light">New</div>' : ''}
-                </div>
-                <div class="card-body-light">
-                  <div class="card-brand-light">${item.brand || ''}</div>
-                  <div class="card-title-light">${item.title}</div>
-                  <div class="card-meta">
-                    <span class="card-price-light">
-                      ${item.sale_price ? `<s>$${item.price}</s> $${item.sale_price}` : `$${item.price}`}
-                    </span>
-                    <span class="card-size-light">${item.size || ''}</span>
-                  </div>
-                </div>
-              </div>`).join('')
-          : '<div class="state-msg state-msg-light">Add items to listings.json</div>';
+      let items = [];
+      try {
+        const res = await fetch('./listings.json');
+        items = await res.json();
       } catch {
-        document.getElementById('preview-grid').innerHTML =
-          '<div class="state-msg state-msg-light">Add items to listings.json to populate the store</div>';
+        track.innerHTML = '<div class="carousel-loading">Add items to listings.json to populate the store</div>';
+        return;
       }
+
+      // Most recent 15 — reverse order (highest id = newest)
+      const cards = [...items].sort((a,b) => b.id - a.id).slice(0, 15);
+
+      if (!cards.length) {
+        track.innerHTML = '<div class="carousel-loading">No listings yet</div>';
+        return;
+      }
+
+      // Render cards
+      track.innerHTML = cards.map(item => `
+        <div class="carousel-card" onclick="window.location='shop.html'" tabindex="0"
+          role="button" aria-label="${item.brand ? item.brand + ' ' : ''}${item.title}">
+          <div class="carousel-card-img">
+            ${item.images?.[0]
+              ? `<img src="${item.images[0]}" alt="${item.title}" loading="lazy" draggable="false" />`
+              : `<div class="carousel-card-placeholder">No Image</div>`}
+            <div class="carousel-card-overlay"><span>View</span></div>
+            ${item.sale_price ? `<span class="carousel-card-badge carousel-badge-sale">Sale</span>` : ''}
+            ${item.new        ? `<span class="carousel-card-badge carousel-badge-new">New</span>`  : ''}
+          </div>
+          <div class="carousel-card-body">
+            <div class="carousel-card-brand">${item.brand || ''}</div>
+            <div class="carousel-card-title">${item.title}</div>
+            <div class="carousel-card-price">
+              ${item.sale_price
+                ? `<s>$${item.price}</s> $${item.sale_price}`
+                : `$${item.price.toLocaleString()}`}
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // ── CAROUSEL STATE ──
+      const VISIBLE  = window.innerWidth <= 768 ? 2.5 : 7;
+      const STEP     = Math.floor(VISIBLE);   // pages advance by full visible count
+      const total    = cards.length;
+      const maxIndex = Math.max(0, total - Math.ceil(VISIBLE));
+      let   current  = 0;
+      let   isDragging = false;
+      let   startX   = 0;
+      let   startTranslate = 0;
+      let   currentTranslate = 0;
+
+      // Build dots — one per "page"
+      const pageCount = Math.ceil(total / STEP);
+      dotsEl.innerHTML = Array.from({ length: pageCount }, (_, i) =>
+        `<button class="carousel-dot ${i === 0 ? 'active' : ''}"
+          aria-label="Page ${i+1}" onclick="goToPage(${i})"></button>`
+      ).join('');
+
+      function getCardWidth() {
+        return track.children[0]?.offsetWidth + 2 || 0; // +2 for gap
+      }
+
+      function getTranslateForIndex(idx) {
+        return -(idx * getCardWidth());
+      }
+
+      function goTo(idx) {
+        current = Math.max(0, Math.min(idx, maxIndex));
+        currentTranslate = getTranslateForIndex(current);
+        track.classList.remove('no-transition');
+        track.style.transform = `translateX(${currentTranslate}px)`;
+        // update dots
+        const page = Math.floor(current / STEP);
+        document.querySelectorAll('.carousel-dot').forEach((d, i) =>
+          d.classList.toggle('active', i === page));
+        // update buttons
+        prevBtn.disabled = current <= 0;
+        nextBtn.disabled = current >= maxIndex;
+      }
+
+      window.goToPage = (p) => goTo(p * STEP);
+
+      prevBtn.addEventListener('click', () => goTo(current - STEP));
+      nextBtn.addEventListener('click', () => goTo(current + STEP));
+
+      // ── DRAG / SWIPE ──
+      function onDragStart(x) {
+        isDragging = true;
+        startX = x;
+        startTranslate = currentTranslate;
+        track.classList.add('no-transition');
+        viewport.classList.add('dragging');
+      }
+
+      function onDragMove(x) {
+        if (!isDragging) return;
+        const delta = x - startX;
+        track.style.transform = `translateX(${startTranslate + delta}px)`;
+      }
+
+      function onDragEnd(x) {
+        if (!isDragging) return;
+        isDragging = false;
+        viewport.classList.remove('dragging');
+        const delta = x - startX;
+        const cardW = getCardWidth();
+        // Snap: if dragged more than 30% of a card width, advance
+        if (Math.abs(delta) > cardW * 0.3) {
+          goTo(delta < 0 ? current + STEP : current - STEP);
+        } else {
+          goTo(current); // snap back
+        }
+      }
+
+      // Mouse events
+      viewport.addEventListener('mousedown', e => { e.preventDefault(); onDragStart(e.clientX); });
+      window.addEventListener('mousemove',   e => { if (isDragging) onDragMove(e.clientX); });
+      window.addEventListener('mouseup',     e => { onDragEnd(e.clientX); });
+
+      // Touch events
+      viewport.addEventListener('touchstart', e => onDragStart(e.touches[0].clientX), { passive: true });
+      viewport.addEventListener('touchmove',  e => onDragMove(e.touches[0].clientX),  { passive: true });
+      viewport.addEventListener('touchend',   e => onDragEnd(e.changedTouches[0].clientX));
+
+      // Init state
+      goTo(0);
     }
 
     updateCartUI();
-    loadPreview();
+    initCarousel();
   </script>
 </body>
 </html>
