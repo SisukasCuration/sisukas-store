@@ -6,7 +6,7 @@
   <title>Sisukas — Designer Archive Fashion</title>
   <link rel="stylesheet" href="style.css" />
   <style>
- 
+
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
@@ -20,8 +20,7 @@
       z-index: 2;
       overflow: hidden;
     }
- 
-    /* Stave church SVG scene — snow-covered, atmospheric */
+
     .hero-church {
       position: absolute;
       bottom: 0;
@@ -32,8 +31,7 @@
       opacity: 0.09;
       z-index: 0;
     }
- 
-    /* Falling snow particles */
+
     .snowfield {
       position: absolute;
       inset: 0;
@@ -55,9 +53,9 @@
       90%  { opacity: 0.4; }
       100% { transform: translateY(100vh) translateX(40px); opacity: 0; }
     }
- 
+
     .hero-content { position: relative; z-index: 2; }
- 
+
     .hero-eyebrow {
       font-family: var(--ff-mono);
       font-size: 0.55rem;
@@ -68,7 +66,7 @@
       opacity: 0.7;
       animation: fadeUp 1s 0.2s ease both;
     }
- 
+
     .hero-title {
       font-family: var(--ff-title);
       font-size: clamp(4rem, 13vw, 10rem);
@@ -77,11 +75,9 @@
       color: var(--oak-dark);
       margin-bottom: 0.6rem;
       animation: fadeUp 1s 0.4s ease both;
-      text-shadow:
-        0 2px 0 rgba(255,255,255,0.8),
-        0 4px 40px rgba(61,43,26,0.08);
+      text-shadow: 0 2px 0 rgba(255,255,255,0.8), 0 4px 40px rgba(61,43,26,0.08);
     }
- 
+
     .hero-title-sub {
       font-family: var(--ff-title);
       font-size: clamp(1.5rem, 4vw, 3.2rem);
@@ -91,7 +87,7 @@
       animation: fadeUp 1s 0.55s ease both;
       font-weight: 400;
     }
- 
+
     .hero-tagline {
       font-family: var(--ff-italic);
       font-style: italic;
@@ -102,7 +98,7 @@
       line-height: 1.75;
       animation: fadeUp 1s 0.7s ease both;
     }
- 
+
     .hero-ctas {
       display: flex;
       gap: 1rem;
@@ -110,8 +106,7 @@
       flex-wrap: wrap;
       animation: fadeUp 1s 0.85s ease both;
     }
- 
-    /* Scroll cue */
+
     .scroll-cue {
       position: absolute;
       bottom: 2.5rem;
@@ -142,8 +137,8 @@
       0%, 100% { opacity: 0.3; transform: scaleY(1); }
       50%       { opacity: 0.8; transform: scaleY(1.12); }
     }
- 
-    /* ── BAND — thin oak stripe ── */
+
+    /* ── OAK BAND ── */
     .oak-band {
       position: relative;
       z-index: 2;
@@ -167,7 +162,7 @@
       font-weight: 400;
       margin-right: 0.5rem;
     }
- 
+
     /* ── INTRO SPLIT ── */
     .intro {
       position: relative;
@@ -205,7 +200,7 @@
       margin-bottom: 1.4rem;
     }
     .intro-right p:last-of-type { margin-bottom: 0; }
- 
+
     /* ── CATEGORY TILES ── */
     .categories {
       position: relative;
@@ -241,18 +236,11 @@
       transition: background 0.25s, transform 0.25s;
       border: 1px solid transparent;
     }
-    .cat-tile:hover {
-      background: var(--oak-dark);
-      transform: translateY(-2px);
-    }
+    .cat-tile:hover { background: var(--oak-dark); transform: translateY(-2px); }
     .cat-tile:hover .cat-icon  { filter: invert(1) sepia(0) brightness(10); }
     .cat-tile:hover .cat-name  { color: var(--snow); }
     .cat-tile:hover .cat-count { color: rgba(247,248,250,0.45); }
-    .cat-icon {
-      font-size: 1.8rem;
-      transition: filter 0.25s;
-      opacity: 0.7;
-    }
+    .cat-icon { font-size: 1.8rem; transition: filter 0.25s; opacity: 0.7; }
     .cat-name {
       font-family: var(--ff-body);
       font-size: 0.82rem;
@@ -268,8 +256,8 @@
       color: var(--text-light);
       transition: color 0.25s;
     }
- 
-    /* ── STAVE CHURCH FEATURE SECTION ── */
+
+    /* ── CHURCH / SISU SECTION (no button) ── */
     .church-section {
       position: relative;
       z-index: 2;
@@ -278,11 +266,9 @@
       padding: 6rem 2.5rem;
       text-align: center;
     }
-    /* Large decorative stave church behind text */
     .church-section-svg {
       position: absolute;
-      bottom: 0;
-      left: 50%;
+      bottom: 0; left: 50%;
       transform: translateX(-50%);
       width: min(800px, 95vw);
       opacity: 0.07;
@@ -315,9 +301,9 @@
       font-size: 1.05rem;
       color: var(--text-mid);
       line-height: 1.85;
-      margin-bottom: 2.5rem;
+      /* no margin-bottom since no button below */
     }
- 
+
     /* ── PREVIEW STRIP ── */
     .preview {
       position: relative;
@@ -345,18 +331,195 @@
       font-size: 0.7em;
       margin-left: 0.5rem;
     }
- 
-    /* Oak accent line before previews */
     .oak-rule {
-      width: 40px;
-      height: 2px;
+      width: 40px; height: 2px;
       background: var(--oak-dark);
       margin-bottom: 0.6rem;
     }
- 
+
+    /* ── JOURNAL SECTIONS (shared styles) ── */
+    .journal-section {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 5rem 2.5rem;
+    }
+
+    .journal-section + .journal-section {
+      padding-top: 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 0.6rem;
+    }
+
+    .section-eyebrow {
+      font-family: var(--ff-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--oak-mid);
+      opacity: 0.65;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-title {
+      font-family: var(--ff-title);
+      font-size: clamp(1.2rem, 3vw, 1.9rem);
+      color: var(--oak-dark);
+      line-height: 1.1;
+    }
+
+    .section-link {
+      font-family: var(--ff-mono);
+      font-size: 0.52rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--oak-mid);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border-oak);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+      align-self: flex-end;
+    }
+    .section-link:hover { color: var(--oak-dark); border-color: var(--oak-dark); }
+
+    .section-desc {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+      max-width: 600px;
+    }
+
+    /* ── JOURNAL CARDS GRID ── */
+    .journal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2px;
+      background: var(--border-snow);
+    }
+
+    .journal-card {
+      background: #fff;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid transparent;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+      box-shadow: 0 2px 12px rgba(61,43,26,0.04);
+    }
+    .journal-card:hover {
+      border-color: rgba(61,43,26,0.15);
+      box-shadow: 0 6px 30px rgba(61,43,26,0.1);
+      transform: translateY(-3px);
+    }
+    .journal-card:hover .journal-card-img img { transform: scale(1.04); }
+
+    .journal-card-img {
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: var(--ice-blue);
+      position: relative;
+    }
+    .journal-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .journal-card-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--iron-light);
+      text-transform: uppercase;
+    }
+
+    .journal-card-tag {
+      position: absolute;
+      top: 0.75rem; left: 0.75rem;
+      font-family: var(--ff-mono);
+      font-size: 0.45rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.55rem;
+      background: var(--oak-dark);
+      color: var(--snow);
+    }
+
+    .journal-card-body {
+      padding: 1.2rem 1.4rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      border-top: 1px solid var(--border-snow);
+    }
+
+    .journal-card-meta {
+      font-family: var(--ff-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--oak-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .journal-card-title {
+      font-family: var(--ff-body);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--oak-dark);
+      margin-bottom: 0.6rem;
+    }
+
+    .journal-card-hook {
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--text-mid);
+      flex: 1;
+      margin-bottom: 1rem;
+    }
+
+    .journal-card-read {
+      font-family: var(--ff-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--oak-mid);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s, gap 0.2s;
+    }
+    .journal-card:hover .journal-card-read { color: var(--oak-dark); gap: 0.7rem; }
+
+    /* ── AUTH LEDGER cards — slightly different tint ── */
+    .auth-card {
+      background: var(--frost-white);
+    }
+    .auth-card .journal-card-img { background: var(--winter-sky); }
+    .auth-card .journal-card-tag { background: var(--iron); }
+
     @media (max-width: 900px) {
       .intro { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 1.5rem 3rem; }
       .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .journal-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
       .hero { padding: 8rem 1.2rem 5rem; }
@@ -364,11 +527,12 @@
       .preview { padding: 3rem 1.2rem; }
       .church-section { padding: 4rem 1.5rem; }
       .oak-band { gap: 1.2rem; padding: 1rem 1.5rem; }
+      .journal-section { padding: 3rem 1.2rem; }
     }
   </style>
 </head>
 <body class="page-light">
- 
+
   <!-- NAV -->
   <nav class="nav nav-light">
     <a href="index.html" class="nav-logo">SISUKAS</a>
@@ -381,76 +545,52 @@
       <button class="nav-cart-btn" id="open-cart">Cart <span id="cart-count-nav"></span></button>
     </div>
   </nav>
- 
+
   <!-- HERO -->
   <section class="hero">
- 
-    <!-- Stave church silhouette -->
     <svg class="hero-church" viewBox="0 0 900 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Snow ground -->
       <ellipse cx="450" cy="590" rx="450" ry="30" fill="#3d2b1a"/>
-      <!-- Snow mounds -->
       <ellipse cx="100" cy="580" rx="130" ry="22" fill="#3d2b1a" opacity="0.6"/>
       <ellipse cx="800" cy="575" rx="120" ry="18" fill="#3d2b1a" opacity="0.5"/>
-      <!-- Main stave church body -->
       <rect x="300" y="340" width="300" height="250" fill="#3d2b1a"/>
-      <!-- Main roof -->
       <polygon points="280,340 620,340 450,180" fill="#3d2b1a"/>
-      <!-- Upper tower body -->
       <rect x="390" y="200" width="120" height="160" fill="#2e1f0a"/>
-      <!-- Upper tower roof -->
       <polygon points="375,200 525,200 450,80" fill="#2e1f0a"/>
-      <!-- Spire body -->
       <rect x="430" y="90" width="40" height="100" fill="#1a1208"/>
-      <!-- Spire tip -->
       <polygon points="425,90 475,90 450,20" fill="#1a1208"/>
-      <!-- Cross at top -->
       <rect x="444" y="5" width="12" height="30" fill="#1a1208"/>
       <rect x="432" y="12" width="36" height="8" fill="#1a1208"/>
-      <!-- Dragon head finials -->
       <ellipse cx="280" cy="338" rx="14" ry="8" fill="#2e1f0a"/>
       <ellipse cx="620" cy="338" rx="14" ry="8" fill="#2e1f0a"/>
       <ellipse cx="375" cy="198" rx="10" ry="6" fill="#2e1f0a"/>
       <ellipse cx="525" cy="198" rx="10" ry="6" fill="#2e1f0a"/>
-      <!-- Church entrance porch -->
       <rect x="390" y="460" width="120" height="130" fill="#2e1f0a"/>
       <polygon points="380,460 520,460 450,400" fill="#2e1f0a"/>
-      <!-- Door arch -->
       <path d="M415 590 L415 490 Q450 460 485 490 L485 590" fill="#3d2b1a"/>
-      <!-- Side windows -->
       <rect x="320" y="380" width="35" height="50" rx="3" fill="#2e1f0a"/>
       <rect x="545" y="380" width="35" height="50" rx="3" fill="#2e1f0a"/>
-      <!-- Decorative carved bands -->
       <rect x="300" y="355" width="300" height="6" fill="#2e1f0a"/>
       <rect x="300" y="430" width="300" height="4" fill="#2e1f0a"/>
-      <!-- Snow on roofs -->
       <path d="M280,340 Q380,330 450,185 Q520,330 620,340" fill="white" opacity="0.9"/>
       <path d="M375,200 Q415,192 450,82 Q485,192 525,200" fill="white" opacity="0.9"/>
       <path d="M380,460 Q420,452 450,402 Q480,452 520,460" fill="white" opacity="0.9"/>
-      <!-- Snow on ground around church -->
       <path d="M290,590 Q350,570 450,565 Q550,570 610,590" fill="white" opacity="0.7"/>
-      <!-- Pine trees flanking -->
-      <!-- Left tree -->
       <polygon points="150,500 190,500 170,420" fill="#1a1208"/>
       <polygon points="140,450 200,450 170,370" fill="#1a1208"/>
       <polygon points="130,400 210,400 170,320" fill="#1a1208"/>
       <rect x="162" y="500" width="16" height="40" fill="#1a1208"/>
-      <!-- Snow on left tree -->
       <polygon points="155,500 185,500 170,430" fill="white" opacity="0.5"/>
       <polygon points="145,450 195,450 170,385" fill="white" opacity="0.4"/>
-      <!-- Right tree -->
       <polygon points="710,500 750,500 730,420" fill="#1a1208"/>
       <polygon points="700,450 760,450 730,370" fill="#1a1208"/>
       <polygon points="690,400 770,400 730,320" fill="#1a1208"/>
       <rect x="722" y="500" width="16" height="40" fill="#1a1208"/>
-      <!-- Snow on right tree -->
       <polygon points="715,500 745,500 730,430" fill="white" opacity="0.5"/>
       <polygon points="705,450 755,450 730,385" fill="white" opacity="0.4"/>
     </svg>
- 
-    <!-- Snow particles -->
+
     <div class="snowfield" id="snowfield"></div>
- 
+
     <div class="hero-content">
       <p class="hero-eyebrow">ᛊᛁᛊᚢᚲᚨᛊ — Sisukas Curation — Archive Fashion</p>
       <h1 class="hero-title">SISUKAS</h1>
@@ -461,13 +601,13 @@
         <a href="shop.html?filter=sale" class="btn btn-snow">Discounted</a>
       </div>
     </div>
- 
+
     <div class="scroll-cue">
       <span class="scroll-cue-text">Scroll</span>
       <div class="scroll-line"></div>
     </div>
   </section>
- 
+
   <!-- OAK BAND -->
   <div class="oak-band">
     <span class="oak-band-item"><strong>Free</strong> Authenticity Guarantee</span>
@@ -475,9 +615,9 @@
     <span class="oak-band-item"><strong>Also on</strong> Grailed</span>
     <span class="oak-band-item"><strong>DM</strong> for Inquiries</span>
   </div>
- 
+
   <div class="divider-light" style="padding: 2rem 0;">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ</div>
- 
+
   <!-- INTRO SPLIT -->
   <section class="intro">
     <div class="intro-left anim-up">
@@ -493,7 +633,7 @@
       <p>Mens, womens, and unisex pieces spanning outerwear, tops, bottoms, footwear, and accessories. Priced honestly. Authenticated personally.</p>
     </div>
   </section>
- 
+
   <!-- CATEGORY TILES -->
   <section class="categories">
     <p class="categories-label">Browse by Category</p>
@@ -520,10 +660,9 @@
       </a>
     </div>
   </section>
- 
-  <!-- CHURCH FEATURE / MANIFESTO -->
+
+  <!-- SPIRIT OF SISU — no button -->
   <section class="church-section">
-    <!-- Repeated church in background of this section -->
     <svg class="church-section-svg" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="250" y="280" width="300" height="220" fill="#3d2b1a"/>
       <polygon points="230,280 570,280 400,140" fill="#3d2b1a"/>
@@ -545,13 +684,12 @@
       <div class="church-rune">ᚠᚢᚦᚨᚱᚲ</div>
       <h2>The Spirit of Sisu</h2>
       <p>Sisu is the Finnish word for an inner strength that endures beyond all reason — resilience forged in winter, clarity found in cold. Sisukas carries that spirit into fashion: pieces that do not follow trends, but outlast them.</p>
-      <a href="shop.html" class="btn btn-oak">Explore the Collection</a>
     </div>
   </section>
- 
+
   <div class="divider-light" style="padding: 2rem 0; margin: 0 2.5rem;">᛭ ᛭ ᛭</div>
- 
-  <!-- LATEST ARRIVALS PREVIEW -->
+
+  <!-- LATEST ARRIVALS -->
   <section class="preview">
     <div class="preview-header">
       <h3>Latest Arrivals <span>— just in</span></h3>
@@ -561,7 +699,109 @@
       <div class="state-msg state-msg-light">Loading archive...</div>
     </div>
   </section>
- 
+
+  <div class="divider-light" style="padding: 2rem 0; margin: 0 2.5rem;">᛭ ᛭ ᛭</div>
+
+  <!-- ══════════════════════════════════════
+       THE ARCHIVE JOURNAL
+       Brand features, style deep dives,
+       curated collection showcases
+       ══════════════════════════════════════ -->
+  <section class="journal-section">
+
+    <div class="section-header">
+      <div>
+        <p class="section-eyebrow">Weekly — Brand Features & Collections</p>
+        <h2 class="section-title">The Archive Journal</h2>
+      </div>
+      <a href="journal/" class="section-link">All Posts →</a>
+    </div>
+    <p class="section-desc">Deep dives into the brands we carry — their history, their seasons, what makes a piece worth owning. Each post ends with a curated selection from our current inventory.</p>
+
+    <div class="journal-grid">
+
+      <!-- POST 1: Acne Studios SS25 Jeans -->
+      <a class="journal-card" href="journal/acne-studios-ss25.html">
+        <div class="journal-card-img">
+          <!-- Replace src with a real image URL when you have one -->
+          <div class="journal-card-img-placeholder">Acne Studios — SS25</div>
+          <span class="journal-card-tag">Brand Feature</span>
+        </div>
+        <div class="journal-card-body">
+          <div class="journal-card-meta">Vol. 01 — May 2026 — Denim</div>
+          <h3 class="journal-card-title">Acne Studios SS25: The Jean That Rewrote the Silhouette</h3>
+          <p class="journal-card-hook">How a Swedish house channelled 70s Scandinavian workwear, Japanese selvedge tradition, and the ghost of Helmut Lang into the season's most-discussed denim drop — and what to look for in the archive.</p>
+          <span class="journal-card-read">Read the Feature →</span>
+        </div>
+      </a>
+
+      <!-- PLACEHOLDER CARD 2 — swap in next post -->
+      <a class="journal-card" href="journal/">
+        <div class="journal-card-img">
+          <div class="journal-card-img-placeholder">Coming Soon</div>
+          <span class="journal-card-tag">Next Issue</span>
+        </div>
+        <div class="journal-card-body">
+          <div class="journal-card-meta">Vol. 02 — Coming Soon</div>
+          <h3 class="journal-card-title">Next Feature Loading...</h3>
+          <p class="journal-card-hook">A new brand deep dive drops every week. Follow on Instagram for early access and behind-the-scenes sourcing stories.</p>
+          <span class="journal-card-read">Follow for Updates →</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <div class="divider-light" style="padding: 1rem 0; margin: 0 2.5rem;">᛭ ᛭ ᛭</div>
+
+  <!-- ══════════════════════════════════════
+       AUTHENTICATION LEDGER
+       Weekly authentication guides per brand
+       ══════════════════════════════════════ -->
+  <section class="journal-section" style="padding-top: 3rem;">
+
+    <div class="section-header">
+      <div>
+        <p class="section-eyebrow">Weekly — Know What You're Buying</p>
+        <h2 class="section-title">Authentication Ledger</h2>
+      </div>
+      <a href="auth/" class="section-link">All Guides →</a>
+    </div>
+    <p class="section-desc">Brand-specific authentication guides written from first-hand experience. Hardware, stitching, labels, materials — everything you need to know before you buy or sell.</p>
+
+    <div class="journal-grid">
+
+      <!-- AUTH 1: Givenchy Leather -->
+      <a class="journal-card auth-card" href="auth/givenchy-leather.html">
+        <div class="journal-card-img">
+          <div class="journal-card-img-placeholder">Givenchy — Leather Goods</div>
+          <span class="journal-card-tag">Authentication</span>
+        </div>
+        <div class="journal-card-body">
+          <div class="journal-card-meta">Issue 01 — May 2026 — Givenchy</div>
+          <h3 class="journal-card-title">How to Authenticate Givenchy Leather Jackets</h3>
+          <p class="journal-card-hook">From the embossed leather interior tag to the branded zipper pulls, stitching density, and lambskin grain — a full breakdown of what separates a real Givenchy from a convincing fake.</p>
+          <span class="journal-card-read">Read the Guide →</span>
+        </div>
+      </a>
+
+      <!-- AUTH PLACEHOLDER 2 -->
+      <a class="journal-card auth-card" href="auth/">
+        <div class="journal-card-img">
+          <div class="journal-card-img-placeholder">Coming Soon</div>
+          <span class="journal-card-tag">Next Guide</span>
+        </div>
+        <div class="journal-card-body">
+          <div class="journal-card-meta">Issue 02 — Coming Soon</div>
+          <h3 class="journal-card-title">Next Authentication Guide Loading...</h3>
+          <p class="journal-card-hook">A new brand authentication breakdown every week — Balenciaga, Kapital, Arc'teryx, and more coming soon. Built from pieces we've personally handled.</p>
+          <span class="journal-card-read">Follow for Updates →</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="footer-light">
     <div>
@@ -577,7 +817,9 @@
       <a href="shop.html?filter=sale">Sale</a>
     </div>
     <div>
-      <h4>Contact</h4>
+      <h4>Read</h4>
+      <a href="journal/">Archive Journal</a>
+      <a href="auth/">Authentication Ledger</a>
       <a href="https://www.instagram.com" target="_blank">Instagram</a>
       <a href="https://www.grailed.com" target="_blank">Grailed</a>
       <a href="mailto:hello@sisukas.com">hello@sisukas.com</a>
@@ -587,7 +829,7 @@
       <p>All sales final · Payments secured</p>
     </div>
   </footer>
- 
+
   <!-- CART DRAWER -->
   <div class="cart-backdrop" id="cart-backdrop">
     <div class="cart-drawer">
@@ -602,15 +844,15 @@
           <span class="cart-total-price" id="cart-total">$0</span>
         </div>
         <button class="btn btn-gold" style="width:100%;text-align:center;display:block;padding:1rem"
-          onclick="alert('Payment processing coming soon. Contact us at hello@sisukas.com to complete your purchase.')">
+          onclick="alert('Add items to cart from the Shop page.')">
           Checkout
         </button>
       </div>
     </div>
   </div>
- 
+
   <script>
-    // ── SNOW PARTICLES ──
+    // ── SNOW ──
     (function() {
       const field = document.getElementById('snowfield');
       for (let i = 0; i < 38; i++) {
@@ -627,20 +869,17 @@
         field.appendChild(s);
       }
     })();
- 
+
     // ── CART ──
     function getCart() {
       try { return JSON.parse(localStorage.getItem('sisukas_cart') || '[]'); } catch { return []; }
     }
-    function saveCart(cart) {
-      localStorage.setItem('sisukas_cart', JSON.stringify(cart));
-      updateCartUI();
-    }
+    function saveCart(cart) { localStorage.setItem('sisukas_cart', JSON.stringify(cart)); updateCartUI(); }
     function removeFromCart(id) { saveCart(getCart().filter(i => i.id !== id)); }
     function updateCartUI() {
-      const cart = getCart();
+      const cart  = getCart();
       const total = cart.reduce((s, i) => s + i.price, 0);
-      const nav = document.getElementById('cart-count-nav');
+      const nav   = document.getElementById('cart-count-nav');
       if (nav) nav.textContent = cart.length ? `(${cart.length})` : '';
       const totalEl = document.getElementById('cart-total');
       if (totalEl) totalEl.textContent = `$${total}`;
@@ -659,7 +898,7 @@
         </div>
       `).join('') : '<div class="cart-empty">Your cart is empty</div>';
     }
- 
+
     document.getElementById('open-cart').addEventListener('click', e => {
       e.preventDefault();
       document.getElementById('cart-backdrop').classList.add('open');
@@ -675,52 +914,50 @@
         document.body.style.overflow = '';
       }
     });
- 
+
     // ── LOAD PREVIEW ──
     async function loadPreview() {
       try {
-        const res = await fetch('./listings.json');
+        const res   = await fetch('./listings.json');
         const items = await res.json();
         document.getElementById('count-mens').textContent   = `${items.filter(i => i.gender === 'mens').length} pieces`;
         document.getElementById('count-womens').textContent = `${items.filter(i => i.gender === 'womens').length} pieces`;
         document.getElementById('count-sale').textContent   = `${items.filter(i => i.sale_price).length} pieces`;
         document.getElementById('count-all').textContent    = `${items.length} pieces`;
- 
+
         const preview = items.slice(0, 4);
         document.getElementById('preview-grid').innerHTML = preview.length
           ? preview.map((item, i) => `
-            <div class="card-light" style="animation:fadeUp 0.6s ${i*0.08}s ease both;opacity:0"
-              onclick="window.location='shop.html'">
-              <div class="card-img">
-                ${item.images?.[0]
-                  ? `<img src="${item.images[0]}" alt="${item.title}" loading="lazy"/>`
-                  : `<div class="card-placeholder-light">No Image</div>`}
-                <div class="card-overlay-light"><span>View Piece</span></div>
-                ${item.sale_price ? '<div class="card-badge badge-sale">Sale</div>' : ''}
-                ${item.new ? '<div class="card-badge badge-new-light">New</div>' : ''}
-              </div>
-              <div class="card-body-light">
-                <div class="card-brand-light">${item.brand || ''}</div>
-                <div class="card-title-light">${item.title}</div>
-                <div class="card-meta">
-                  <span class="card-price-light">
-                    ${item.sale_price ? `<s>$${item.price}</s> $${item.sale_price}` : `$${item.price}`}
-                  </span>
-                  <span class="card-size-light">${item.size || ''}</span>
+              <div class="card-light" style="animation:fadeUp 0.6s ${i*0.08}s ease both;opacity:0"
+                onclick="window.location='shop.html'">
+                <div class="card-img">
+                  ${item.images?.[0]
+                    ? `<img src="${item.images[0]}" alt="${item.title}" loading="lazy"/>`
+                    : `<div class="card-placeholder-light">No Image</div>`}
+                  <div class="card-overlay-light"><span>View Piece</span></div>
+                  ${item.sale_price ? '<div class="card-badge badge-sale">Sale</div>' : ''}
+                  ${item.new ? '<div class="card-badge badge-new-light">New</div>' : ''}
                 </div>
-              </div>
-            </div>
-          `).join('')
+                <div class="card-body-light">
+                  <div class="card-brand-light">${item.brand || ''}</div>
+                  <div class="card-title-light">${item.title}</div>
+                  <div class="card-meta">
+                    <span class="card-price-light">
+                      ${item.sale_price ? `<s>$${item.price}</s> $${item.sale_price}` : `$${item.price}`}
+                    </span>
+                    <span class="card-size-light">${item.size || ''}</span>
+                  </div>
+                </div>
+              </div>`).join('')
           : '<div class="state-msg state-msg-light">Add items to listings.json</div>';
       } catch {
         document.getElementById('preview-grid').innerHTML =
           '<div class="state-msg state-msg-light">Add items to listings.json to populate the store</div>';
       }
     }
- 
+
     updateCartUI();
     loadPreview();
   </script>
 </body>
 </html>
- 
