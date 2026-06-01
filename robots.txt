@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sisukas-store.vercel.app/sitemap.xml
