@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sisukas — Listing Import Tool</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400&family=Cinzel:wght@300;400;600&family=IM+Fell+English:ital@0;1&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --void:      #08090b;
+      --deep:      #0f1114;
+      --panel:     #161a1e;
+      --metal:     #2a2e34;
+      --frost:     #c8dce8;
+      --parchment: #e8dfc8;
+      --smoke:     #8a9299;
+      --ash:       #5a6370;
+      --gold:      #c9a84c;
+      --gold-dim:  #7a6130;
+      --rune-red:  #7a1a1a;
+      --ff-title:  'Cinzel Decorative', serif;
+      --ff-body:   'Cinzel', serif;
+      --ff-italic: 'IM Fell English', serif;
+      --ff-mono:   'Share Tech Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--void);
+      color: var(--parchment);
+      font-family: var(--ff-body);
+      min-height: 100dvh;
+    }
+
+    /* ── LAYOUT ── */
+    .app {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 6rem;
+    }
+
+    .header {
+      padding: 1.5rem 0 2rem;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      margin-bottom: 2rem;
+    }
+
+    .header-logo {
+      font-family: var(--ff-title);
+      font-size: 1rem;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-shadow: 0 0 20px rgba(201,168,76,0.3);
+      margin-bottom: 0.4rem;
+    }
+
+    .header-title {
+      font-family: var(--ff-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--smoke);
+    }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .tab {
+      flex: 1;
+      padding: 0.75rem 1rem;
+      font-family: var(--ff-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-align: center;
+      color: var(--smoke);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 150ms ease;
+    }
+
+    .tab:not(:last-child) { border-right: 1px solid rgba(201,168,76,0.15); }
+    .tab:hover { color: var(--frost); background: rgba(200,220,232,0.04); }
+    .tab.active { color: var(--gold); background: rgba(201,168,76,0.08); }
+
+    /* ── MODE PANELS ── */
+    .mode-panel { display: none; }
+    .mode-panel.active { display: block; }
+
+    /* ── FORM FIELDS ── */
+    .field-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .field-label {
+      display: block;
+      font-family: var(--ff-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+
+    .field-hint {
+      font-family: var(--ff-mono);
+      font-size: 0.45rem;
+      color: var(--ash);
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      font-family: var(--ff-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      color: var(--parchment);
+      background: var(--panel);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 0.6rem 0.8rem;
+      transition: border-color 150ms ease;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold);
+    }
+
+    textarea { resize: vertical; min-height: 60px; }
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a9299' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 32px;
+    }
+
+    select option { background: var(--deep); color: var(--parchment); }
+
+    /* Two-up fields */
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+
+    .field-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.8rem;
+    }
+
+    /* ── PASTE MODE ── */
+    .paste-area {
+      width: 100%;
+      min-height: 200px;
+      font-family: var(--ff-mono);
+      font-size: 0.7rem;
+      line-height: 1.6;
+      color: var(--parchment);
+      background: var(--panel);
+      border: 1px dashed rgba(201,168,76,0.25);
+      padding: 1rem;
+      resize: vertical;
+    }
+
+    .paste-area::placeholder { color: var(--ash); }
+
+    .paste-area:focus { border-style: solid; border-color: var(--gold); }
+
+    /* ── IMAGE URLS ── */
+    .images-area {
+      width: 100%;
+      min-height: 100px;
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      line-height: 1.8;
+      color: var(--frost);
+      background: var(--panel);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 0.8rem;
+      resize: vertical;
+    }
+
+    .images-area::placeholder { color: var(--ash); }
+
+    /* ── MEASUREMENTS ── */
+    .measurements-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+
+    .meas-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .meas-field label {
+      font-family: var(--ff-mono);
+      font-size: 0.42rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ash);
+    }
+
+    .meas-field input {
+      padding: 0.4rem 0.5rem;
+      font-size: 0.7rem;
+    }
+
+    /* ── AUTH LEDGER TOGGLE ── */
+    .auth-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.8rem 0;
+    }
+
+    .toggle-switch {
+      width: 36px; height: 20px;
+      background: var(--metal);
+      border-radius: 10px;
+      position: relative;
+      cursor: pointer;
+      transition: background 200ms ease;
+      flex-shrink: 0;
+    }
+
+    .toggle-switch.on { background: var(--gold); }
+
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 16px; height: 16px;
+      background: var(--parchment);
+      border-radius: 50%;
+      transition: transform 200ms ease;
+    }
+
+    .toggle-switch.on::after { transform: translateX(16px); }
+
+    .toggle-label {
+      font-family: var(--ff-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--smoke);
+    }
+
+    .auth-fields {
+      display: none;
+      padding: 1rem;
+      border: 1px solid rgba(201,168,76,0.1);
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .auth-fields.visible { display: block; }
+
+    /* ── ACTIONS ── */
+    .actions {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(201,168,76,0.12);
+    }
+
+    .btn-generate {
+      flex: 1;
+      padding: 0.85rem 1.5rem;
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--void);
+      background: var(--gold);
+      border: none;
+      cursor: pointer;
+      transition: background 200ms ease, box-shadow 200ms ease;
+    }
+
+    .btn-generate:hover { background: var(--parchment); box-shadow: 0 4px 24px rgba(201,168,76,0.3); }
+
+    .btn-clear {
+      padding: 0.85rem 1.2rem;
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--smoke);
+      background: transparent;
+      border: 1px solid rgba(90,99,112,0.3);
+      cursor: pointer;
+      transition: color 150ms ease, border-color 150ms ease;
+    }
+
+    .btn-clear:hover { color: var(--frost); border-color: var(--frost); }
+
+    /* ── OUTPUT ── */
+    .output-section {
+      margin-top: 2.5rem;
+      display: none;
+    }
+
+    .output-section.visible { display: block; }
+
+    .output-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .output-title {
+      font-family: var(--ff-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .btn-copy {
+      padding: 0.45rem 0.9rem;
+      font-family: var(--ff-mono);
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--frost);
+      background: rgba(200,220,232,0.08);
+      border: 1px solid rgba(200,220,232,0.2);
+      cursor: pointer;
+      transition: all 150ms ease;
+    }
+
+    .btn-copy:hover { background: rgba(200,220,232,0.15); border-color: var(--frost); }
+    .btn-copy.copied { color: var(--gold); border-color: var(--gold); background: rgba(201,168,76,0.1); }
+
+    .output-code {
+      background: var(--panel);
+      border: 1px solid rgba(201,168,76,0.1);
+      padding: 1rem;
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      line-height: 1.6;
+      color: var(--frost);
+      white-space: pre-wrap;
+      word-break: break-all;
+      max-height: 500px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold-dim) transparent;
+    }
+
+    .output-instructions {
+      margin-top: 1rem;
+      font-family: var(--ff-italic);
+      font-style: italic;
+      font-size: 0.85rem;
+      color: var(--smoke);
+      line-height: 1.7;
+    }
+
+    .output-instructions strong {
+      font-style: normal;
+      color: var(--parchment);
+      font-weight: 400;
+    }
+
+    /* ── STATUS BAR ── */
+    .status-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(15,17,20,0.95);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 0.6rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--ff-mono);
+      font-size: 0.45rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ash);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+
+    .status-id { color: var(--gold); }
+
+    @media (max-width: 600px) {
+      .field-row, .field-row-3 { grid-template-columns: 1fr; }
+      .measurements-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app">
+
+    <div class="header">
+      <div class="header-logo">SISUKAS</div>
+      <div class="header-title">Listing Import Tool — Private</div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('form')">Form Entry</button>
+      <button class="tab" onclick="switchTab('paste')">Quick Paste</button>
+    </div>
+
+    <!-- ════ FORM MODE ════ -->
+    <div class="mode-panel active" id="panel-form">
+
+      <div class="field-row">
+        <div class="field-group">
+          <label class="field-label">Brand *</label>
+          <input type="text" id="f-brand" placeholder="e.g. Balenciaga" />
+        </div>
+        <div class="field-group">
+          <label class="field-label">Title *</label>
+          <input type="text" id="f-title" placeholder="e.g. Pink Nologo Distressed Hoodie" />
+        </div>
+      </div>
+
+      <div class="field-row-3">
+        <div class="field-group">
+          <label class="field-label">Price *</label>
+          <input type="number" id="f-price" placeholder="400" />
+        </div>
+        <div class="field-group">
+          <label class="field-label">Sale Price</label>
+          <span class="field-hint">Leave blank if not on sale</span>
+          <input type="number" id="f-sale" placeholder="" />
+        </div>
+        <div class="field-group">
+          <label class="field-label">Size *</label>
+          <input type="text" id="f-size" placeholder="M / EU 48-50" />
+        </div>
+      </div>
+
+      <div class="field-row-3">
+        <div class="field-group">
+          <label class="field-label">Gender</label>
+          <select id="f-gender">
+            <option value="mens">Mens</option>
+            <option value="womens">Womens</option>
+            <option value="unisex">Unisex</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Category</label>
+          <select id="f-category">
+            <option value="tops">Tops</option>
+            <option value="outerwear">Outerwear</option>
+            <option value="bottoms">Bottoms</option>
+            <option value="footwear">Footwear</option>
+            <option value="accessories">Accessories</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Condition</label>
+          <select id="f-condition">
+            <option value="New">New</option>
+            <option value="New With Tags">New With Tags</option>
+            <option value="New without tags">New without tags</option>
+            <option value="New with box">New with box</option>
+            <option value="Excellent" selected>Excellent</option>
+            <option value="Good">Good</option>
+            <option value="Used">Used</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row-3">
+        <div class="field-group">
+          <label class="field-label">Color</label>
+          <input type="text" id="f-color" placeholder="Black" />
+        </div>
+        <div class="field-group">
+          <label class="field-label">Era</label>
+          <input type="text" id="f-era" placeholder="FW23 or Unknown" value="Unknown" />
+        </div>
+        <div class="field-group">
+          <label class="field-label">New Arrival?</label>
+          <select id="f-new">
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Description</label>
+        <textarea id="f-desc" rows="3" placeholder="Short description from Grailed listing"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Image URLs</label>
+        <span class="field-hint">One per line — copy from Grailed (long press each photo → copy image address)</span>
+        <textarea class="images-area" id="f-images" rows="5" placeholder="https://media-assets.grailed.com/prd/listing/temp/abc123?w=2200&#10;https://media-assets.grailed.com/prd/listing/temp/def456?w=2200"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Grailed Listing URL</label>
+        <input type="text" id="f-grailed" placeholder="https://www.grailed.com/listings/..." />
+      </div>
+
+      <!-- Measurements -->
+      <div class="field-group">
+        <label class="field-label">Measurements (inches, flat)</label>
+        <span class="field-hint">Fill in what applies — leave blank to skip</span>
+        <div class="measurements-grid">
+          <div class="meas-field">
+            <label>Chest</label>
+            <input type="number" id="m-chest" step="0.5" />
+          </div>
+          <div class="meas-field">
+            <label>Shoulder</label>
+            <input type="number" id="m-shoulder" step="0.5" />
+          </div>
+          <div class="meas-field">
+            <label>Sleeve</label>
+            <input type="number" id="m-sleeve" step="0.5" />
+          </div>
+          <div class="meas-field">
+            <label>Length</label>
+            <input type="number" id="m-length" step="0.5" />
+          </div>
+          <div class="meas-field">
+            <label>Waist</label>
+            <input type="number" id="m-waist" step="0.5" />
+          </div>
+          <div class="meas-field">
+            <label>Inseam</label>
+            <input type="number" id="m-inseam" step="0.5" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Auth Ledger -->
+      <div class="auth-toggle" onclick="toggleAuth()">
+        <div class="toggle-switch" id="auth-toggle-switch"></div>
+        <span class="toggle-label">Include Authentication Ledger</span>
+      </div>
+
+      <div class="auth-fields" id="auth-fields">
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label">Tag Verified</label>
+            <select id="a-tag">
+              <option value="Pass">Pass</option>
+              <option value="N/A">N/A</option>
+              <option value="Partial">Partial</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Hardware Verified</label>
+            <select id="a-hw">
+              <option value="Pass">Pass</option>
+              <option value="N/A">N/A</option>
+              <option value="Partial">Partial</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label">Stitching</label>
+            <select id="a-stitch">
+              <option value="Pass">Pass</option>
+              <option value="N/A">N/A</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Material Feel</label>
+            <select id="a-material">
+              <option value="Pass">Pass</option>
+              <option value="N/A">N/A</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label">Replica Risk</label>
+            <select id="a-risk">
+              <option value="Low">Low</option>
+              <option value="Moderate">Moderate</option>
+              <option value="High">High</option>
+              <option value="Very Low">Very Low</option>
+              <option value="N/A">N/A</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Confidence</label>
+            <select id="a-conf">
+              <option value="Certain">Certain</option>
+              <option value="Extremely High">Extremely High</option>
+              <option value="Very High">Very High</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Provenance</label>
+          <input type="text" id="a-prov" placeholder="e.g. Purchased brand direct" />
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ════ PASTE MODE ════ -->
+    <div class="mode-panel" id="panel-paste">
+      <div class="field-group">
+        <label class="field-label">Raw Grailed Listing Text</label>
+        <span class="field-hint">Copy everything from the Grailed listing page and paste it below. The tool will extract what it can.</span>
+        <textarea class="paste-area" id="paste-raw" rows="12" placeholder="Paste your Grailed listing text here...
+
+Example:
+Balenciaga
+Pink Nologo Distressed Oversized Hoodie
+Men's XS / EU 42 • Excellent • Located in United States
+
+$400
+
+Seller Description
+Excellent condition, comes pre-distressed, oversized fit
+
+Measurements
+Chest: 24 in
+Length: 25 in"></textarea>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Image URLs</label>
+        <span class="field-hint">One per line</span>
+        <textarea class="images-area" id="paste-images" rows="5" placeholder="https://media-assets.grailed.com/..."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Grailed URL</label>
+        <input type="text" id="paste-grailed" placeholder="https://www.grailed.com/listings/..." />
+      </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="actions">
+      <button class="btn-generate" onclick="generate()">Generate JSON</button>
+      <button class="btn-clear" onclick="clearAll()">Clear</button>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="output-section" id="output-section">
+      <div class="output-header">
+        <span class="output-title">Generated JSON Entry</span>
+        <button class="btn-copy" id="btn-copy" onclick="copyOutput()">Copy</button>
+      </div>
+      <div class="output-code" id="output-code"></div>
+      <p class="output-instructions">
+        <strong>How to add:</strong> Open your <strong>listings.json</strong> on GitHub. Click the pencil to edit. Find the last <code>}</code> before the closing <code>]</code>. Add a comma after it, then paste this block. Commit. Vercel auto-deploys in 30 seconds.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <span>Next ID: <span class="status-id" id="status-id">26</span></span>
+    <span>Private Tool — Not Indexed</span>
+  </div>
+
+  <script>
+    // ── STATE ──
+    let nextId = 26; // Update this as you add listings
+    let authEnabled = false;
+    let activeTab = 'form';
+
+    // Load next ID from localStorage if saved
+    const savedId = localStorage.getItem('sisukas_next_id');
+    if (savedId) nextId = parseInt(savedId, 10);
+    document.getElementById('status-id').textContent = nextId;
+
+    // ── TABS ──
+    function switchTab(tab) {
+      activeTab = tab;
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.mode-panel').forEach(p => p.classList.remove('active'));
+      document.querySelector(`.tab:nth-child(${tab === 'form' ? 1 : 2})`).classList.add('active');
+      document.getElementById(`panel-${tab}`).classList.add('active');
+    }
+
+    // ── AUTH TOGGLE ──
+    function toggleAuth() {
+      authEnabled = !authEnabled;
+      document.getElementById('auth-toggle-switch').classList.toggle('on', authEnabled);
+      document.getElementById('auth-fields').classList.toggle('visible', authEnabled);
+    }
+
+    // ── PARSE GRAILED TEXT ──
+    function parseGrailedText(raw) {
+      const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+      const data = {
+        brand: '', title: '', price: 0, size: '', gender: 'mens',
+        condition: 'Good', color: '', description: '',
+        measurements: {}
+      };
+
+      // Line 1 is usually brand
+      if (lines[0]) data.brand = lines[0].replace(/\[.*?\]\(.*?\)/g, '').trim();
+
+      // Line 2 is usually title
+      if (lines[1]) data.title = lines[1].trim();
+
+      // Look for price
+      for (const line of lines) {
+        const priceMatch = line.match(/^\$(\d[\d,]*)/);
+        if (priceMatch) {
+          data.price = parseInt(priceMatch[1].replace(/,/g, ''), 10);
+          break;
+        }
+      }
+
+      // Look for size/condition/gender in the "Men's XS / EU 42 • Excellent" line
+      for (const line of lines) {
+        if (line.includes('•') || line.includes('·')) {
+          const parts = line.split(/[•·]/);
+          // First part often has size
+          if (parts[0]) {
+            const sizeRaw = parts[0].trim();
+            if (sizeRaw.match(/men|women|unisex/i)) {
+              if (/women/i.test(sizeRaw)) data.gender = 'womens';
+              else if (/unisex/i.test(sizeRaw)) data.gender = 'unisex';
+              // Extract size after "Men's" or similar
+              const sizeMatch = sizeRaw.match(/(?:Men's|Women's|Unisex)\s+(.*)/i);
+              if (sizeMatch) data.size = sizeMatch[1].trim();
+            }
+          }
+          // Second part often has condition
+          if (parts[1]) {
+            const cond = parts[1].trim();
+            if (/new/i.test(cond)) data.condition = cond;
+            else if (/excellent/i.test(cond)) data.condition = 'Excellent';
+            else if (/good|gently/i.test(cond)) data.condition = 'Good';
+            else if (/used|fair/i.test(cond)) data.condition = 'Used';
+          }
+          break;
+        }
+      }
+
+      // Look for seller description
+      const descIdx = lines.findIndex(l => /seller\s*description/i.test(l));
+      if (descIdx >= 0 && lines[descIdx + 1]) {
+        // Collect lines until we hit "Measurements" or another section keyword
+        const descLines = [];
+        for (let i = descIdx + 1; i < lines.length; i++) {
+          if (/^(measurements|color|streetwear|designer|grailed|smart pricing)/i.test(lines[i])) break;
+          descLines.push(lines[i]);
+        }
+        data.description = descLines.join(' ').trim();
+      }
+
+      // Look for measurements
+      const measLabels = ['chest', 'shoulder', 'sleeve', 'length', 'waist', 'inseam'];
+      for (const line of lines) {
+        for (const label of measLabels) {
+          const regex = new RegExp(`${label}\\s*[:\\-]?\\s*(\\d+\\.?\\d*)\\s*in`, 'i');
+          const match = line.match(regex);
+          if (match) {
+            data.measurements[label] = parseFloat(match[1]);
+          }
+        }
+      }
+
+      // Look for color
+      const colorLine = lines.find(l => /^(black|white|blue|red|pink|green|gray|grey|brown|navy|cream|orange|multicolor|beige|yellow)/i.test(l));
+      if (colorLine) data.color = colorLine.charAt(0).toUpperCase() + colorLine.slice(1).split('\n')[0].trim();
+
+      return data;
+    }
+
+    // ── GENERATE ──
+    function generate() {
+      let entry;
+
+      if (activeTab === 'paste') {
+        // Parse from raw text
+        const raw    = document.getElementById('paste-raw').value;
+        const imgs   = document.getElementById('paste-images').value;
+        const gUrl   = document.getElementById('paste-grailed').value.trim();
+
+        if (!raw.trim()) { alert('Paste the Grailed listing text first.'); return; }
+
+        entry = parseGrailedText(raw);
+        entry.id = nextId;
+        entry.sale_price = null;
+        entry.era = 'Unknown';
+        entry.category = 'tops'; // default, user should check
+        entry.new = false;
+        entry.images = imgs.split('\n').map(u => u.trim()).filter(u => u.startsWith('http'));
+        entry.grailed_url = gUrl || '';
+        entry.instagram = '';
+
+      } else {
+        // Build from form fields
+        const brand     = document.getElementById('f-brand').value.trim();
+        const title     = document.getElementById('f-title').value.trim();
+        const price     = parseInt(document.getElementById('f-price').value, 10);
+
+        if (!brand || !title || !price) {
+          alert('Brand, Title, and Price are required.');
+          return;
+        }
+
+        const saleRaw   = document.getElementById('f-sale').value.trim();
+        const images    = document.getElementById('f-images').value
+          .split('\n').map(u => u.trim()).filter(u => u.startsWith('http'));
+
+        // Measurements
+        const meas = {};
+        ['chest','shoulder','sleeve','length','waist','inseam'].forEach(k => {
+          const v = parseFloat(document.getElementById(`m-${k}`).value);
+          if (v) meas[k] = v;
+        });
+
+        entry = {
+          id:          nextId,
+          title:       title,
+          brand:       brand,
+          price:       price,
+          sale_price:  saleRaw ? parseInt(saleRaw, 10) : null,
+          size:        document.getElementById('f-size').value.trim(),
+          gender:      document.getElementById('f-gender').value,
+          condition:   document.getElementById('f-condition').value,
+          color:       document.getElementById('f-color').value.trim(),
+          era:         document.getElementById('f-era').value.trim() || 'Unknown',
+          category:    document.getElementById('f-category').value,
+          new:         document.getElementById('f-new').value === 'true',
+          description: document.getElementById('f-desc').value.trim(),
+          images:      images,
+          measurements: meas,
+          grailed_url: document.getElementById('f-grailed').value.trim(),
+          instagram:   ''
+        };
+
+        // Auth ledger
+        if (authEnabled) {
+          entry.authLedger = {
+            verified:            true,
+            brand:               brand.toUpperCase(),
+            tagVerified:         document.getElementById('a-tag').value,
+            hardwareVerified:    document.getElementById('a-hw').value,
+            stitchingConsistent: document.getElementById('a-stitch').value,
+            materialFeel:        document.getElementById('a-material').value,
+            knownReplicaRisk:    document.getElementById('a-risk').value,
+            sellerConfidence:    document.getElementById('a-conf').value,
+            provenance:          document.getElementById('a-prov').value.trim() || ''
+          };
+        }
+      }
+
+      // Format output
+      const json = JSON.stringify(entry, null, 2);
+
+      // Show output
+      const outputSection = document.getElementById('output-section');
+      const outputCode    = document.getElementById('output-code');
+      outputCode.textContent = json;
+      outputSection.classList.add('visible');
+      outputSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Increment next ID
+      nextId++;
+      localStorage.setItem('sisukas_next_id', nextId);
+      document.getElementById('status-id').textContent = nextId;
+    }
+
+    // ── COPY ──
+    function copyOutput() {
+      const text = document.getElementById('output-code').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('btn-copy');
+        btn.textContent = 'Copied ✓';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+      });
+    }
+
+    // ── CLEAR ──
+    function clearAll() {
+      document.querySelectorAll('input[type="text"], input[type="number"], textarea').forEach(el => {
+        if (el.id === 'f-era') el.value = 'Unknown';
+        else el.value = '';
+      });
+      document.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
+      document.getElementById('output-section').classList.remove('visible');
+      if (authEnabled) toggleAuth();
+    }
+  </script>
+</body>
+</html>
