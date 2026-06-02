@@ -473,6 +473,7 @@
       <a href="shop.html?gender=mens" style="color:rgba(247,248,250,0.55);">Mens</a>
       <a href="shop.html?gender=womens" style="color:rgba(247,248,250,0.55);">Womens</a>
       <a href="shop.html?filter=sale" style="color:rgba(247,248,250,0.55);">Sale</a>
+      <a href="scam-check.html" class="nav-scam" style="color:var(--gold,#c9a84c);">Scam Check?</a>
       <button class="nav-cart-btn" id="open-cart" style="color:var(--gold,#c9a84c);border-color:rgba(201,168,76,0.3);">Cart <span id="cart-count-nav"></span></button>
     </div>
   </nav>
@@ -655,6 +656,29 @@
       <div class="church-rune">ᚠᚢᚦᚨᚱᚲ</div>
       <h2 class="reveal-text">The Spirit of Sisu</h2>
       <p>Sisu is the Finnish word for an inner strength that endures beyond all reason — resilience forged in winter, clarity found in cold. Sisukas carries that spirit into fashion: pieces that do not follow trends, but outlast them.</p>
+    </div>
+  </section>
+
+  <!-- SCAM CHECK BAR -->
+  <style>
+    .scam-bar{position:relative;z-index:2;background:var(--oak-dark,#3d2b1a);border-top:1px solid rgba(184,137,58,0.4);border-bottom:1px solid rgba(184,137,58,0.4);}
+    .scam-bar-inner{max-width:1100px;margin:0 auto;padding:1.4rem 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;}
+    .scam-bar-text{flex:1;min-width:260px;}
+    .scam-bar-eyebrow{font-family:var(--ff-mono,'Share Tech Mono',monospace);font-size:0.5rem;letter-spacing:0.32em;text-transform:uppercase;color:var(--gold-pale,#d4aa6a);margin-bottom:0.45rem;display:flex;align-items:center;gap:0.6rem;}
+    .scam-bar-eyebrow::before{content:'';width:18px;height:1px;background:var(--gold-pale,#d4aa6a);}
+    .scam-bar-blurb{font-family:var(--ff-italic,'IM Fell English',serif);font-style:italic;font-size:1.05rem;line-height:1.5;color:var(--snow,#f7f8fa);}
+    .scam-bar-blurb b{font-style:normal;font-family:var(--ff-body,'Cinzel',serif);font-weight:400;color:var(--gold-pale,#d4aa6a);}
+    .scam-bar-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:0.6rem;font-family:var(--ff-mono,'Share Tech Mono',monospace);font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--oak-dark,#3d2b1a);background:var(--gold-pale,#d4aa6a);padding:0.85rem 1.5rem;text-decoration:none;transition:background .25s,color .25s,gap .25s;border:1px solid var(--gold-pale,#d4aa6a);}
+    .scam-bar-btn:hover{background:transparent;color:var(--gold-pale,#d4aa6a);gap:1rem;}
+    @media(max-width:640px){.scam-bar-inner{padding:1.3rem 1.2rem;}.scam-bar-btn{width:100%;justify-content:center;}}
+  </style>
+  <section class="scam-bar">
+    <div class="scam-bar-inner">
+      <div class="scam-bar-text">
+        <div class="scam-bar-eyebrow">Free Buyer Tool</div>
+        <p class="scam-bar-blurb">Not sure if a price is fair? <b>Check the average resale value</b> of any brand, category, and condition before you buy — works for any seller, not just us.</p>
+      </div>
+      <a href="scam-check.html" class="scam-bar-btn">Are You Getting Scammed? →</a>
     </div>
   </section>
 
