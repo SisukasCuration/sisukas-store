@@ -194,6 +194,22 @@
 
     .difficulty-label { color: var(--smoke); margin-left: 0.3rem; }
 
+    /* ── COVER IMAGE ── */
+    .article-cover {
+      position: relative; z-index: 2;
+      max-width: 820px;
+      margin: 1.5rem auto 0;
+      padding: 0 2.5rem;
+    }
+    .article-cover-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      background: var(--panel);
+      border: 1px solid var(--border-dark);
+    }
+
     /* ── ARTICLE BODY ── */
     .article-body {
       position: relative; z-index: 2;
@@ -478,6 +494,7 @@
     @media (max-width: 768px) {
       .nav { padding: 0 1.2rem; }
       .article-hero { padding: 8rem 1.2rem 3rem; }
+      .article-cover { padding: 0 1.2rem; }
       .article-body { padding: 0 1.2rem 4rem; }
       .article-meta { gap: 1.2rem; }
       .domain-compare { grid-template-columns: 1fr; }
@@ -517,6 +534,11 @@
       <div class="difficulty-dot unfilled"></div>
       <span class="difficulty-label">High — fakes now clone the NFC scan itself</span>
     </div>
+  </div>
+
+  <!-- COVER IMAGE -->
+  <div class="article-cover">
+    <img class="article-cover-img" src="../hellstar.jpg" alt="Hellstar NFC tag authentication" />
   </div>
 
   <!-- ARTICLE BODY -->
