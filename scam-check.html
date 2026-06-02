@@ -65,6 +65,12 @@
 
     .micro{font-family:var(--ff-italic);font-style:italic;font-size:0.82rem;color:var(--smoke);line-height:1.6;margin-top:1.3rem;padding:0.85rem 1rem;border-left:2px solid var(--gold-dim);background:rgba(201,168,76,0.04);}
 
+    /* Inventory cross-check blip */
+    .listing-note{display:none;font-family:var(--ff-italic);font-style:italic;font-size:0.84rem;color:var(--smoke);line-height:1.6;margin-top:0.8rem;padding:0.85rem 1rem;border-left:2px solid var(--green);background:rgba(95,174,110,0.06);}
+    .listing-note b{font-style:normal;font-weight:400;color:var(--green);}
+    .listing-note a{color:var(--green);text-decoration:none;border-bottom:1px solid rgba(95,174,110,0.5);}
+    .listing-note a:hover{color:var(--frost);}
+
     /* DISCLAIMERS */
     .disclaimer{margin-top:2.5rem;border:1px solid var(--border-metal);background:var(--deep);padding:1.4rem 1.5rem;}
     .disclaimer-title{font-family:var(--ff-mono);font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--smoke);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
@@ -131,6 +137,7 @@
         <span class="range-val" id="range">—</span>
       </div>
       <div class="micro">This is a broad average across many different styles, eras, colorways, and sizes within this category — not a quote for any specific item. A piece can sit well above or below it for all sorts of legitimate reasons.</div>
+      <div class="listing-note" id="listingNote"></div>
     </div>
 
     <!-- DISCLAIMERS -->
@@ -230,6 +237,18 @@
     const recap    = document.getElementById('recap');
     const priceEl  = document.getElementById('price');
     const rangeEl  = document.getElementById('range');
+    const listingNote = document.getElementById('listingNote');
+
+    // Load the shop's live inventory once (for the optional cross-check blip).
+    // Fails silently if listings.json isn't reachable (e.g. local preview).
+    let LISTINGS = [];
+    const listingsReady = (async () => {
+      try {
+        const res = await fetch('listings.json', { cache:'no-store' });
+        if(res.ok){ const data = await res.json(); if(Array.isArray(data)) LISTINGS = data; }
+      } catch(e){ /* no inventory available — blip simply won't show */ }
+    })();
+    const norm = s => (s||'').toString().toLowerCase().replace(/[^a-z0-9]/g,'');
 
     const money = n => '$' + Math.round(n).toLocaleString('en-US');
     const roundTo = (n,step) => Math.round(n/step)*step;
@@ -270,7 +289,7 @@
       compute();
     });
 
-    function hideResult(){ result.classList.remove('show'); }
+    function hideResult(){ result.classList.remove('show'); listingNote.style.display='none'; }
 
     function compute(){
       const b=brandSel.value, cat=catSel.value, cond=condSel.value;
@@ -284,6 +303,30 @@
       priceEl.textContent=money(roundTo(avg,5));
       rangeEl.textContent=money(low)+' – '+money(high);
       result.classList.add('show');
+      checkListings(b, cat);
+    }
+
+    // Optional blip: if the shop currently lists items in this brand + category,
+    // show the user their own listed prices as a sanity check against the reference.
+    async function checkListings(brand, cat){
+      listingNote.style.display='none';
+      listingNote.innerHTML='';
+      await listingsReady;
+      if(!LISTINGS.length) return;
+      const nb=norm(brand), nc=norm(cat);
+      const matches=LISTINGS.filter(i=>i && norm(i.brand)===nb && norm(i.category)===nc);
+      if(!matches.length) return;
+      const prices=matches.map(i=>(i.sale_price!=null?i.sale_price:i.price)).filter(p=>typeof p==='number');
+      if(!prices.length) return;
+      const avg=prices.reduce((a,p)=>a+p,0)/prices.length;
+      const list=prices.slice().sort((a,p)=>a-p).map(p=>money(p)).join(', ');
+      const n=matches.length;
+      const catName=(CATEGORY_LABELS[cat]||cat).toLowerCase();
+      const noun=n===1?'piece':'pieces';
+      listingNote.innerHTML='<b>Sanity check · your shop:</b> You currently list '+n+' '+brand+' '+catName+' '+noun+
+        ' ('+list+') — your average is '+money(avg)+', across all conditions. Compare against the reference above. '+
+        '<a href="shop.html">View in shop →</a>';
+      listingNote.style.display='block';
     }
   })();
   </script>
