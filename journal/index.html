@@ -3,43 +3,127 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Archive Journal — Sisukas</title>
-  <meta name="description" content="Brand features, collection notes, and designer archive writing from Sisukas." />
-  <link rel="stylesheet" href="../style.css" />
-</head>
-<body class="page-light">
+  <title>The Archive Journal — Sisukas</title>
+  <meta name="description" content="Brand deep dives and editorial features from Sisukas — archive fashion, denim, and streetwear, researched from pieces we've handled." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@300;400;600&family=IM+Fell+English:ital@0;1&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --snow:#f7f8fa;--frost-white:#eef2f6;--ice-blue:#dce8f0;
+      --oak-dark:#3d2b1a;--oak-mid:#5c3d22;--oak-light:#8b5e3c;
+      --iron-light:#7a8089;--gold:#b8893a;--gold-pale:#d4aa6a;
+      --border-snow:rgba(61,43,26,0.1);--border-oak:rgba(61,43,26,0.2);
+      --text-dark:#1e1410;--text-mid:#4a3d32;--text-light:#7a6e64;
+      --ff-title:'Cinzel Decorative',serif;--ff-body:'Cinzel',serif;
+      --ff-italic:'IM Fell English',serif;--ff-mono:'Share Tech Mono',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--snow);color:var(--text-dark);font-family:var(--ff-body);min-height:100dvh;}
+    body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 140% 50% at 50% 0%,rgba(200,220,232,0.4)0%,transparent 55%),radial-gradient(ellipse 60% 30% at 0% 100%,rgba(220,232,240,0.2)0%,transparent 50%);pointer-events:none;z-index:0;}
 
-  <nav class="nav nav-dark" style="background:rgba(8,9,11,0.92);border-bottom:1px solid rgba(201,168,76,0.15);">
-    <a href="../index.html" class="nav-logo" style="color:var(--gold,#c9a84c);">SISUKAS</a>
+    .nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px;background:rgba(247,248,250,0.92);border-bottom:1px solid var(--border-snow);backdrop-filter:blur(12px);}
+    .nav-logo{font-family:var(--ff-title);font-size:1.1rem;letter-spacing:0.22em;color:var(--oak-dark);text-decoration:none;}
+    .nav-links{display:flex;gap:2rem;align-items:center;}
+    .nav-links a{font-family:var(--ff-mono);font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--iron-light);text-decoration:none;transition:color .2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--oak-dark);}
+
+    .wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:9rem 2.5rem 5rem;}
+    .header{margin-bottom:3rem;max-width:680px;}
+    .back{font-family:var(--ff-mono);font-size:0.52rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--oak-light);text-decoration:none;display:inline-flex;gap:0.4rem;margin-bottom:2rem;transition:color .2s;}
+    .back:hover{color:var(--oak-dark);}
+    .eyebrow{font-family:var(--ff-mono);font-size:0.5rem;letter-spacing:0.34em;text-transform:uppercase;color:var(--oak-mid);margin-bottom:1rem;display:flex;align-items:center;gap:1rem;}
+    .eyebrow::after{content:'';flex:1;height:1px;background:var(--border-oak);max-width:70px;}
+    h1{font-family:var(--ff-title);font-size:clamp(2rem,6vw,3.2rem);line-height:1.1;color:var(--oak-dark);margin-bottom:1rem;letter-spacing:0.02em;}
+    .intro{font-family:var(--ff-italic);font-style:italic;font-size:1.12rem;color:var(--text-mid);line-height:1.7;}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--border-snow);border:1px solid var(--border-snow);}
+    .card{background:#fff;text-decoration:none;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 1px 8px rgba(61,43,26,0.03);transition:box-shadow 300ms ease,transform 300ms cubic-bezier(0.16,1,0.3,1);}
+    .card:hover{box-shadow:0 12px 40px rgba(61,43,26,0.1);transform:translateY(-4px);z-index:1;}
+    .card:hover .card-img img{transform:scale(1.05);}
+    .card:hover .card-read{gap:0.8rem;color:var(--oak-dark);}
+    .card-img{aspect-ratio:16/9;overflow:hidden;background:var(--ice-blue);position:relative;}
+    .card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 600ms cubic-bezier(0.25,0.46,0.45,0.94);}
+    .card-tag{position:absolute;top:0.75rem;left:0.75rem;font-family:var(--ff-mono);font-size:0.45rem;letter-spacing:0.22em;text-transform:uppercase;padding:0.22rem 0.55rem;background:var(--oak-dark);color:var(--snow);}
+    .card-body{padding:1.2rem 1.4rem 1.6rem;display:flex;flex-direction:column;flex:1;border-top:1px solid var(--border-snow);}
+    .card-meta{font-family:var(--ff-mono);font-size:0.48rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--oak-light);margin-bottom:0.5rem;}
+    .card-title{font-family:var(--ff-body);font-size:1rem;font-weight:400;line-height:1.3;color:var(--oak-dark);margin-bottom:0.6rem;}
+    .card-hook{font-family:var(--ff-italic);font-style:italic;font-size:0.88rem;line-height:1.65;color:var(--text-mid);flex:1;margin-bottom:1rem;}
+    .card-read{font-family:var(--ff-mono);font-size:0.5rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--oak-mid);display:flex;align-items:center;gap:0.4rem;transition:color 250ms ease,gap 300ms cubic-bezier(0.16,1,0.3,1);}
+
+    .footer{position:relative;z-index:1;background:var(--oak-dark);padding:2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:3rem;}
+    .footer-logo{font-family:var(--ff-title);font-size:1rem;letter-spacing:0.2em;color:var(--gold-pale);text-decoration:none;}
+    .footer-links{display:flex;gap:1.5rem;}
+    .footer-links a{font-family:var(--ff-mono);font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(247,248,250,0.4);text-decoration:none;transition:color .2s;}
+    .footer-links a:hover{color:var(--snow);}
+
+    @media(max-width:768px){.nav{padding:0 1.2rem;}.wrap{padding:8rem 1.2rem 4rem;}.footer{padding:2rem 1.2rem;}.grid{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="../index.html" class="nav-logo">SISUKAS</a>
     <div class="nav-links">
       <a href="../index.html">Home</a>
       <a href="../shop.html">Shop</a>
-      <a href="../shop.html?gender=mens">Mens</a>
-      <a href="../shop.html?gender=womens">Womens</a>
-      <a href="../shop.html?filter=sale">Sale</a>
+      <a href="../journal/" class="active">Journal</a>
+      <a href="../auth/">Auth Ledger</a>
     </div>
   </nav>
 
-  <main class="journal-section" style="padding-top:8rem;">
-    <p class="section-eyebrow">The Archive Journal</p>
-    <h1 class="section-title">Archive Journal</h1>
-    <p class="section-desc">Deep dives into designer houses, collections, materials, silhouettes, and pieces worth owning.</p>
+  <div class="wrap">
+    <div class="header">
+      <a href="../index.html" class="back">← Back to Home</a>
+      <div class="eyebrow">The Archive Journal</div>
+      <h1>The Archive Journal</h1>
+      <p class="intro">Brand deep dives and editorial features — the stories behind the pieces we curate. Researched from items we've personally handled, sourced, and studied.</p>
+    </div>
 
-    <div class="journal-grid">
-      <a class="journal-card" href="acne-studios-ss25.html">
-        <div class="journal-card-img">
-          <div class="journal-card-img-placeholder">Acne Studios — SS25</div>
-          <span class="journal-card-tag">Brand Feature</span>
-        </div>
-        <div class="journal-card-body">
-          <div class="journal-card-meta">Vol. 01 — May 2026 — Denim</div>
-          <h3 class="journal-card-title">Acne Studios SS25: The Jean That Rewrote the Silhouette</h3>
-          <p class="journal-card-hook">A closer look at Acne Studios denim, Scandinavian proportion, and why the right cut matters.</p>
-          <span class="journal-card-read">Read the Feature →</span>
+    <div class="grid">
+
+      <a class="card" href="gallerydept.html">
+        <div class="card-img"><img src="../gallerydept.jpg" alt="Gallery Dept repurposed denim feature" loading="lazy" /><span class="card-tag">Brand Feature</span></div>
+        <div class="card-body">
+          <div class="card-meta">Vol. 03 — June 2026 — Denim / Art</div>
+          <h2 class="card-title">Gallery Dept: Paint, Patience, and the $1,000 Thrift Flip</h2>
+          <p class="card-hook">How an LA artist turned other people's old Levi's into a sold-out, four-figure art label — and made the imperfections the whole point.</p>
+          <span class="card-read">Read the Feature →</span>
         </div>
       </a>
+
+      <a class="card" href="hellstar.html">
+        <div class="card-img"><img src="../hellstar.jpg" alt="Hellstar brand feature" loading="lazy" /><span class="card-tag">Brand Feature</span></div>
+        <div class="card-body">
+          <div class="card-meta">Vol. 02 — June 2026 — Graphics</div>
+          <h2 class="card-title">Hellstar: Light Out of the Dark</h2>
+          <p class="card-hook">The most misunderstood name in streetwear is also one of the most sincere — a pastor's son turning biblical struggle into a brand, and a $2,500 idea into a resale phenomenon.</p>
+          <span class="card-read">Read the Feature →</span>
+        </div>
+      </a>
+
+      <a class="card" href="acne-studios-ss25.html">
+        <div class="card-img"><img src="../acnestudios.jpg" alt="Acne Studios SS25 denim feature" loading="lazy" /><span class="card-tag">Brand Feature</span></div>
+        <div class="card-body">
+          <div class="card-meta">Vol. 01 — May 2026 — Denim</div>
+          <h2 class="card-title">Acne Studios SS25: The Jean That Rewrote the Silhouette</h2>
+          <p class="card-hook">How a Swedish house channelled 70s Scandinavian workwear, Japanese selvedge tradition, and the ghost of Helmut Lang into the season's most-discussed denim drop.</p>
+          <span class="card-read">Read the Feature →</span>
+        </div>
+      </a>
+
     </div>
-  </main>
+  </div>
+
+  <footer class="footer">
+    <a href="../index.html" class="footer-logo">SISUKAS</a>
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../shop.html">Shop</a>
+      <a href="../auth/">Auth Ledger</a>
+      <a href="mailto:hello@sisukas.com">Contact</a>
+    </div>
+  </footer>
 
 </body>
 </html>
