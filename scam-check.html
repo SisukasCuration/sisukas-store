@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Are You Getting Scammed? — Sisukas Resale Reference</title>
+  <meta name="description" content="A free resale-average reference tool. Pick a brand, category, and condition to see the approximate secondary-market average. General averages only — not purchase advice or an appraisal." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@300;400;600&family=IM+Fell+English:ital@0;1&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --void:#08090b; --deep:#0f1114; --panel:#161a1e; --metal:#2a2e34;
+      --frost:#c8dce8; --parchment:#e8dfc8; --smoke:#8a9299; --ash:#5a6370;
+      --gold:#c9a84c; --gold-dim:#7a6130; --rune-red:#7a1a1a; --green:#5fae6e;
+      --border-dark:rgba(201,168,76,0.15); --border-metal:rgba(200,220,232,0.12);
+      --ff-title:'Cinzel Decorative',serif; --ff-body:'Cinzel',serif;
+      --ff-italic:'IM Fell English',serif; --ff-mono:'Share Tech Mono',monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--void);color:var(--parchment);font-family:var(--ff-body);min-height:100dvh;}
+    body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 100% 50% at 50% 0%,rgba(15,25,35,0.8)0%,transparent 60%),radial-gradient(ellipse 60% 50% at 0% 100%,rgba(26,18,8,0.5)0%,transparent 50%);pointer-events:none;z-index:0;}
+    body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:0.5;}
+
+    /* NAV */
+    .nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px;background:rgba(8,9,11,0.94);border-bottom:1px solid var(--border-dark);backdrop-filter:blur(12px);}
+    .nav-logo{font-family:var(--ff-title);font-size:1.1rem;letter-spacing:0.22em;color:var(--gold);text-decoration:none;text-shadow:0 0 20px rgba(201,168,76,0.3);}
+    .nav-links{display:flex;gap:2rem;align-items:center;}
+    .nav-links a{font-family:var(--ff-mono);font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--smoke);text-decoration:none;transition:color .2s;}
+    .nav-links a:hover{color:var(--frost);}
+
+    .wrap{position:relative;z-index:2;max-width:720px;margin:0 auto;padding:8.5rem 1.5rem 5rem;}
+
+    /* HERO */
+    .eyebrow{font-family:var(--ff-mono);font-size:0.5rem;letter-spacing:0.34em;text-transform:uppercase;color:var(--gold);opacity:0.85;margin-bottom:1rem;display:flex;align-items:center;gap:1rem;}
+    .eyebrow::after{content:'';flex:1;height:1px;background:var(--border-dark);max-width:80px;}
+    h1{font-family:var(--ff-title);font-size:clamp(1.9rem,6vw,3rem);line-height:1.08;color:var(--parchment);margin-bottom:1rem;letter-spacing:0.01em;}
+    .sub{font-family:var(--ff-italic);font-style:italic;font-size:1.1rem;color:var(--smoke);line-height:1.7;max-width:560px;margin-bottom:2.6rem;}
+
+    /* STEPPER */
+    .step{margin-bottom:1.3rem;opacity:0.45;pointer-events:none;transition:opacity .3s;}
+    .step.active{opacity:1;pointer-events:auto;}
+    .step-label{font-family:var(--ff-mono);font-size:0.5rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:0.55rem;display:flex;align-items:center;gap:0.6rem;}
+    .step.active .step-label{color:var(--gold);}
+    .step-num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border:1px solid currentColor;border-radius:50%;font-size:0.55rem;}
+
+    .sel-wrap{position:relative;}
+    select{width:100%;appearance:none;-webkit-appearance:none;background:var(--deep);border:1px solid var(--border-dark);color:var(--parchment);font-family:var(--ff-body);font-size:1rem;padding:0.95rem 2.8rem 0.95rem 1.1rem;cursor:pointer;outline:none;transition:border-color .2s;}
+    select:hover{border-color:var(--gold-dim);}
+    select:focus{border-color:var(--gold);}
+    select:disabled{cursor:not-allowed;}
+    .sel-wrap::after{content:'';position:absolute;right:1.2rem;top:50%;width:8px;height:8px;border-right:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);transform:translateY(-65%) rotate(45deg);pointer-events:none;}
+
+    /* RESULT */
+    .result{margin-top:2.2rem;border:1px solid var(--border-dark);background:linear-gradient(180deg,rgba(201,168,76,0.05),rgba(201,168,76,0.01));padding:2rem 1.8rem;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s;}
+    .result.show{opacity:1;transform:none;}
+    .result-eyebrow{font-family:var(--ff-mono);font-size:0.48rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--smoke);margin-bottom:0.5rem;}
+    .result-recap{font-family:var(--ff-italic);font-style:italic;font-size:0.95rem;color:var(--parchment);margin-bottom:1.4rem;line-height:1.5;}
+    .result-recap b{font-style:normal;color:var(--gold);font-weight:400;}
+    .price{font-family:var(--ff-title);font-size:clamp(2.6rem,11vw,4rem);color:var(--gold);line-height:1;text-shadow:0 0 30px rgba(201,168,76,0.2);font-variant-numeric:tabular-nums;}
+    .price-tag{font-family:var(--ff-mono);font-size:0.5rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--ash);margin-top:0.6rem;}
+    .range{margin-top:1.3rem;padding-top:1.3rem;border-top:1px solid var(--border-dark);display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;}
+    .range-label{font-family:var(--ff-mono);font-size:0.48rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--ash);}
+    .range-val{font-family:var(--ff-body);font-size:1.1rem;color:var(--frost);font-variant-numeric:tabular-nums;}
+
+    .micro{font-family:var(--ff-italic);font-style:italic;font-size:0.82rem;color:var(--smoke);line-height:1.6;margin-top:1.3rem;padding:0.85rem 1rem;border-left:2px solid var(--gold-dim);background:rgba(201,168,76,0.04);}
+
+    /* DISCLAIMERS */
+    .disclaimer{margin-top:2.5rem;border:1px solid var(--border-metal);background:var(--deep);padding:1.4rem 1.5rem;}
+    .disclaimer-title{font-family:var(--ff-mono);font-size:0.5rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--smoke);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem;}
+    .disclaimer-title::before{content:'\26A0';color:var(--gold-dim);font-size:0.7rem;}
+    .disclaimer p{font-family:var(--ff-italic);font-style:italic;font-size:0.84rem;line-height:1.7;color:var(--ash);padding:0.4rem 0;border-bottom:1px solid rgba(200,220,232,0.05);}
+    .disclaimer p:last-child{border-bottom:none;}
+    .disclaimer p b{font-style:normal;color:var(--smoke);font-weight:400;}
+    .disclaimer a{color:var(--gold-dim);text-decoration:none;border-bottom:1px solid var(--gold-dim);}
+    .disclaimer a:hover{color:var(--gold);}
+
+    .foot{font-family:var(--ff-mono);font-size:0.48rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--ash);text-align:center;margin-top:2.5rem;opacity:0.55;line-height:1.9;}
+
+    @media(max-width:600px){.nav{padding:0 1.2rem;}.nav-links{gap:1.1rem;}.wrap{padding:7.5rem 1.1rem 4rem;}}
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">SISUKAS</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="auth/">Auth Ledger</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <div class="eyebrow">Resale Reference Tool</div>
+    <h1>Are You Getting Scammed?</h1>
+    <p class="sub">Pick a brand, a category, and a condition. We'll show the approximate average resale price so you can sanity-check what you're being asked to pay. It's a gut-check, not a verdict.</p>
+
+    <!-- STEP 1: BRAND -->
+    <div class="step active" id="step1">
+      <div class="step-label"><span class="step-num">1</span> Choose a Brand</div>
+      <div class="sel-wrap">
+        <select id="brand"><option value="">Select a brand…</option></select>
+      </div>
+    </div>
+
+    <!-- STEP 2: CATEGORY -->
+    <div class="step" id="step2">
+      <div class="step-label"><span class="step-num">2</span> Choose a Category</div>
+      <div class="sel-wrap">
+        <select id="category" disabled><option value="">Select a brand first…</option></select>
+      </div>
+    </div>
+
+    <!-- STEP 3: CONDITION -->
+    <div class="step" id="step3">
+      <div class="step-label"><span class="step-num">3</span> Choose the Condition</div>
+      <div class="sel-wrap">
+        <select id="condition" disabled><option value="">Select a category first…</option></select>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result" id="result">
+      <div class="result-eyebrow">Approximate Average Resale Price</div>
+      <div class="result-recap" id="recap"></div>
+      <div class="price" id="price">—</div>
+      <div class="price-tag">Secondary-market average · USD</div>
+      <div class="range">
+        <span class="range-label">Typical range seen</span>
+        <span class="range-val" id="range">—</span>
+      </div>
+      <div class="micro">This is a broad average across many different styles, eras, colorways, and sizes within this category — not a quote for any specific item. A piece can sit well above or below it for all sorts of legitimate reasons.</div>
+    </div>
+
+    <!-- DISCLAIMERS -->
+    <div class="disclaimer">
+      <div class="disclaimer-title">Read This First</div>
+      <p><b>This is not purchase, financial, or investment advice.</b> Sisukas is not recommending that you buy, sell, or pay any particular amount for anything. What you do with this number is entirely your decision.</p>
+      <p><b>These are general averages, not valuations.</b> Each figure is a rough average of secondary-market (resale) prices across a wide mix of styles, releases, sizes, and colorways within a category — it is not an appraisal of any individual item.</p>
+      <p><b>Resale only.</b> The numbers reflect approximate secondary-market resale prices, not original retail, not what a store would charge, and not a guaranteed sale or buy price.</p>
+      <p><b>Real value varies a lot.</b> A specific piece's worth depends on the exact style, hype, size, flaws, completeness (tags, box, receipt), and current demand — none of which this tool measures.</p>
+      <p><b>Authenticity is not checked here.</b> This tool says nothing about whether an item is real. For that, see the <a href="auth/">Authentication Ledger</a>.</p>
+      <p><b>Estimates can be out of date.</b> Markets move. Always do your own research before making any decision.</p>
+    </div>
+
+    <div class="foot">
+      Sisukas Curation · A free buyer gut-check tool<br>
+      General resale averages · No item is being valued or offered for sale here
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    "use strict";
+
+    /* =========================================================================
+       PRICE REFERENCE DATA  —  EDIT THESE NUMBERS ANYTIME
+       -------------------------------------------------------------------------
+       Each value = approximate AVERAGE RESALE PRICE (USD) for that brand +
+       category, in DEADSTOCK / NEW condition. Other conditions are derived by
+       multiplying by CONDITION_FACTORS below. Only categories you list for a
+       brand will appear in the dropdown, so add/remove freely.
+       ========================================================================= */
+    const PRICE_DATA = {
+      "Acne Studios":              { outerwear:400, tops:150, bottoms:200, footwear:250, accessories:150 },
+      "Alexander McQueen":         { outerwear:900, tops:300, bottoms:400, footwear:450, accessories:350 },
+      "AllSaints":                 { outerwear:250, tops:70,  bottoms:120, footwear:150, accessories:90 },
+      "Amiri":                     { outerwear:700, tops:300, bottoms:600, footwear:500, accessories:250 },
+      "Arc'teryx":                 { outerwear:350, tops:150, bottoms:200, footwear:250, accessories:120 },
+      "BAPE":                      { outerwear:450, tops:150, bottoms:200, footwear:220, accessories:120 },
+      "Balenciaga":                { outerwear:950, tops:350, bottoms:500, footwear:600, accessories:450 },
+      "Better With Age":           { outerwear:400, tops:250, bottoms:300, footwear:200, accessories:150 },
+      "Burberry":                  { outerwear:1000, tops:350, bottoms:400, footwear:450, accessories:400 },
+      "Cactus Jack":               { outerwear:250, tops:150, bottoms:150, footwear:300, accessories:120 },
+      "Celine":                    { outerwear:1200, tops:450, bottoms:550, footwear:650, accessories:600 },
+      "Chrome Hearts":             { outerwear:2500, tops:600, bottoms:900, footwear:800, accessories:700 },
+      "Denim Tears":               { outerwear:400, tops:250, bottoms:350, footwear:300, accessories:150 },
+      "Desto Dubb":                { outerwear:250, tops:120, bottoms:150, footwear:180, accessories:80 },
+      "Dior":                      { outerwear:1500, tops:600, bottoms:700, footwear:700, accessories:600 },
+      "Enfants Riches Déprimés":   { outerwear:1500, tops:500, bottoms:700, footwear:600, accessories:400 },
+      "Fear of God":               { outerwear:600, tops:200, bottoms:350, footwear:250, accessories:150 },
+      "Gallery Dept":              { outerwear:500, tops:200, bottoms:700, footwear:300, accessories:150 },
+      "Givenchy":                  { outerwear:900, tops:250, bottoms:350, footwear:400, accessories:300 },
+      "Gosha Rubchinskiy":         { outerwear:300, tops:120, bottoms:180, footwear:200, accessories:100 },
+      "Gucci":                     { outerwear:1500, tops:500, bottoms:600, footwear:600, accessories:550 },
+      "Hellstar":                  { outerwear:250, tops:130, bottoms:180, footwear:200, accessories:90 },
+      "Heron Preston":             { outerwear:350, tops:150, bottoms:200, footwear:250, accessories:120 },
+      "Kapital":                   { outerwear:450, tops:180, bottoms:280, footwear:200, accessories:120 },
+      "Louis Vuitton":             { outerwear:2000, tops:700, bottoms:900, footwear:900, accessories:800 },
+      "Needles":                   { outerwear:400, tops:150, bottoms:280, footwear:250, accessories:130 },
+      "New Balance":               { outerwear:120, tops:60,  bottoms:80,  footwear:150, accessories:50 },
+      "Off-White":                 { outerwear:600, tops:250, bottoms:350, footwear:400, accessories:250 },
+      "Palace":                    { outerwear:300, tops:120, bottoms:150, footwear:180, accessories:100 },
+      "Paly":                      { outerwear:250, tops:120, bottoms:150, footwear:150, accessories:90 },
+      "Prada":                     { outerwear:1200, tops:450, bottoms:550, footwear:650, accessories:700 },
+      "Raf Simons":                { outerwear:1200, tops:400, bottoms:500, footwear:500, accessories:300 },
+      "Rick Owens":                { outerwear:1200, tops:400, bottoms:550, footwear:700, accessories:350 },
+      "Saint Michael":             { outerwear:700, tops:400, bottoms:450, footwear:350, accessories:250 },
+      "Sp5der":                    { outerwear:300, tops:180, bottoms:220, footwear:200, accessories:100 },
+      "Supreme":                   { outerwear:300, tops:120, bottoms:150, footwear:180, accessories:100 },
+      "Vetements":                 { outerwear:800, tops:350, bottoms:450, footwear:500, accessories:300 },
+      "VLONE":                     { outerwear:300, tops:150, bottoms:180, footwear:200, accessories:100 },
+      "Warner Bros":               { outerwear:150, tops:80,  bottoms:90,  footwear:90,  accessories:50 },
+      "Who Decides War":           { outerwear:500, tops:250, bottoms:400, footwear:350, accessories:180 }
+    };
+
+    // Condition tiers (label -> multiplier applied to the Deadstock/New base)
+    const CONDITION_FACTORS = {
+      "Deadstock / New": 1.00,
+      "Excellent":       0.85,
+      "Good":            0.70,
+      "Used / Worn":     0.55
+    };
+
+    const CATEGORY_LABELS = {
+      outerwear:"Outerwear", tops:"Tops", bottoms:"Bottoms",
+      footwear:"Footwear", accessories:"Accessories"
+    };
+    // Always offer the full category set for every brand
+    const CATEGORIES = ["outerwear","tops","bottoms","footwear","accessories"];
+    /* ===================== END EDITABLE DATA ===================== */
+
+    const brandSel = document.getElementById('brand');
+    const catSel   = document.getElementById('category');
+    const condSel  = document.getElementById('condition');
+    const step2    = document.getElementById('step2');
+    const step3    = document.getElementById('step3');
+    const result   = document.getElementById('result');
+    const recap    = document.getElementById('recap');
+    const priceEl  = document.getElementById('price');
+    const rangeEl  = document.getElementById('range');
+
+    const money = n => '$' + Math.round(n).toLocaleString('en-US');
+    const roundTo = (n,step) => Math.round(n/step)*step;
+
+    // populate brands
+    Object.keys(PRICE_DATA).sort().forEach(b=>{
+      const o=document.createElement('option'); o.value=b; o.textContent=b; brandSel.appendChild(o);
+    });
+
+    function resetSelect(sel, placeholder){
+      sel.innerHTML='<option value="">'+placeholder+'</option>';
+    }
+
+    brandSel.addEventListener('change', ()=>{
+      const b=brandSel.value;
+      hideResult();
+      resetSelect(condSel,'Select a category first…'); condSel.disabled=true; step3.classList.remove('active');
+      if(!b){ resetSelect(catSel,'Select a brand first…'); catSel.disabled=true; step2.classList.remove('active'); return; }
+      resetSelect(catSel,'Select a category…');
+      CATEGORIES.forEach(cat=>{
+        const o=document.createElement('option'); o.value=cat; o.textContent=CATEGORY_LABELS[cat]||cat; catSel.appendChild(o);
+      });
+      catSel.disabled=false; step2.classList.add('active');
+    });
+
+    catSel.addEventListener('change', ()=>{
+      hideResult();
+      if(!catSel.value){ resetSelect(condSel,'Select a category first…'); condSel.disabled=true; step3.classList.remove('active'); return; }
+      resetSelect(condSel,'Select condition…');
+      Object.keys(CONDITION_FACTORS).forEach(c=>{
+        const o=document.createElement('option'); o.value=c; o.textContent=c; condSel.appendChild(o);
+      });
+      condSel.disabled=false; step3.classList.add('active');
+    });
+
+    condSel.addEventListener('change', ()=>{
+      if(!condSel.value){ hideResult(); return; }
+      compute();
+    });
+
+    function hideResult(){ result.classList.remove('show'); }
+
+    function compute(){
+      const b=brandSel.value, cat=catSel.value, cond=condSel.value;
+      if(!b||!cat||!cond) return;
+      const base=PRICE_DATA[b][cat];
+      const avg=base*CONDITION_FACTORS[cond];
+      const low=roundTo(avg*0.8,5);
+      const high=roundTo(avg*1.2,5);
+
+      recap.innerHTML='<b>'+b+'</b> · '+(CATEGORY_LABELS[cat]||cat)+' · '+cond;
+      priceEl.textContent=money(roundTo(avg,5));
+      rangeEl.textContent=money(low)+' – '+money(high);
+      result.classList.add('show');
+    }
+  })();
+  </script>
+</body>
+</html>
