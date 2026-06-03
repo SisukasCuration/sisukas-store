@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creative Generator — Sisukas Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;500;600&family=Share+Tech+Mono&family=IM+Fell+English:ital@1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --void: #08090b;
+      --deep: #0f1114;
+      --panel: #161a1e;
+      --metal: #2a2e34;
+      --accent-gold: #c9a84c;
+      --gold-pale: #d4aa6a;
+      --frost: #c8dce8;
+      --parchment: #e8dfc8;
+      --smoke: #8a9299;
+      --ash: #5a6370;
+      --ff-title: 'Cinzel Decorative', serif;
+      --ff-body: 'Cinzel', serif;
+      --ff-italic: 'IM Fell English', serif;
+      --ff-mono: 'Share Tech Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--void);
+      color: var(--frost);
+      font-family: var(--ff-body);
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .header {
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      padding: 1.25rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header-logo {
+      font-family: var(--ff-title);
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      color: var(--accent-gold);
+      text-decoration: none;
+    }
+    .header-tag {
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ash);
+    }
+
+    /* ── Layout ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      min-height: calc(100vh - 60px);
+    }
+    .sidebar {
+      background: var(--deep);
+      border-right: 1px solid var(--metal);
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
+    .preview-zone {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    /* ── Sidebar controls ── */
+    .section-label {
+      font-family: var(--ff-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .control-group { margin-bottom: 1.5rem; }
+
+    label {
+      display: block;
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--smoke);
+      margin-bottom: 0.4rem;
+    }
+    select, input[type="text"] {
+      width: 100%;
+      background: var(--panel);
+      border: 1px solid var(--metal);
+      color: var(--frost);
+      font-family: var(--ff-mono);
+      font-size: 0.75rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 200ms;
+      appearance: none;
+    }
+    select:focus, input[type="text"]:focus {
+      border-color: var(--accent-gold);
+    }
+    select option { background: var(--panel); }
+
+    .format-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .format-btn {
+      background: var(--panel);
+      border: 1px solid var(--metal);
+      color: var(--smoke);
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.7rem;
+      cursor: pointer;
+      transition: all 200ms;
+      text-align: center;
+    }
+    .format-btn.active {
+      background: rgba(201,168,76,0.08);
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+    }
+
+    .theme-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .theme-btn {
+      background: var(--panel);
+      border: 1px solid var(--metal);
+      color: var(--smoke);
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.7rem;
+      cursor: pointer;
+      transition: all 200ms;
+      text-align: center;
+    }
+    .theme-btn.active {
+      border-color: var(--frost);
+      color: var(--frost);
+      background: rgba(200,220,232,0.06);
+    }
+
+    /* listing info panel */
+    .listing-info {
+      background: var(--panel);
+      border: 1px solid var(--metal);
+      border-radius: 2px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+    .listing-info.visible { display: block; }
+    .info-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 0.35rem 0;
+      border-bottom: 1px solid rgba(42,46,52,0.8);
+      font-size: 0.7rem;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-key { color: var(--ash); font-family: var(--ff-mono); font-size: 0.6rem; letter-spacing: 0.1em; }
+    .info-val { color: var(--parchment); font-family: var(--ff-mono); font-size: 0.65rem; }
+    .info-val.auth-pass { color: #5aab6e; }
+
+    .download-btn {
+      width: 100%;
+      background: var(--accent-gold);
+      color: var(--void);
+      border: none;
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 0.9rem;
+      cursor: pointer;
+      transition: background 200ms, transform 100ms;
+      margin-bottom: 0.6rem;
+    }
+    .download-btn:hover { background: var(--gold-pale); }
+    .download-btn:active { transform: scale(0.99); }
+    .download-btn.secondary {
+      background: transparent;
+      border: 1px solid var(--metal);
+      color: var(--smoke);
+    }
+    .download-btn.secondary:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+    }
+
+    /* caption block */
+    .caption-block {
+      background: var(--panel);
+      border: 1px solid var(--metal);
+      border-radius: 2px;
+      padding: 1rem;
+      margin-top: 0.75rem;
+    }
+    .caption-text {
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      line-height: 1.7;
+      color: var(--smoke);
+      white-space: pre-wrap;
+      user-select: all;
+    }
+    .copy-btn {
+      background: none;
+      border: none;
+      color: var(--accent-gold);
+      font-family: var(--ff-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 0.5rem 0 0;
+      display: block;
+    }
+
+    /* ── Preview zone ── */
+    .preview-label {
+      font-family: var(--ff-mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ash);
+      text-align: center;
+    }
+    .canvas-wrap {
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 0 0 1px var(--metal), 0 24px 60px rgba(0,0,0,0.6);
+    }
+    #mainCanvas {
+      display: block;
+      image-rendering: auto;
+    }
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--ash);
+      font-family: var(--ff-italic);
+      font-size: 1.1rem;
+      font-style: italic;
+      text-align: center;
+      padding: 4rem 2rem;
+      border: 1px solid var(--metal);
+      width: 480px;
+      min-height: 320px;
+    }
+    .empty-state .empty-sub {
+      font-family: var(--ff-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--metal);
+      font-style: normal;
+    }
+
+    /* loading */
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(8,9,11,0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      display: none;
+    }
+    .loading-overlay.visible { display: flex; }
+
+    /* divider */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--metal);
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--metal); }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a href="../index.html" class="header-logo">SISUKAS</a>
+  <span class="header-tag">Creative Generator — Admin</span>
+</header>
+
+<div class="layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+
+    <div class="section-label">Select Listing</div>
+    <div class="control-group">
+      <label for="listingSelect">Listing</label>
+      <select id="listingSelect" onchange="onListingChange()">
+        <option value="">— choose a listing —</option>
+      </select>
+    </div>
+
+    <div id="listingInfo" class="listing-info"></div>
+
+    <hr class="divider" />
+
+    <div class="section-label">Format</div>
+    <div class="format-toggle">
+      <button class="format-btn active" data-format="feed" onclick="setFormat('feed', this)">Feed 1:1</button>
+      <button class="format-btn" data-format="story" onclick="setFormat('story', this)">Story 9:16</button>
+    </div>
+
+    <div class="section-label">Style</div>
+    <div class="theme-toggle">
+      <button class="theme-btn active" data-theme="dark" onclick="setTheme('dark', this)">Dark Void</button>
+      <button class="theme-btn" data-theme="light" onclick="setTheme('light', this)">Snow Light</button>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="section-label">Export</div>
+    <button class="download-btn" onclick="downloadCanvas('png')">↓ Download PNG</button>
+    <button class="download-btn secondary" onclick="downloadCanvas('jpg')">↓ Download JPG</button>
+
+    <hr class="divider" />
+
+    <div class="section-label">Caption</div>
+    <div id="captionBlock" class="caption-block" style="display:none;">
+      <div class="caption-text" id="captionText"></div>
+      <button class="copy-btn" onclick="copyCaption()">Copy Caption ↗</button>
+    </div>
+
+  </aside>
+
+  <!-- ── PREVIEW ── -->
+  <main class="preview-zone">
+    <div class="preview-label" id="previewLabel">Select a listing to begin</div>
+    <div id="emptyState" class="empty-state">
+      <span>Choose a listing from the sidebar</span>
+      <span class="empty-sub">Creative will render here</span>
+    </div>
+    <div class="canvas-wrap" id="canvasWrap" style="display:none;">
+      <canvas id="mainCanvas"></canvas>
+      <div class="loading-overlay" id="loadingOverlay">Rendering...</div>
+    </div>
+  </main>
+
+</div>
+
+<script>
+/* ─────────────────────────────────────────────
+   STATE
+───────────────────────────────────────────── */
+let listings = [];
+let currentListing = null;
+let currentFormat = 'feed';   // 'feed' | 'story'
+let currentTheme  = 'dark';   // 'dark' | 'light'
+let productImage  = null;
+let fontsReady    = false;
+
+const FORMATS = {
+  feed:  { w: 1080, h: 1080, scale: 0.44 },
+  story: { w: 1080, h: 1920, scale: 0.25 }
+};
+
+/* ─────────────────────────────────────────────
+   INIT: load listings.json, load fonts
+───────────────────────────────────────────── */
+async function init() {
+  // Load Google Fonts for canvas (they must be loaded as FontFace objects)
+  try {
+    const fonts = [
+      new FontFace('Cinzel Decorative', 'url(https://fonts.gstatic.com/s/cinzeldecorative/v16/daaCSScvJGqLYhG8nNt8KPPswUAPnh7URs4.woff2)', { weight: '700' }),
+      new FontFace('Cinzel', 'url(https://fonts.gstatic.com/s/cinzel/v23/8vIU7ww63mVu7gt79mT7.woff2)', { weight: '500' }),
+      new FontFace('Share Tech Mono', 'url(https://fonts.gstatic.com/s/sharetechmono/v15/J7aHnp1uDWRBEqV98dVQztYldFcLowEF.woff2)', { weight: '400' }),
+    ];
+    await Promise.all(fonts.map(f => f.load().then(loaded => document.fonts.add(loaded))));
+    fontsReady = true;
+  } catch(e) {
+    console.warn('Font preload partial:', e);
+    fontsReady = true; // proceed anyway with fallbacks
+  }
+
+  // Fetch listings
+  try {
+    const res = await fetch('../listings.json');
+    listings = await res.json();
+    populateSelect();
+  } catch(e) {
+    console.error('Could not load listings.json:', e);
+    document.getElementById('listingSelect').innerHTML =
+      '<option>Error: could not load listings.json</option>';
+  }
+}
+
+function populateSelect() {
+  const sel = document.getElementById('listingSelect');
+  sel.innerHTML = '<option value="">— choose a listing —</option>';
+  listings.forEach(l => {
+    const opt = document.createElement('option');
+    opt.value = l.id;
+    const saleTag = l.sale_price ? ' ★' : '';
+    opt.textContent = `#${l.id} — ${l.brand} — ${l.title.substring(0,40)}${saleTag}`;
+    sel.appendChild(opt);
+  });
+}
+
+/* ─────────────────────────────────────────────
+   LISTING SELECTION
+───────────────────────────────────────────── */
+function onListingChange() {
+  const id = parseInt(document.getElementById('listingSelect').value);
+  if (!id) { clearPreview(); return; }
+  currentListing = listings.find(l => l.id === id);
+  if (!currentListing) return;
+
+  showListingInfo(currentListing);
+  generateCaption(currentListing);
+  loadImageAndRender(currentListing);
+}
+
+function clearPreview() {
+  currentListing = null;
+  productImage = null;
+  document.getElementById('listingInfo').classList.remove('visible');
+  document.getElementById('listingInfo').innerHTML = '';
+  document.getElementById('canvasWrap').style.display = 'none';
+  document.getElementById('emptyState').style.display = 'flex';
+  document.getElementById('captionBlock').style.display = 'none';
+  document.getElementById('previewLabel').textContent = 'Select a listing to begin';
+}
+
+function showListingInfo(l) {
+  const info = document.getElementById('listingInfo');
+  const price = l.sale_price
+    ? `$${l.sale_price} <span style="color:var(--ash);text-decoration:line-through">$${l.price}</span>`
+    : `$${l.price}`;
+  const auth = l.authLedger;
+  info.innerHTML = `
+    <div class="info-row"><span class="info-key">Brand</span><span class="info-val">${l.brand}</span></div>
+    <div class="info-row"><span class="info-key">Price</span><span class="info-val">${price}</span></div>
+    <div class="info-row"><span class="info-key">Size</span><span class="info-val">${l.size}</span></div>
+    <div class="info-row"><span class="info-key">Condition</span><span class="info-val">${l.condition}</span></div>
+    <div class="info-row"><span class="info-key">Era</span><span class="info-val">${l.era}</span></div>
+    ${auth ? `<div class="info-row"><span class="info-key">Auth</span><span class="info-val auth-pass">${auth.sellerConfidence || 'Verified'}</span></div>` : ''}
+    <div class="info-row"><span class="info-key">Images</span><span class="info-val">${l.images.length} available</span></div>
+  `;
+  info.classList.add('visible');
+}
+
+/* ─────────────────────────────────────────────
+   IMAGE LOADING
+───────────────────────────────────────────── */
+async function loadImageAndRender(listing) {
+  showLoading(true);
+  document.getElementById('canvasWrap').style.display = 'block';
+  document.getElementById('emptyState').style.display = 'none';
+
+  if (!listing.images || !listing.images.length) {
+    productImage = null;
+    renderCreative();
+    return;
+  }
+
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload  = () => { productImage = img; renderCreative(); };
+  img.onerror = () => {
+    // Try second image if first fails
+    if (listing.images.length > 1) {
+      const img2 = new Image();
+      img2.crossOrigin = 'anonymous';
+      img2.onload  = () => { productImage = img2; renderCreative(); };
+      img2.onerror = () => { productImage = null; renderCreative(); };
+      img2.src = listing.images[1];
+    } else {
+      productImage = null;
+      renderCreative();
+    }
+  };
+  img.src = listing.images[0];
+}
+
+/* ─────────────────────────────────────────────
+   MAIN RENDER
+───────────────────────────────────────────── */
+function renderCreative() {
+  if (!currentListing) return;
+
+  const fmt = FORMATS[currentFormat];
+  const canvas = document.getElementById('mainCanvas');
+  canvas.width  = fmt.w;
+  canvas.height = fmt.h;
+  canvas.style.width  = Math.round(fmt.w * fmt.scale) + 'px';
+  canvas.style.height = Math.round(fmt.h * fmt.scale) + 'px';
+
+  const ctx = canvas.getContext('2d');
+
+  if (currentTheme === 'dark') {
+    renderDark(ctx, fmt.w, fmt.h, currentListing);
+  } else {
+    renderLight(ctx, fmt.w, fmt.h, currentListing);
+  }
+
+  const brand = currentListing.brand.toUpperCase().replace(/\s+/g, '-');
+  const fmtLabel = currentFormat === 'feed' ? '1x1' : '9x16';
+  document.getElementById('previewLabel').textContent =
+    `${brand} — ${fmtLabel} — ${fmt.w}×${fmt.h}px`;
+
+  showLoading(false);
+}
+
+/* ─────────────────────────────────────────────
+   DARK THEME RENDER (void / gold)
+───────────────────────────────────────────── */
+function renderDark(ctx, W, H, l) {
+  const isStory = currentFormat === 'story';
+
+  // Background
+  ctx.fillStyle = '#08090b';
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle grain texture
+  paintGrain(ctx, W, H, 0.04);
+
+  // Gold border frame (inset)
+  const bm = 28;
+  ctx.strokeStyle = 'rgba(201,168,76,0.22)';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(bm, bm, W - bm*2, H - bm*2);
+
+  // Inner hairline
+  const bm2 = 36;
+  ctx.strokeStyle = 'rgba(201,168,76,0.08)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(bm2, bm2, W - bm2*2, H - bm2*2);
+
+  // ── PRODUCT IMAGE ──
+  const imgAreaTop = isStory ? 120 : 80;
+  const imgAreaH   = isStory ? Math.round(H * 0.62) : Math.round(H * 0.55);
+  const imgAreaW   = W - 80;
+  const imgAreaX   = 40;
+
+  if (productImage) {
+    // Draw image with cover fit
+    const { sx, sy, sw, sh } = coverFit(productImage.width, productImage.height, imgAreaW, imgAreaH);
+    ctx.save();
+    roundRect(ctx, imgAreaX, imgAreaTop, imgAreaW, imgAreaH, 6);
+    ctx.clip();
+    ctx.drawImage(productImage, sx, sy, sw, sh, imgAreaX, imgAreaTop, imgAreaW, imgAreaH);
+    ctx.restore();
+
+    // Gradient overlay bottom of image (for dark)
+    const gradImg = ctx.createLinearGradient(0, imgAreaTop + imgAreaH * 0.5, 0, imgAreaTop + imgAreaH);
+    gradImg.addColorStop(0, 'rgba(8,9,11,0)');
+    gradImg.addColorStop(1, 'rgba(8,9,11,0.55)');
+    ctx.save();
+    roundRect(ctx, imgAreaX, imgAreaTop, imgAreaW, imgAreaH, 6);
+    ctx.clip();
+    ctx.fillStyle = gradImg;
+    ctx.fillRect(imgAreaX, imgAreaTop, imgAreaW, imgAreaH);
+    ctx.restore();
+  } else {
+    // Placeholder
+    ctx.fillStyle = '#161a1e';
+    ctx.fillRect(imgAreaX, imgAreaTop, imgAreaW, imgAreaH);
+    ctx.fillStyle = 'rgba(201,168,76,0.2)';
+    ctx.font = `${isStory ? 48 : 36}px 'Cinzel', serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('NO IMAGE', W/2, imgAreaTop + imgAreaH/2);
+  }
+
+  const textStart = imgAreaTop + imgAreaH + (isStory ? 60 : 44);
+
+  // ── EYEBROW: brand in mono ──
+  ctx.fillStyle = '#c9a84c';
+  ctx.font = `${isStory ? 38 : 28}px 'Share Tech Mono', monospace`;
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.25em';
+  ctx.fillText(l.brand.toUpperCase(), W/2, textStart);
+  ctx.letterSpacing = '0';
+
+  // ── TITLE ──
+  const titleSize = isStory ? 58 : 42;
+  ctx.fillStyle = '#e8dfc8';
+  ctx.font = `700 ${titleSize}px 'Cinzel Decorative', serif`;
+  ctx.textAlign = 'center';
+  const titleLines = wrapText(ctx, l.title, W - 120, titleSize);
+  titleLines.slice(0, 3).forEach((line, i) => {
+    ctx.fillText(line, W/2, textStart + (isStory ? 72 : 54) + i * (titleSize * 1.25));
+  });
+
+  const priceY = textStart + (isStory ? 72 : 54) + titleLines.slice(0,3).length * (titleSize * 1.25) + (isStory ? 60 : 44);
+
+  // ── PRICE BADGE ──
+  const priceStr = l.sale_price ? `$${l.sale_price}` : `$${l.price}`;
+  const priceSize = isStory ? 52 : 38;
+  ctx.font = `500 ${priceSize}px 'Cinzel', serif`;
+  ctx.fillStyle = '#c9a84c';
+  ctx.textAlign = 'center';
+  ctx.fillText(priceStr, W/2, priceY);
+
+  // Strike-through original if on sale
+  if (l.sale_price) {
+    const origStr = `$${l.price}`;
+    const strikeSize = isStory ? 34 : 26;
+    ctx.font = `${strikeSize}px 'Share Tech Mono', monospace`;
+    ctx.fillStyle = 'rgba(138,146,153,0.7)';
+    const tw = ctx.measureText(origStr).width;
+    const ox = W/2 - tw/2;
+    const oy = priceY + (isStory ? 48 : 36);
+    ctx.fillText(origStr, W/2, oy);
+    ctx.strokeStyle = 'rgba(138,146,153,0.7)';
+    ctx.lineWidth = isStory ? 2.5 : 2;
+    ctx.beginPath();
+    ctx.moveTo(ox - 4, oy - strikeSize * 0.35);
+    ctx.lineTo(ox + tw + 4, oy - strikeSize * 0.35);
+    ctx.stroke();
+  }
+
+  // ── SIZE CHIP ──
+  const sizeY = priceY + (l.sale_price ? (isStory ? 120 : 88) : (isStory ? 60 : 46));
+  const sizeLabel = `SIZE ${l.size.toUpperCase()}`;
+  ctx.font = `${isStory ? 28 : 22}px 'Share Tech Mono', monospace`;
+  ctx.fillStyle = 'rgba(200,220,232,0.5)';
+  ctx.textAlign = 'center';
+  ctx.fillText(sizeLabel, W/2, sizeY);
+
+  // ── AUTH BADGE ──
+  if (l.authLedger && l.authLedger.verified) {
+    const authY = sizeY + (isStory ? 52 : 40);
+    const authLabel = '✦ AUTHENTICATION VERIFIED';
+    ctx.font = `${isStory ? 22 : 17}px 'Share Tech Mono', monospace`;
+    ctx.fillStyle = 'rgba(201,168,76,0.55)';
+    ctx.textAlign = 'center';
+    ctx.fillText(authLabel, W/2, authY);
+  }
+
+  // ── BOTTOM: SISUKAS + URL ──
+  const bottomY = H - (isStory ? 90 : 72);
+  ctx.fillStyle = 'rgba(201,168,76,0.9)';
+  ctx.font = `700 ${isStory ? 34 : 26}px 'Cinzel Decorative', serif`;
+  ctx.textAlign = 'center';
+  ctx.letterSpacing = '0.15em';
+  ctx.fillText('SISUKAS', W/2, bottomY);
+  ctx.letterSpacing = '0';
+
+  ctx.fillStyle = 'rgba(90,99,112,0.9)';
+  ctx.font = `${isStory ? 22 : 18}px 'Share Tech Mono', monospace`;
+  ctx.fillText('sisukas-store.vercel.app', W/2, bottomY + (isStory ? 36 : 28));
+
+  // ── CONDITION DOT ──
+  const condColor = { 'New': '#5aab6e', 'New With Tags': '#5aab6e', 'Excellent': '#7bba8a', 'Good': '#c9a84c', 'Used': '#8a9299' };
+  const dotColor = condColor[l.condition] || '#8a9299';
+  const dotX = isStory ? 80 : 68;
+  const dotY = imgAreaTop + (isStory ? 48 : 40);
+  ctx.fillStyle = 'rgba(8,9,11,0.75)';
+  roundRectFill(ctx, dotX - 16, dotY - 22, isStory ? 200 : 160, isStory ? 44 : 36, 20);
+  ctx.fillStyle = dotColor;
+  ctx.beginPath();
+  ctx.arc(dotX, dotY - 5, isStory ? 7 : 5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(200,220,232,0.8)';
+  ctx.font = `${isStory ? 22 : 17}px 'Share Tech Mono', monospace`;
+  ctx.textAlign = 'left';
+  ctx.fillText(l.condition.toUpperCase(), dotX + (isStory ? 18 : 14), dotY - (isStory ? 1 : 2));
+}
+
+/* ─────────────────────────────────────────────
+   LIGHT THEME RENDER (snow / oak)
+───────────────────────────────────────────── */
+function renderLight(ctx, W, H, l) {
+  const isStory = currentFormat === 'story';
+
+  // Background
+  ctx.fillStyle = '#f7f8fa';
+  ctx.fillRect(0, 0, W, H);
+
+  // Subtle warm tint
+  ctx.fillStyle = 'rgba(232,223,200,0.08)';
+  ctx.fillRect(0, 0, W, H);
+
+  // Oak border
+  ctx.strokeStyle = 'rgba(61,43,26,0.18)';
+  ctx.lineWidth = 2;
+  const bm = 28;
+  ctx.strokeRect(bm, bm, W - bm*2, H - bm*2);
+
+  const bm2 = 36;
+  ctx.strokeStyle = 'rgba(61,43,26,0.07)';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(bm2, bm2, W - bm2*2, H - bm2*2);
+
+  // ── PRODUCT IMAGE ──
+  const imgAreaTop = isStory ? 120 : 80;
+  const imgAreaH   = isStory ? Math.round(H * 0.62) : Math.round(H * 0.55);
+  const imgAreaW   = W - 80;
+  const imgAreaX   = 40;
+
+  if (productImage) {
+    const { sx, sy, sw, sh } = coverFit(productImage.width, productImage.height, imgAreaW, imgAreaH);
+    ctx.save();
+    roundRect(ctx, imgAreaX, imgAreaTop, imgAreaW, imgAreaH, 6);
+    ctx.clip();
+    ctx.drawImage(productImage, sx, sy, sw, sh, imgAreaX, imgAreaTop, imgAreaW, imgAreaH);
+    ctx.restore();
+
+    // light overlay top
+    const gradImg = ctx.createLinearGradient(0, imgAreaTop, 0, imgAreaTop + imgAreaH * 0.35);
+    gradImg.addColorStop(0, 'rgba(247,248,250,0.3)');
+    gradImg.addColorStop(1, 'rgba(247,248,250,0)');
+    ctx.save();
+    roundRect(ctx, imgAreaX, imgAreaTop, imgAreaW, imgAreaH, 6);
+    ctx.clip();
+    ctx.fillStyle = gradImg;
+    ctx.fillRect(imgAreaX, imgAreaTop, imgAreaW, imgAreaH);
+    ctx.restore();
+  } else {
+    ctx.fillStyle = '#dce8f0';
+    ctx.fillRect(imgAreaX, imgAreaTop, imgAreaW, imgAreaH);
+    ctx.fillStyle = 'rgba(61,43,26,0.3)';
+    ctx.font = `${isStory ? 48 : 36}px 'Cinzel', serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('NO IMAGE', W/2, imgAreaTop + imgAreaH/2);
+  }
+
+  const textStart = imgAreaTop + imgAreaH + (isStory ? 60 : 44);
+
+  // Brand eyebrow
+  ctx.fillStyle = '#8b5e3c';
+  ctx.font = `${isStory ? 38 : 28}px 'Share Tech Mono', monospace`;
+  ctx.textAlign = 'center';
+  ctx.fillText(l.brand.toUpperCase(), W/2, textStart);
+
+  // Title
+  const titleSize = isStory ? 58 : 42;
+  ctx.fillStyle = '#3d2b1a';
+  ctx.font = `700 ${titleSize}px 'Cinzel Decorative', serif`;
+  ctx.textAlign = 'center';
+  const titleLines = wrapText(ctx, l.title, W - 120, titleSize);
+  titleLines.slice(0, 3).forEach((line, i) => {
+    ctx.fillText(line, W/2, textStart + (isStory ? 72 : 54) + i * (titleSize * 1.25));
+  });
+
+  const priceY = textStart + (isStory ? 72 : 54) + titleLines.slice(0,3).length * (titleSize * 1.25) + (isStory ? 60 : 44);
+
+  // Price
+  const priceStr = l.sale_price ? `$${l.sale_price}` : `$${l.price}`;
+  ctx.font = `500 ${isStory ? 52 : 38}px 'Cinzel', serif`;
+  ctx.fillStyle = '#b8893a';
+  ctx.textAlign = 'center';
+  ctx.fillText(priceStr, W/2, priceY);
+
+  if (l.sale_price) {
+    const origStr = `$${l.price}`;
+    const strikeSize = isStory ? 34 : 26;
+    ctx.font = `${strikeSize}px 'Share Tech Mono', monospace`;
+    ctx.fillStyle = 'rgba(90,62,34,0.45)';
+    const tw = ctx.measureText(origStr).width;
+    const ox = W/2 - tw/2;
+    const oy = priceY + (isStory ? 48 : 36);
+    ctx.fillText(origStr, W/2, oy);
+    ctx.strokeStyle = 'rgba(90,62,34,0.45)';
+    ctx.lineWidth = isStory ? 2.5 : 2;
+    ctx.beginPath();
+    ctx.moveTo(ox - 4, oy - strikeSize * 0.35);
+    ctx.lineTo(ox + tw + 4, oy - strikeSize * 0.35);
+    ctx.stroke();
+  }
+
+  const sizeY = priceY + (l.sale_price ? (isStory ? 120 : 88) : (isStory ? 60 : 46));
+  ctx.font = `${isStory ? 28 : 22}px 'Share Tech Mono', monospace`;
+  ctx.fillStyle = 'rgba(61,43,26,0.4)';
+  ctx.textAlign = 'center';
+  ctx.fillText(`SIZE ${l.size.toUpperCase()}`, W/2, sizeY);
+
+  if (l.authLedger && l.authLedger.verified) {
+    const authY = sizeY + (isStory ? 52 : 40);
+    ctx.font = `${isStory ? 22 : 17}px 'Share Tech Mono', monospace`;
+    ctx.fillStyle = 'rgba(184,137,58,0.7)';
+    ctx.textAlign = 'center';
+    ctx.fillText('✦ AUTHENTICATION VERIFIED', W/2, authY);
+  }
+
+  // Bottom branding
+  const bottomY = H - (isStory ? 90 : 72);
+  ctx.fillStyle = '#3d2b1a';
+  ctx.font = `700 ${isStory ? 34 : 26}px 'Cinzel Decorative', serif`;
+  ctx.textAlign = 'center';
+  ctx.fillText('SISUKAS', W/2, bottomY);
+
+  ctx.fillStyle = 'rgba(61,43,26,0.35)';
+  ctx.font = `${isStory ? 22 : 18}px 'Share Tech Mono', monospace`;
+  ctx.fillText('sisukas-store.vercel.app', W/2, bottomY + (isStory ? 36 : 28));
+
+  // Condition chip
+  const condColor = { 'New': '#1d7a3a', 'New With Tags': '#1d7a3a', 'Excellent': '#2a7a45', 'Good': '#7a5a1a', 'Used': '#5a6370' };
+  const dotColor = condColor[l.condition] || '#5a6370';
+  const dotX = isStory ? 80 : 68;
+  const dotY = imgAreaTop + (isStory ? 48 : 40);
+  ctx.fillStyle = 'rgba(247,248,250,0.88)';
+  roundRectFill(ctx, dotX - 16, dotY - 22, isStory ? 200 : 160, isStory ? 44 : 36, 20);
+  ctx.fillStyle = dotColor;
+  ctx.beginPath();
+  ctx.arc(dotX, dotY - 5, isStory ? 7 : 5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#3d2b1a';
+  ctx.font = `${isStory ? 22 : 17}px 'Share Tech Mono', monospace`;
+  ctx.textAlign = 'left';
+  ctx.fillText(l.condition.toUpperCase(), dotX + (isStory ? 18 : 14), dotY - (isStory ? 1 : 2));
+}
+
+/* ─────────────────────────────────────────────
+   CAPTION GENERATOR
+───────────────────────────────────────────── */
+function generateCaption(l) {
+  const saleTag = l.sale_price
+    ? `Marked down from $${l.price} → $${l.sale_price}.`
+    : `Priced at $${l.price}.`;
+
+  const authLine = l.authLedger && l.authLedger.verified
+    ? `Authentication verified — ${l.authLedger.sellerConfidence || 'high'} confidence.`
+    : '';
+
+  const hashtags = buildHashtags(l);
+
+  const caption = `${l.brand.toUpperCase()} — ${l.title}
+
+${saleTag} Size ${l.size}. Condition: ${l.condition}.
+
+${l.description ? l.description.substring(0, 120) + (l.description.length > 120 ? '...' : '') : ''}
+
+${authLine}
+
+Link in bio → full listing with measurements + authentication details.
+
+${hashtags}`;
+
+  document.getElementById('captionText').textContent = caption.trim();
+  document.getElementById('captionBlock').style.display = 'block';
+}
+
+function buildHashtags(l) {
+  const base = ['#sisukas', '#archivefashion', '#designerresale', '#grailed', '#authenticated'];
+  const brand = '#' + l.brand.toLowerCase().replace(/\s+/g,'').replace(/[^a-z0-9]/g,'');
+  const cat = { outerwear: '#jacket #coat #outerwear', tops: '#top #shirt #knitwear', bottoms: '#pants #denim #bottoms', footwear: '#sneakers #shoes', accessories: '#accessories' };
+  const catTags = cat[l.category] || '';
+  const era = l.era && l.era !== 'Unknown' ? `#${l.era.replace(/\s/g,'').toLowerCase()}` : '';
+  return [brand, ...base, catTags, era].filter(Boolean).join(' ');
+}
+
+function copyCaption() {
+  const text = document.getElementById('captionText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => { btn.textContent = 'Copy Caption ↗'; }, 2000);
+  });
+}
+
+/* ─────────────────────────────────────────────
+   FORMAT & THEME SWITCHES
+───────────────────────────────────────────── */
+function setFormat(fmt, el) {
+  currentFormat = fmt;
+  document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  if (currentListing) renderCreative();
+}
+
+function setTheme(theme, el) {
+  currentTheme = theme;
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  if (currentListing) renderCreative();
+}
+
+/* ─────────────────────────────────────────────
+   DOWNLOAD
+───────────────────────────────────────────── */
+function downloadCanvas(type) {
+  if (!currentListing) return;
+  const canvas = document.getElementById('mainCanvas');
+  const mime = type === 'jpg' ? 'image/jpeg' : 'image/png';
+  const q = type === 'jpg' ? 0.92 : 1;
+  const brand = currentListing.brand.toLowerCase().replace(/\s+/g, '-');
+  const id    = currentListing.id;
+  const fmt   = currentFormat;
+  const theme = currentTheme;
+  const dataURL = canvas.toDataURL(mime, q);
+  const a = document.createElement('a');
+  a.href     = dataURL;
+  a.download = `sisukas-${id}-${brand}-${fmt}-${theme}.${type}`;
+  a.click();
+}
+
+/* ─────────────────────────────────────────────
+   HELPERS
+───────────────────────────────────────────── */
+function showLoading(show) {
+  document.getElementById('loadingOverlay').classList.toggle('visible', show);
+}
+
+function coverFit(iw, ih, tw, th) {
+  const scale = Math.max(tw / iw, th / ih);
+  const sw = tw / scale;
+  const sh = th / scale;
+  const sx = (iw - sw) / 2;
+  const sy = (ih - sh) / 2;
+  return { sx, sy, sw, sh };
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function roundRectFill(ctx, x, y, w, h, r) {
+  roundRect(ctx, x, y, w, h, r);
+  ctx.fill();
+}
+
+function wrapText(ctx, text, maxW, fontSize) {
+  const words = text.split(' ');
+  const lines = [];
+  let current = '';
+  for (const word of words) {
+    const test = current ? current + ' ' + word : word;
+    if (ctx.measureText(test).width > maxW && current) {
+      lines.push(current);
+      current = word;
+    } else {
+      current = test;
+    }
+  }
+  if (current) lines.push(current);
+  return lines;
+}
+
+function paintGrain(ctx, W, H, opacity) {
+  // Lightweight noise using random dots — no ImageData for speed
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  ctx.fillStyle = '#ffffff';
+  const count = Math.round(W * H * 0.0015);
+  for (let i = 0; i < count; i++) {
+    const x = Math.random() * W;
+    const y = Math.random() * H;
+    ctx.fillRect(x, y, 1, 1);
+  }
+  ctx.restore();
+}
+
+/* ─────────────────────────────────────────────
+   BOOT
+───────────────────────────────────────────── */
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
